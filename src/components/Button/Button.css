@@ -1,0 +1,9 @@
+@import '../../styles/colors.css';
+
+.button {
+  padding: 10px;
+
+  &_red {
+    background-color: var(--red);
+  }
+}
