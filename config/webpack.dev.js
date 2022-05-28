@@ -5,7 +5,7 @@ const common = require('./webpack.common')
 module.exports = merge(common, {
   // Set the mode to development or production
   mode: 'development',
-
+  cache: false,
   // Control how source maps are generated
   devtool: 'inline-source-map',
 
@@ -14,7 +14,7 @@ module.exports = merge(common, {
     historyApiFallback: true,
     open: true,
     compress: true,
-    hot: false,
+    hot: true,
     port: 8080,
   },
 
@@ -27,7 +27,7 @@ module.exports = merge(common, {
           'style-loader',
           {
             loader: 'css-loader',
-            options: { sourceMap: true, importLoaders: 1, modules: false },
+            options: { sourceMap: true, importLoaders: 2, modules: false },
           },
           { loader: 'postcss-loader', options: { sourceMap: true } },
         ],
