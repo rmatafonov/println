@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+
 import ErrorBoundary from '../ErrorBoundary'
 import Bug from '@/components/Bug'
 
