@@ -1,0 +1,103 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: "Roboto", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.2;
+  color: var(--text);
+  position: relative;
+  height: 100%;
+}
+
+.container {
+  width: 95%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  li {
+    list-style-type: none;
+  }
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-weight: normal;
+  color: var(--text);
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 28px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+p {
+  margin: 0;
+}
+
+input {
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.app {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.background {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: url("../../static/images/app-bg.jpg");
+  background-repeat: repeat;
+  background-position: 0 -100%;
+  background-size: auto auto;
+  animation: animatedBackground 700s linear infinite;
+  z-index: -1;
+}
+
+@keyframes animatedBackground {
+  from {
+    background-position: 0 100%;
+  }
+  to {
+    background-position: 0 -5000%;
+  }
+}

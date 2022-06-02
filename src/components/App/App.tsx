@@ -1,36 +1,21 @@
-import React, { Component } from 'react'
-import Button from '../Button'
+import React from 'react'
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
+import Login from '../../pages/Login';
+import SignUp from '../../pages/SignUp'
+import Menu from '../../pages/Menu'
 
-class App extends Component {
-  state = {
-    name: 'Пупа',
-    dummy: false,
-  }
-
-  toggleMessage = () => {
-    const { name } = this.state
-
-    this.setState({ name: name === 'Пупа' ? 'Лупа' : 'Пупа' })
-  }
-
-  toggleDummy = () => {
-    this.setState({ dummy: !this.state.dummy })
-  }
-
-  render() {
-    const { name } = this.state
-
-    return (
-      <React.Fragment>
-        <h1>{name}</h1>
-        <Button className="button_red" onClick={this.toggleMessage}>
-          Изменить сообщение
-        </Button>
-        <button onClick={this.toggleMessage}>Изменить сообщение</button>
-        <button onClick={this.toggleDummy}>Сделать пустое изменение</button>
-      </React.Fragment>
-    )
-  }
+export default function App() {
+  return (
+    <div className="app">
+      <div className="background">
+      </div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/menu" element={<Menu />} />
+        </Routes>
+      </Router>
+    </div>
+  );
 }
-
-export default App

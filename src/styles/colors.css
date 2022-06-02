@@ -1,3 +1,8 @@
 :root {
-  --red: red;
+  --text: #fff;
+  --auth-bg: rgba(0,0,0, .8);
+  --shadow-input: 0px 0px 6px rgba(0, 0, 0, 0.14);
+  --shadow-input-danger: 0px 0px 6px rgba(250, 29, 29, 0.14);
+  --border-button: #fff;
+  --danger: #af1616;
 }
