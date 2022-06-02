@@ -19,10 +19,10 @@
     "skipLibCheck": true,
     "declaration": false,
     "sourceMap": false,
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "outDir": "./dist",
     "paths": {
-      "*": ["./src/*"]
+      "@/*": ["*"]
     },
     "typeRoots": ["typings/**/*.d.ts", "node_modules/@types"],
   },
