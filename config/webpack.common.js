@@ -18,15 +18,15 @@ module.exports = {
     }),
   ],
   resolve: {
-<<<<<<< HEAD
-    extensions: ['.tsx', '.ts', '.js', '.jpg'],
-=======
     plugins: [new TsconfigPathsPlugin()],
     extensions: ['.tsx', '.ts', '.js'],
->>>>>>> main
     alias: {
       '@': paths.src,
-      utills: paths.utills,
+      utils: paths.utils,
+      api: paths.api,
+      components: paths.components,
+      styles: paths.styles,
+      pages: paths.pages,
     },
   },
   module: {

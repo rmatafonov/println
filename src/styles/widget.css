@@ -1,5 +1,6 @@
 .widget {
   height: 100%;
+
   &__container {
     height: 100%;
     display: flex;
@@ -8,6 +9,7 @@
     align-items: center;
     min-width: 300px;
   }
+
   &__content {
     width: 50%;
     background-color: var(--auth-bg);

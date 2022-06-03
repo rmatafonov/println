@@ -5,14 +5,16 @@
   font-size: 18px;
   color: var(--text);
   border-radius: var(--border-radius-formfields);
-  background: linear-gradient(to right, #606c88 0%, #3f4c6b  51%, #606c88  100%);
+  background: linear-gradient(to right, #606c88 0%, #3f4c6b 51%, #606c88 100%);
   transition: 0.5s;
   background-size: 200% auto;
   text-align: center;
+
   &:hover {
     background-position: right center;
     text-decoration: none;
-  }           
+  }
+
   &_simple {
     padding: 0;
     font-size: 16px;
@@ -20,8 +22,9 @@
     border-radius: 0;
     background: none;
   }
+
   &_disabled {
     pointer-events: none;
-    opacity: .5;
+    opacity: 0.5;
   }
 }

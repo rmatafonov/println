@@ -1,8 +1,8 @@
 import React from 'react'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
-import Login from '../../pages/Login';
-import SignUp from '../../pages/SignUp'
-import Menu from '../../pages/Menu'
+import Login from 'pages/Login';
+import SignUp from 'pages/SignUp'
+import Menu from 'pages/Menu'
 
 export default function App() {
   return (

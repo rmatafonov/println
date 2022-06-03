@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import '../../styles/widget.css'
+import 'styles/widget.css'
 import './menu.css'
 
 function Menu() {

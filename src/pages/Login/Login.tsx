@@ -1,13 +1,13 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import AuthApi from '../../api/AuthApi'
+import Validation from 'utils/validate'
+import AuthApi from 'api/AuthApi'
 
-import Button from '../../components/Button'
-import Input from '../../components/Input'
-import '../../styles/auth.css'
-import '../../styles/widget.css'
+import Button from 'components/Button'
+import Input from 'components/Input'
+import 'styles/auth.css'
+import 'styles/widget.css'
 import { InputType } from '../SignUp/types';
-import Validation from '../../utils/validate'
 
 function Login() {
   const authApi = new AuthApi();
