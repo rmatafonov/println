@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+import Button from 'components/Button'
 import 'styles/widget.css'
 import './Leaderboard.css'
 
@@ -8,6 +11,11 @@ const Leaderboard = () => {
     { date: '2022, 23 мая, 10:00', accuracy: '75.5%', destroyed: 10 },
     { date: '2022, 23 мая, 10:00', accuracy: '75.5%', destroyed: 10 },
   ])
+  const navigate = useNavigate()
+
+  const goToMenu = () => {
+    navigate('/menu')
+  }
 
   return (
     <div className="leaderboard widget">
@@ -32,6 +40,7 @@ const Leaderboard = () => {
               ))}
             </tbody>
           </table>
+          <Button onClick={goToMenu}>Меню</Button>
         </div>
       </div>
     </div>
