@@ -3,6 +3,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import Login from 'pages/Login';
 import SignUp from 'pages/SignUp'
 import Menu from 'pages/Menu'
+import Leaderboard from 'pages/Leaderboard';
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
           <Route path="/" element={<Login />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/menu" element={<Menu />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
         </Routes>
       </Router>
     </div>

@@ -13,7 +13,7 @@ function Menu() {
               <Link className="menu__link" to="#">Играть</Link>
             </li>
             <li className="menu__item">
-              <Link className="menu__link" to="#">Таблица рекордов</Link>
+              <Link className="menu__link" to="/leaderboard">Таблица рекордов</Link>
             </li>
             <li className="menu__item">
               <Link className="menu__link" to="#">Профиль</Link>
