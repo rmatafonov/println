@@ -22,7 +22,11 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js'],
     alias: {
       '@': paths.src,
-      utills: paths.utills,
+      utils: paths.utils,
+      api: paths.api,
+      components: paths.components,
+      styles: paths.styles,
+      pages: paths.pages,
     },
   },
   module: {
