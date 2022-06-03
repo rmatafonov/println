@@ -1,0 +1,6 @@
+@import '../../styles/colors.css';
+
+.leaderboard td,
+th {
+  @apply border border-sky-500;
+}
