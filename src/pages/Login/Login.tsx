@@ -29,12 +29,25 @@ function Login() {
       id: 1,
     },
   ])
-  const [isFailValidate, setIsFailValidate] = useState<boolean>(true);
+  const [isFailValidate, setIsFailValidate] = useState(true);
   const [responseError, setResponseError] = useState<null | string>(null);
 
   const goToSignUp = () => {
     navigate('/sign-up')
   }
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const response = await authApi.getUser();
+      return response
+    }
+    const checkAuthResponse = checkAuth();
+    checkAuthResponse.then((res) => {
+      if (res) {
+        navigate('/menu')
+      }
+    })
+  }, [])
 
   useEffect(() => {
     const isEmptySomeInput = inputs.some((input) => Boolean(input.value) === false);
@@ -65,6 +78,8 @@ function Login() {
     }))
     if (response.error) {
       setResponseError(response.error)
+    } else {
+      navigate('/menu')
     }
   }, [inputs])
 

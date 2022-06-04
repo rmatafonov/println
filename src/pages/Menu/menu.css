@@ -19,5 +19,6 @@
     color: var(--text);
     text-decoration: none;
     font-size: 28px;
+    cursor: pointer;
   }
 }

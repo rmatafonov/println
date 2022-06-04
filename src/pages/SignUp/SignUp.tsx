@@ -58,14 +58,26 @@ function SignUp() {
   ])
   const [isFailValidate, setIsFailValidate] = useState<boolean>(true);
   const [responseError, setResponseError] = useState<null | string>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const response = await authApi.getUser();
+      return response
+    }
+    const checkAuthResponse = checkAuth();
+    checkAuthResponse.then((res) => {
+      if (res) {
+        navigate('/menu')
+      }
+    })
+  }, [])
 
   useEffect(() => {
     const isEmptySomeInput = inputs.some((input) => Boolean(input.value) === false);
     const hasSomeError = inputs.some((input) => input.error !== null);
     setIsFailValidate(isEmptySomeInput || hasSomeError);
   }, [inputs]);
-
-  const navigate = useNavigate();
 
   const changeInput = useCallback((fieldType: string, e: React.ChangeEvent<HTMLInputElement>) => {
     const validate = new Validation()

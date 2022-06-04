@@ -31,6 +31,24 @@ class AuthApi {
       }
     }
   }
+
+  async getUser(): Promise<unknown> {
+    try {
+      const response = await Api.get('auth/user');
+      return response
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async logout() {
+    try {
+      const response = await Api.post('auth/logout')
+      return response
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
 
 export default AuthApi

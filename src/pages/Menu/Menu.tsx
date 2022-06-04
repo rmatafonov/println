@@ -1,9 +1,21 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useCallback } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+
+import AuthApi from 'api/AuthApi'
 import 'styles/widget.css'
 import './menu.css'
 
 function Menu() {
+  const authApi = new AuthApi();
+  const navigate = useNavigate();
+
+  const logout = useCallback(async () => {
+    const response = await authApi.logout();
+    if (response) {
+      navigate('/');
+    }
+  }, [])
+
   return (
     <div className="menu widget">
       <div className="widget__container container">
@@ -22,7 +34,7 @@ function Menu() {
               <Link className="menu__link" to="#">Настройки</Link>
             </li>
             <li className="menu__item">
-              <Link className="menu__link" to="/">Выйти</Link>
+              <div className="menu__link" onClick={logout}>Выйти</div>
             </li>
           </ul>
         </div>
