@@ -1,13 +1,16 @@
-import React, { useState, useCallback, useEffect } from 'react'
+/* eslint-disable camelcase */
+import React, { useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AuthApi from 'api/AuthApi'
 
 import Button from 'components/Button'
-import Input from 'components/Input'
-import Validation from 'utils/validate'
-import { InputType } from './types'
+import Auth from 'components/Auth'
+
+import { InputType } from 'components/Auth/types'
+import { submitEventType } from 'pages/Login/types'
+
 import 'styles/auth.css'
-import 'styles/widget.css'
+import './signUp.css'
 
 function SignUp() {
   const authApi = new AuthApi();
@@ -56,52 +59,19 @@ function SignUp() {
       id: 5,
     },
   ])
-  const [isFailValidate, setIsFailValidate] = useState<boolean>(true);
+  const [isFailValidate, setIsFailValidate] = useState(true);
   const [responseError, setResponseError] = useState<null | string>(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      const response = await authApi.getUser();
-      return response
-    }
-    const checkAuthResponse = checkAuth();
-    checkAuthResponse.then((res) => {
-      if (res) {
-        navigate('/menu')
-      }
-    })
-  }, [])
-
-  useEffect(() => {
-    const isEmptySomeInput = inputs.some((input) => Boolean(input.value) === false);
-    const hasSomeError = inputs.some((input) => input.error !== null);
-    setIsFailValidate(isEmptySomeInput || hasSomeError);
-  }, [inputs]);
-
-  const changeInput = useCallback((fieldType: string, e: React.ChangeEvent<HTMLInputElement>) => {
-    const validate = new Validation()
-    const inputError = validate.by(fieldType, e.target.value)
-    setInputs(inputs.map((input) => {
-      if (input.fieldType === fieldType) {
-        input.value = e.target.value;
-        input.error = inputError;
-      }
-      return input;
-    }))
-  }, [inputs])
-
-  const submit = useCallback(async () => {
-    // eslint-disable-next-line camelcase
+  const submit = useCallback(async (e: submitEventType) => {
+    e.preventDefault();
     const first_name = inputs.find((item) => item.fieldType === 'name')?.value ?? '';
-    // eslint-disable-next-line camelcase
     const second_name = inputs.find((item) => item.fieldType === 'lastName')?.value ?? '';
     const email = inputs.find((item) => item.fieldType === 'email')?.value ?? '';
     const phone = inputs.find((item) => item.fieldType === 'phone')?.value ?? '';
     const login = inputs.find((item) => item.fieldType === 'login')?.value ?? '';
     const password = inputs.find((item) => item.fieldType === 'password')?.value ?? '';
     const response = await authApi.signUp({
-      // eslint-disable-next-line camelcase
       login, password, first_name, second_name, email, phone
     });
     setInputs(inputs.map((input) => {
@@ -110,6 +80,8 @@ function SignUp() {
     }))
     if (response.error) {
       setResponseError(response.error)
+    } else {
+      navigate('/menu')
     }
   }, [inputs])
 
@@ -117,49 +89,28 @@ function SignUp() {
     navigate('/')
   }
   return (
-    <div className="auth widget">
-      <div className="widget__container container">
-        <div className="widget__content">
-          <h1 className="auth__title">Регистрация</h1>
-          <div className="auth__body">
-            <ul className="auth__inputs">
-              {inputs
-                .map(({
-                  name, error, id, fieldType, type, value
-                }) => (
-                  <li key={id} className="auth__input">
-                    <Input
-                      placeholder={name}
-                      type={type}
-                      value={value}
-                      error={error ?? ''}
-                      className={error ? 'field__input_error' : ''}
-                      onChange={(e) => changeInput(fieldType, e)}
-                    />
-                  </li>
-                ))
-              }
-            </ul>
-            <ul className="auth__buttons">
-              <li className="auth__button">
-                <Button isDisabled={isFailValidate} onClick={submit}>
-                  Зарегистрироваться
-                </Button>
-              </li>
-              <li className="auth__button">
-                <Button onClick={goToLogin} className="button_simple">Войти</Button>
-              </li>
-            </ul>
-            {responseError &&
-              <div className="auth__error">
-                {responseError}
-              </div>
-            }
-          </div>
-        </div>
-      </div>
+    <div className="sign-up">
+      <form className="sign-up__form" onSubmit={submit}>
+        <Auth inputs={inputs} setInputs={setInputs} setIsFailValidate={setIsFailValidate} title="Регистрация">
+          <ul className="auth__buttons">
+            <li className="auth__button">
+              <Button isDisabled={isFailValidate} onClick={submit}>
+                Зарегистрироваться
+              </Button>
+            </li>
+            <li className="auth__button">
+              <Button onClick={goToLogin} className="button_simple">Войти</Button>
+            </li>
+          </ul>
+          {responseError &&
+            <div className="auth__error">
+              {responseError}
+            </div>
+          }
+        </Auth>
+      </form>
     </div>
-  )
+  );
 }
 
 export default SignUp
