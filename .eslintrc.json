@@ -9,7 +9,7 @@
     "consistent-return":"warn",
     "import/prefer-default-export": 0,
     "camelcase": "warn",
-    "no-undef": "warn",
+    "no-undef": "off",
     "no-underscore-dangle": 0,
     "no-useless-constructor": "warn",
     "no-restricted-exports": 0,
