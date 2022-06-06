@@ -7,7 +7,7 @@ import Button from 'components/Button'
 import Auth from 'components/Auth'
 
 import { InputType } from 'components/Auth/types'
-import { submitEventType } from 'pages/Login/types'
+import { SubmitEventType } from 'pages/Login/types'
 
 import 'styles/auth.css'
 import './signUp.css'
@@ -63,7 +63,7 @@ function SignUp() {
   const [responseError, setResponseError] = useState<null | string>(null);
   const navigate = useNavigate();
 
-  const submit = useCallback(async (e: submitEventType) => {
+  const submit = useCallback(async (e: SubmitEventType) => {
     e.preventDefault();
     const first_name = inputs.find((item) => item.fieldType === 'name')?.value ?? '';
     const second_name = inputs.find((item) => item.fieldType === 'lastName')?.value ?? '';
