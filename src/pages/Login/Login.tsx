@@ -6,7 +6,7 @@ import Button from 'components/Button'
 import Auth from 'components/Auth'
 
 import { InputType } from 'components/Auth/types';
-import { submitEventType } from './types'
+import { SubmitEventType } from './types'
 
 import 'styles/auth.css'
 import './login.css'
@@ -38,7 +38,7 @@ function Login() {
     navigate('/sign-up')
   }
 
-  const submit = useCallback(async (e: submitEventType) => {
+  const submit = useCallback(async (e: SubmitEventType) => {
     e.preventDefault();
     const login = inputs.find((item) => item.fieldType === 'login')?.value ?? '';
     const password = inputs.find((item) => item.fieldType === 'password')?.value ?? '';

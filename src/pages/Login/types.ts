@@ -1,3 +1,3 @@
 import React from 'react'
 
-export type submitEventType = React.MouseEvent<HTMLButtonElement, MouseEvent> | React.FormEvent<HTMLFormElement>
+export type SubmitEventType = React.MouseEvent<HTMLButtonElement, MouseEvent> | React.FormEvent<HTMLFormElement>
