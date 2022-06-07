@@ -1,13 +1,18 @@
 import React, { Component } from 'react'
 
 import ErrorBoundary from '../ErrorBoundary'
-import Bug from '@/components/Bug'
+import { GameContainer } from '../canvas'
+
+
+import './App.css'
 
 class App extends Component {
   render() {
     return (
       <ErrorBoundary>
-        <Bug />
+        <div className="app-container">
+          <GameContainer />
+        </div>
       </ErrorBoundary>
     )
   }
