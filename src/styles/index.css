@@ -1,12 +1,3 @@
+@import './variables.css';
 @import './colors.css';
-
-html,
-body {
-  margin: 0;
-  height: 100%;
-}
-
-#root {
-  width: 100%;
-  height: 100%;
-}
+@import './base.css';

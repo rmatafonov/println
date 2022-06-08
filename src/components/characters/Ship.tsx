@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
-import { mathUtil } from '../../util'
+// import { mathUtil } from '../../util'
+
+const img = new Image()
+img.src =
+  'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiCgkgdmlld0JveD0iMCAwIDUxMi4wMDMgNTEyLjAwMyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTEyLjAwMyA1MTIuMDAzOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxnPgoJPHJlY3QgeD0iMjAwLjE3NyIgeT0iNDU0LjkxNSIgc3R5bGU9ImZpbGw6IzVCQUNGNTsiIHdpZHRoPSIzOC45NDUiIGhlaWdodD0iNTcuMDg5Ii8+Cgk8cmVjdCB4PSIyNzIuODgxIiB5PSI0NTQuOTE1IiBzdHlsZT0iZmlsbDojNUJBQ0Y1OyIgd2lkdGg9IjM4Ljk0NSIgaGVpZ2h0PSI1Ny4wODkiLz4KPC9nPgo8cGF0aCBzdHlsZT0iZmlsbDojRTQyMTA1OyIgZD0iTTQyNC4xNjQsMzcwLjAzNGMtMS4xMjEtOS4yMTUtOC40MjItMjAuOTM4LTE2LjE2Ni0yNi4wNThsLTc4LjAyMS01MS41NzlIMTgyLjAyNmwtNzguMDIxLDUxLjU3OQoJYy03Ljc0NCw1LjEyLTE1LjA0NSwxNi44NDMtMTYuMTY2LDI2LjA1OGMtMi45MjIsMjQuMDI1LTExLjQxOCw5Ni4xMjktMTEuNDE4LDk2LjEyOWgxMDYuMjgxbDcyLjMzNi0yMi41MDZsNzQuMjYzLDIyLjUwNmgxMDYuMjgxCglDNDM1LjU4Miw0NjYuMTY0LDQyNy4wODYsMzk0LjA1OSw0MjQuMTY0LDM3MC4wMzR6Ii8+CjxwYXRoIHN0eWxlPSJmaWxsOiNGRkIzNjc7IiBkPSJNMzI5LjMwMSwxNDQuMjY4YzAtNTkuMjY0LTI4Ljg3My0xMTEuNzY1LTczLjI5OS0xNDQuMjY4CgljLTQ0LjQyNiwzMi41MDQtNzMuMjk4LDg1LjAwNC03My4yOTgsMTQ0LjI2OHYyODguMTM3bDczLjI5OSwyMi41MDVsNzMuMjk5LTIyLjUwNVYxNDQuMjY4SDMyOS4zMDF6Ii8+CjxyZWN0IHg9IjE4Mi43MDEiIHk9IjQzMi40MDkiIHN0eWxlPSJmaWxsOiMzRDUxQ0M7IiB3aWR0aD0iMTQ2LjYwMSIgaGVpZ2h0PSIzMy43NTgiLz4KPHBhdGggc3R5bGU9ImZpbGw6I0ZGNzAzOTsiIGQ9Ik0yMTYuNDYyLDE0NC4yNjhoNzkuMDgxYzAtMTMuNDQxLTEuOTA1LTI2LjY4Ni01LjUxOC0zOS4zODVoLTY4LjA0NQoJQzIxOC4zNjcsMTE3LjU4MiwyMTYuNDYyLDEzMC44MjcsMjE2LjQ2MiwxNDQuMjY4eiIvPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K'
 
 type OwnProps = {
   canvasContext: CanvasRenderingContext2D
@@ -12,8 +16,9 @@ type OwnProps = {
 type Props = React.FC<OwnProps>
 
 const Ship: Props = ({ canvasContext, x, y, rectSide }) => {
-  const xMax = rectSide
-  const yMax = rectSide
+  const shipRect = rectSide * 0.90
+  const xMax = shipRect * 0.95
+  const yMax = shipRect * 0.95
   const [currentAxesAngle, setAngle] = useState(0)
 
   useEffect(() => {
@@ -32,9 +37,9 @@ const Ship: Props = ({ canvasContext, x, y, rectSide }) => {
 
     canvasContext.beginPath()
     canvasContext.translate(x, y)
-    canvasContext.clearRect(-xMax, -yMax, rectSide * 2, rectSide * 2)
+    canvasContext.clearRect(-rectSide, -rectSide, rectSide * 2, rectSide * 2)
     canvasContext.rotate(currentAxesAngle)
-    drawShip(canvasContext, xMax, xMax)
+    canvasContext.drawImage(img, -xMax, -yMax, shipRect * 2, shipRect * 2)
 
     canvasContext.restore()
   }, [currentAxesAngle])
@@ -43,70 +48,6 @@ const Ship: Props = ({ canvasContext, x, y, rectSide }) => {
 }
 
 export default Ship
-
-function drawShip(ctx: CanvasRenderingContext2D, xMax: number, yMax: number) {
-  ctx.lineWidth = 2
-
-  drawShipSide(ctx, xMax, yMax)
-  ctx.scale(-1, 1)
-  drawShipSide(ctx, xMax, yMax)
-  drawShipIlluminator(ctx, xMax * 0.15)
-}
-
-function drawShipSide(
-  ctx: CanvasRenderingContext2D,
-  xMax: number,
-  yMax: number
-) {
-  const top = yMax * 0.9
-  const bottom = -yMax * 0.85
-  const p1x = xMax * 0.4
-  const p1y = yMax * 0.3
-  const p2x = xMax * 0.7
-  const p2y = yMax * 0.8
-
-  ctx.beginPath()
-  ctx.moveTo(0, top)
-  ctx.bezierCurveTo(p1x, p1y, p2x, p2y, 0, bottom)
-  ctx.stroke()
-
-  const stayTopLinePointA = mathUtil.getBezierPoint(
-    0.75,
-    { x: 0, y: top },
-    { x: p1x, y: p1x },
-    { x: p2x, y: p2y },
-    { x: 0, y: bottom }
-  )
-  const stayTopLinePointB = {
-    x: xMax * Math.cos(Math.PI / 5),
-    y: yMax * Math.sin(Math.PI / 5),
-  }
-
-  ctx.beginPath()
-  ctx.moveTo(stayTopLinePointA.x, stayTopLinePointA.y)
-  ctx.lineTo(stayTopLinePointB.x, stayTopLinePointB.y)
-  ctx.stroke()
-
-  const stayBottomLinePointA = mathUtil.getBezierPoint(
-    0.95,
-    { x: 0, y: top },
-    { x: p1x, y: p1x },
-    { x: p2x, y: p2y },
-    { x: 0, y: bottom }
-  )
-
-  ctx.beginPath()
-  ctx.moveTo(stayBottomLinePointA.x, stayBottomLinePointA.y)
-  ctx.lineTo(stayTopLinePointB.x, stayTopLinePointB.y)
-  ctx.stroke()
-}
-
-function drawShipIlluminator(ctx: CanvasRenderingContext2D, radius: number) {
-  ctx.beginPath()
-  ctx.arc(0, 0, radius, 0, Math.PI * 2)
-  ctx.closePath()
-  ctx.stroke()
-}
 
 //TODO: remove when bullet class and shoot method is ready
 function getRandomInt(max: number): number {

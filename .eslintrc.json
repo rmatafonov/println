@@ -9,7 +9,7 @@
     "consistent-return":"warn",
     "import/prefer-default-export": 0,
     "camelcase": "warn",
-    "no-undef": "warn",
+    "no-undef": "off",
     "no-underscore-dangle": 0,
     "no-useless-constructor": "warn",
     "no-restricted-exports": 0,
@@ -18,7 +18,8 @@
     "import/no-unresolved": 0,
     "import/extensions": 0,
     "semi": 0,
-    "max-len": [2, 120],
-    "@typescript-eslint/no-unused-vars": 2
+    "max-len": "off",
+    "@typescript-eslint/no-unused-vars": 2,
+    "no-param-reassign": "off"
   }
 }

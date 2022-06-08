@@ -1,0 +1,6 @@
+.login {
+  height: 100%;
+  &__form {
+    height: 100%;
+  }
+}

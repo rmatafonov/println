@@ -37,11 +37,11 @@ const GameContainer: Props = ({}) => {
     canvas.height = height
     const canvasContext = domUtil.getCanvasContext(canvas)
 
-    setShipPoint({x: Math.floor(width / 2), y: height * 0.95})
+    setShipPoint({x: Math.floor(width / 2), y: height * 0.93})
     setShipSize(height * 0.05)
 
     setEnemyPoint({x: mathUtil.getRandomInt(width), y: mathUtil.getRandomInt(height * 0.05)})
-    setEnemySize(height * 0.01)
+    setEnemySize(height * 0.02)
 
     setCanvasCtx(canvasContext)
 
@@ -76,10 +76,10 @@ const GameContainer: Props = ({}) => {
   }
 
   return (
-    <>
+    <div className='game-container'>
       <canvas ref={canvasRef} className="canvas-ship" />
       {renderCharacters}
-    </>
+    </div>
   )
 }
 

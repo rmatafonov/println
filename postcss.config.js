@@ -1,9 +1,9 @@
 /* eslint-disable global-require */
 module.exports = {
-  plugins: [
-    require('postcss-import'),
-    require('autoprefixer'),
-    require('postcss-nested'),
-    require('postcss-custom-media'),
-  ]
+  plugins: {
+    'postcss-import': {},
+    'postcss-nested': {},
+    'postcss-custom-media': {},
+    autoprefixer: {},
+  }
 }
