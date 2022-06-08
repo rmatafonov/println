@@ -1,4 +1,4 @@
-import EnemyEventBus from '@/service/eventBus/EnemyEventBus'
+import { EnemyEvents, EventBus } from '@/service/eventBus'
 import React from 'react'
 import { useEffect } from 'react'
 
@@ -96,7 +96,7 @@ function flyToShip(
     start = timestamp
 
     if (currentStep > stepsCount) {
-      EnemyEventBus.getInstance().emit(EnemyEventBus.EVENTS.ENEMY_GOT_SHIP)
+      EventBus.getInstance().emit(EnemyEvents.EnemyGotShip)
       return
     }
 

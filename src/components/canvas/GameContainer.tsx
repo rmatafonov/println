@@ -1,11 +1,11 @@
 import React, { ReactNode, useState } from 'react'
 import { useEffect, useRef } from 'react'
 
-import EnemyEventBus from '@/service/eventBus/EnemyEventBus'
 import { domUtil, mathUtil } from '@/util'
 import { Enemy, Ship } from '../characters'
 
 import './GameContainer.css'
+import { EnemyEvents, EventBus } from '@/service/eventBus'
 
 type OwnProps = {}
 
@@ -45,7 +45,7 @@ const GameContainer: Props = ({}) => {
 
     setCanvasCtx(canvasContext)
 
-    EnemyEventBus.getInstance().on(EnemyEventBus.EVENTS.ENEMY_GOT_SHIP, () => {
+    EventBus.getInstance().on(EnemyEvents.EnemyGotShip, () => {
       canvasContext.fillText('Ба-бах!', width / 2, height / 2)
     })
   }, [])

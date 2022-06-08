@@ -1,6 +1,21 @@
+export enum EnemyEvents {
+    EnemyGotShip = 'enemy:got-ship',
+}
+
 export type Listener<T extends unknown[] = any[]> = (...args: T) => void;
 
-export default abstract class AbstractEventBus<E extends string = string, M extends { [K in E]: unknown[] } = Record<E, any[]>> {
+export default class EventBus<E extends string = string, M extends { [K in E]: unknown[] } = Record<E, any[]>> {
+    private static instance: EventBus
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new EventBus()
+        }
+        return this.instance
+    }
+
+    private constructor() { }
+
     private listeners: { [key in E]?: Listener<M[E]>[] } = {};
 
     on(event: E, callback: Listener<M[E]>) {
