@@ -72,8 +72,6 @@ function flyToShip(
   shipY: number,
   stepsCount: number
 ) {
-  ctx.lineWidth = 2
-
   const textSize = 20
 
   let x = enemyX
@@ -82,13 +80,14 @@ function flyToShip(
   const dx = (shipX - x) / stepsCount
   const dy = (shipY - y) / stepsCount
 
+  ctx.font = `${textSize}px helvetica`
+  ctx.textBaseline = 'top'
   const wordMetrics = ctx.measureText(word)
   const wordWidth = wordMetrics.width
 
   let start = performance.now()
-  window.requestAnimationFrame(step)
 
-  function step(timestamp: DOMHighResTimeStamp) {
+  const step = (timestamp: DOMHighResTimeStamp) => {
     const dt = timestamp - start
     if (dt < FPS_60_PER_SEC) {
       requestAnimationFrame(step)
@@ -102,21 +101,21 @@ function flyToShip(
     }
 
     ctx.clearRect(
-      x - wordWidth * 2.2,
-      y - size * 1.2,
-      wordWidth * 2.1 + size * 2,
-      textSize + size * 2
+      x - wordWidth * 1.1,
+      y - size * 1.1,
+      wordWidth + size * 2.1,
+      textSize + size * 2.1
     )
 
     ctx.drawImage(img, x - size, y - size, size * 2, size * 2)
 
     ctx.save()
     ctx.fillStyle = 'black'
-    ctx.fillRect(x - wordWidth * 2.1, y + size, wordWidth * 2.1, textSize)
+    ctx.fillRect(x - wordWidth, y + size, wordWidth, textSize)
     ctx.fillStyle = '#e3d212'
     ctx.font = `${textSize}px helvetica`
     ctx.textBaseline = 'top'
-    ctx.fillText(word, x - wordWidth * 2.1, y + size)
+    ctx.fillText(word, x - wordWidth, y + size)
     ctx.restore()
 
     x += dx
@@ -125,4 +124,6 @@ function flyToShip(
 
     requestAnimationFrame(step)
   }
+
+  window.requestAnimationFrame(step)
 }
