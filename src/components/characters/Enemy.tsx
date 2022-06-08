@@ -20,7 +20,7 @@ type OwnProps = {
 type Props = React.FC<OwnProps>
 
 const FPS_60_PER_SEC = 1000 / 60
-const LEVEL_0_STEPS = 2000
+const LEVEL_0_STEPS = 1000
 
 const Enemy: Props = ({
   canvasContext,
@@ -87,6 +87,24 @@ function flyToShip(
 
   let start = performance.now()
 
+  const redrawImage = () => {
+    ctx.clearRect(x - size * 1.1, y - size * 1.2, size * 2.1, size * 2.1)
+    ctx.drawImage(img, x - size, y - size, size * 2, size * 2)
+  }
+
+  const redrawText = () => {
+    ctx.clearRect(x - wordWidth * 1.1, y + size * 0.7, wordWidth * 1.1, textSize)
+
+    ctx.save()
+    ctx.fillStyle = 'black'
+    ctx.fillRect(x - wordWidth, y + size, wordWidth, textSize)
+    ctx.fillStyle = '#e3d212'
+    ctx.font = `${textSize}px helvetica`
+    ctx.textBaseline = 'top'
+    ctx.fillText(word, x - wordWidth, y + size)
+    ctx.restore()
+  }
+
   const step = (timestamp: DOMHighResTimeStamp) => {
     const dt = timestamp - start
     if (dt < FPS_60_PER_SEC) {
@@ -100,23 +118,8 @@ function flyToShip(
       return
     }
 
-    ctx.clearRect(
-      x - wordWidth * 1.1,
-      y - size * 1.1,
-      wordWidth + size * 2.1,
-      textSize + size * 2.1
-    )
-
-    ctx.drawImage(img, x - size, y - size, size * 2, size * 2)
-
-    ctx.save()
-    ctx.fillStyle = 'black'
-    ctx.fillRect(x - wordWidth, y + size, wordWidth, textSize)
-    ctx.fillStyle = '#e3d212'
-    ctx.font = `${textSize}px helvetica`
-    ctx.textBaseline = 'top'
-    ctx.fillText(word, x - wordWidth, y + size)
-    ctx.restore()
+    redrawImage()
+    redrawText()
 
     x += dx
     y += dy

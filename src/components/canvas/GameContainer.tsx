@@ -11,15 +11,22 @@ type OwnProps = {}
 
 type Props = React.FC<OwnProps>
 
+type Enemy = {
+  word: string
+  point: Point
+}
+
 const GameContainer: Props = ({}) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [canvasCtx, setCanvasCtx] =
     useState<Nullable<CanvasRenderingContext2D>>(null)
   const [shipPoint, setShipPoint] = useState<Point>({ x: 0, y: 0 })
   const [shipSize, setShipSize] = useState(0)
-  const [enemyPoint, setEnemyPoint] = useState<Point>({ x: 0, y: 0 })
   const [enemySize, setEnemySize] = useState(0)
   const [gameLevel, _setGameLevel] = useState(1)
+  const [enemies, setEnemies] = useState<Array<Enemy>>([])
+
+  // <Array<{word: string, x: number, y: number}>
 
   useEffect(() => {
     window.onkeydown = (e: KeyboardEvent) => {
@@ -37,10 +44,25 @@ const GameContainer: Props = ({}) => {
     canvas.height = height
     const canvasContext = domUtil.getCanvasContext(canvas)
 
-    setShipPoint({x: Math.floor(width / 2), y: height * 0.93})
+    setShipPoint({ x: Math.floor(width / 2), y: height * 0.93 })
     setShipSize(height * 0.05)
 
-    setEnemyPoint({x: mathUtil.getRandomInt(width), y: mathUtil.getRandomInt(height * 0.05)})
+    setEnemies([
+      {
+        word: 'слово1',
+        point: {
+          x: mathUtil.getRandomInt(width),
+          y: mathUtil.getRandomInt(height * 0.05),
+        },
+      },
+      {
+        word: 'слово2',
+        point: {
+          x: mathUtil.getRandomInt(width),
+          y: mathUtil.getRandomInt(height * 0.05),
+        },
+      },
+    ])
     setEnemySize(height * 0.02)
 
     setCanvasCtx(canvasContext)
@@ -61,22 +83,24 @@ const GameContainer: Props = ({}) => {
           rectSide={shipSize}
         />
 
-        <Enemy
-          canvasContext={canvasCtx}
-          x={enemyPoint.x}
-          y={enemyPoint.y}
-          rectSide={enemySize}
-          word='textable'
-          shipX={shipPoint.x}
-          shipY={shipPoint.y}
-          gameLevel={gameLevel}
-        />
+        {enemies.map((enemy) => (
+          <Enemy
+            canvasContext={canvasCtx}
+            x={enemy.point.x}
+            y={enemy.point.y}
+            rectSide={enemySize}
+            word={enemy.word}
+            shipX={shipPoint.x}
+            shipY={shipPoint.y - shipSize / 2}
+            gameLevel={gameLevel}
+          />
+        ))}
       </>
     )
   }
 
   return (
-    <div className='game-container'>
+    <div className="game-container">
       <canvas ref={canvasRef} className="canvas-ship" />
       {renderCharacters}
     </div>
