@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
-// import { mathUtil } from '../../util'
 
 const img = new Image()
 img.src =
