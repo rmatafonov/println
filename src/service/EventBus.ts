@@ -14,9 +14,9 @@ export default class EventBus<E extends string = string, M extends { [K in E]: u
         return this.instance
     }
 
-    private constructor() { }
-
     private listeners: { [key in E]?: Listener<M[E]>[] } = {};
+
+    private constructor() { }
 
     on(event: E, callback: Listener<M[E]>) {
         if (!this.listeners[event]) {

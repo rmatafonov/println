@@ -1,20 +1,15 @@
 import React, { ReactNode, useState } from 'react'
 import { useEffect, useRef } from 'react'
 
-import { domUtil, mathUtil } from '@/util'
+import { domUtil } from '@/util'
 import { Enemy, Ship } from '../characters'
 
 import './GameContainer.css'
-import { EnemyEvents, EventBus } from '@/service/eventBus'
+import { EnemyModel, EnemyEvents, EventBus, EnemiesStore } from '@/service'
 
 type OwnProps = {}
 
 type Props = React.FC<OwnProps>
-
-type Enemy = {
-  word: string
-  point: Point
-}
 
 const GameContainer: Props = ({}) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -24,15 +19,11 @@ const GameContainer: Props = ({}) => {
   const [shipSize, setShipSize] = useState(0)
   const [enemySize, setEnemySize] = useState(0)
   const [gameLevel, _setGameLevel] = useState(1)
-  const [enemies, setEnemies] = useState<Array<Enemy>>([])
+  const [enemies, setEnemies] = useState<Array<EnemyModel>>([])
 
-  // <Array<{word: string, x: number, y: number}>
+  const enemiesStore = EnemiesStore.getInstance()
 
   useEffect(() => {
-    window.onkeydown = (e: KeyboardEvent) => {
-      //TODO: Probably using EventBus here to emit shoot event
-    }
-
     if (!canvasRef.current) {
       throw Error('Something wrong with ref')
     }
@@ -47,22 +38,7 @@ const GameContainer: Props = ({}) => {
     setShipPoint({ x: Math.floor(width / 2), y: height * 0.93 })
     setShipSize(height * 0.05)
 
-    setEnemies([
-      {
-        word: 'слово1',
-        point: {
-          x: mathUtil.getRandomInt(width),
-          y: mathUtil.getRandomInt(height * 0.05),
-        },
-      },
-      {
-        word: 'слово2',
-        point: {
-          x: mathUtil.getRandomInt(width),
-          y: mathUtil.getRandomInt(height * 0.05),
-        },
-      },
-    ])
+    setEnemies(enemiesStore.getNextEnemies(5, width, height * 0.05))
     setEnemySize(height * 0.02)
 
     setCanvasCtx(canvasContext)

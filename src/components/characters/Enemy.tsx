@@ -1,4 +1,4 @@
-import { EnemyEvents, EventBus } from '@/service/eventBus'
+import { EnemyEvents, EventBus } from '@/service'
 import React from 'react'
 import { useEffect } from 'react'
 
