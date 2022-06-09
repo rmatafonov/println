@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import AuthApi from 'api/AuthApi'
+import authApi from 'api/AuthApi'
 
 import Button from 'components/Button'
 import Auth from 'components/Auth'
@@ -13,7 +13,6 @@ import 'styles/auth.css'
 import './signUp.css'
 
 function SignUp() {
-  const authApi = new AuthApi();
   const [inputs, setInputs] = useState<InputType[]>([
     {
       fieldType: 'email',

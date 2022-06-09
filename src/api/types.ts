@@ -7,6 +7,17 @@ export type AuthResponse = {
   error: null | string
 }
 
+export type GetUserResponse = {
+  id: number
+  first_name: string
+  second_name: string
+  display_name: string
+  login: string
+  email: string
+  phone: string
+  avatar: string
+}
+
 export type SignUpData = {
   first_name: string
   second_name: string

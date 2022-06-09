@@ -1,8 +1,8 @@
 import Api from './Api'
 import { SignInData, AuthResponse, SignUpData } from './types'
 
-class AuthApi {
-  async signIn(data: SignInData): Promise<AuthResponse> {
+const authApi = {
+  signIn: async (data: SignInData): Promise<AuthResponse> => {
     try {
       await Api.post('auth/signin', data)
       return {
@@ -15,9 +15,8 @@ class AuthApi {
         error: errorMessage,
       }
     }
-  }
-
-  async signUp(data: SignUpData): Promise<AuthResponse> {
+  },
+  signUp: async (data: SignUpData): Promise<AuthResponse> => {
     try {
       await Api.post('auth/signUp', data)
       return {
@@ -30,18 +29,16 @@ class AuthApi {
         error: errorMessage,
       }
     }
-  }
-
-  async getUser(): Promise<unknown> {
+  },
+  getUser: async (): Promise<any> => {
     try {
-      const response = await Api.get('auth/user');
+      const response = await Api.get('auth/user')
       return response
     } catch (error) {
       console.log(error)
     }
-  }
-
-  async logout() {
+  },
+  logout: async () => {
     try {
       const response = await Api.post('auth/logout')
       return response
@@ -51,4 +48,4 @@ class AuthApi {
   }
 }
 
-export default AuthApi
+export default authApi
