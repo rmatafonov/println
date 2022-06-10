@@ -18,14 +18,7 @@ const Ship: Props = ({ canvasContext, x, y, rectSide }) => {
   const shipRect = rectSide * 0.90
   const xMax = shipRect * 0.95
   const yMax = shipRect * 0.95
-  const [currentAxesAngle, setAngle] = useState(0)
-
-  useEffect(() => {
-    window.onkeydown = (e: KeyboardEvent) => {
-      console.log(e)
-      setAngle(getRandomInt(Math.PI * 2))
-    }
-  }, [])
+  const [currentAxesAngle, _setAngle] = useState(0)
 
   useEffect(() => {
     console.log(
@@ -47,8 +40,3 @@ const Ship: Props = ({ canvasContext, x, y, rectSide }) => {
 }
 
 export default Ship
-
-//TODO: remove when bullet class and shoot method is ready
-function getRandomInt(max: number): number {
-  return Math.floor(Math.random() * max)
-}

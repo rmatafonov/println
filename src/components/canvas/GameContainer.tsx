@@ -21,8 +21,6 @@ const GameContainer: Props = ({}) => {
   const [gameLevel, _setGameLevel] = useState(1)
   const [enemies, setEnemies] = useState<Array<EnemyModel>>([])
 
-  const enemiesStore = EnemiesStore.getInstance()
-
   useEffect(() => {
     if (!canvasRef.current) {
       throw Error('Something wrong with ref')
@@ -38,7 +36,8 @@ const GameContainer: Props = ({}) => {
     setShipPoint({ x: Math.floor(width / 2), y: height * 0.93 })
     setShipSize(height * 0.05)
 
-    setEnemies(enemiesStore.getNextEnemies(5, width, height * 0.05))
+    const enemiesStore = new EnemiesStore(width, height * 0.05)
+    setEnemies(enemiesStore.getNextEnemies(5))
     setEnemySize(height * 0.02)
 
     setCanvasCtx(canvasContext)
@@ -47,6 +46,27 @@ const GameContainer: Props = ({}) => {
       canvasContext.fillText('Ба-бах!', width / 2, height / 2)
     })
   }, [])
+
+  useEffect(() => {
+    if (enemies.length === 0) {
+      return
+    }
+
+    window.onkeydown = (e: KeyboardEvent) => {
+      const targetEnemy = enemies.find((enemy) => enemy.word.startsWith(e.key))
+
+      if (typeof targetEnemy === 'undefined') {
+        console.log('past')
+      } else {
+        console.log(targetEnemy)
+        targetEnemy.word = targetEnemy.word.substring(
+          1,
+          targetEnemy.word.length
+        )
+        console.log(targetEnemy)
+      }
+    }
+  }, [enemies])
 
   let renderCharacters: ReactNode = <></>
   if (canvasCtx) {
@@ -59,13 +79,11 @@ const GameContainer: Props = ({}) => {
           rectSide={shipSize}
         />
 
-        {enemies.map((enemy) => (
+        {enemies.map((enemyModel) => (
           <Enemy
             canvasContext={canvasCtx}
-            x={enemy.point.x}
-            y={enemy.point.y}
+            enemyModel={enemyModel}
             rectSide={enemySize}
-            word={enemy.word}
             shipX={shipPoint.x}
             shipY={shipPoint.y - shipSize / 2}
             gameLevel={gameLevel}

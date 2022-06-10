@@ -1,6 +1,6 @@
 import { mathUtil } from '@/util'
 
-const text = 'Он говорил на том изысканном французском языке, на котором не только говорили, но и думали наши деды, и с теми, тихими, покровительственными интонациями, которые свойственны состаревшемуся в свете и при дворе значительному человеку. Он подошел к Анне Павловне, поцеловал ее руку, подставив ей свою надушенную и сияющую лысину, и покойно уселся на диване.'
+const text = 'кот собака рука нога партизан'
 
 export type EnemyModel = {
     word: string
@@ -8,33 +8,34 @@ export type EnemyModel = {
 }
 
 export default class EnemiesStore {
-    private static instance: EnemiesStore
-
-    static getInstance() {
-        if (!this.instance) {
-            this.instance = new EnemiesStore()
-        }
-        return this.instance
-    }
-
-    private words: Array<string>
+    private enemies: Array<EnemyModel>
     private currentIndex = 0
 
-    private constructor() {
-        this.words = text.replace(/[^0-9a-zA-Zа-яА-Я ]/g, '').split(' ')
+    constructor(xMax: number, yMax: number) {
+        const words = text.replace(/[^0-9a-zA-Zа-яА-Я ]/g, '').split(' ')
+        this.enemies = words.map(word => ({
+            word: word,
+            point: {
+                x: mathUtil.getRandomInt(xMax),
+                y: mathUtil.getRandomInt(yMax),
+            }
+        }))
     }
 
-    getNextEnemies(count: number, xMax: number, yMax: number): Array<EnemyModel> {
-        const result: Array<EnemyModel> = []
-        for (let i = 0; i < count; i++) {
-            result.push({
-                word: this.words[this.currentIndex++],
-                point: {
-                    x: mathUtil.getRandomInt(xMax),
-                    y: mathUtil.getRandomInt(yMax),
-                }
-            })
+    getNextEnemies(count: number): Array<EnemyModel> {
+        const end = this.currentIndex + count
+        const result = this.enemies.slice(this.currentIndex, end)
+        if (end > this.enemies.length - 1) {
+            const countLeft = end - this.enemies.length - 1
+            result.concat(this.enemies.slice(0, countLeft))
+            this.currentIndex = countLeft
+        } else {
+            this.currentIndex += count
         }
         return result
+    }
+
+    getEnemyWithWordStartingWith(letter: string) {
+        return
     }
 }

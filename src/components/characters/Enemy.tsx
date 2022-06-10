@@ -1,4 +1,4 @@
-import { EnemyEvents, EventBus } from '@/service'
+import { EnemyEvents, EnemyModel, EventBus } from '@/service'
 import React from 'react'
 import { useEffect } from 'react'
 
@@ -8,10 +8,8 @@ img.src =
 
 type OwnProps = {
   canvasContext: CanvasRenderingContext2D
-  x: number
-  y: number
+  enemyModel: EnemyModel
   rectSide: number
-  word: string
   shipX: number
   shipY: number
   gameLevel: number
@@ -24,10 +22,8 @@ const LEVEL_0_STEPS = 1000
 
 const Enemy: Props = ({
   canvasContext,
-  x,
-  y,
+  enemyModel,
   rectSide,
-  word,
   shipX,
   shipY,
   gameLevel,
@@ -36,18 +32,12 @@ const Enemy: Props = ({
   const yMax = rectSide
 
   useEffect(() => {
-    console.log(`Enemy coordinates ${x}, ${y}, radius ${rectSide}`)
-  }, [])
-
-  useEffect(() => {
     canvasContext.save()
 
     canvasContext.clearRect(-xMax, -yMax, rectSide * 2, rectSide * 2)
     flyToShip(
       canvasContext,
-      word,
-      x,
-      y,
+      enemyModel,
       rectSide,
       shipX,
       shipY,
@@ -64,9 +54,7 @@ export default Enemy
 
 function flyToShip(
   ctx: CanvasRenderingContext2D,
-  word: string,
-  enemyX: number,
-  enemyY: number,
+  enemyModel: EnemyModel,
   size: number,
   shipX: number,
   shipY: number,
@@ -74,34 +62,40 @@ function flyToShip(
 ) {
   const textSize = 20
 
-  let x = enemyX
-  let y = enemyY
+  const dx = (shipX - enemyModel.point.x) / stepsCount
+  const dy = (shipY - enemyModel.point.y) / stepsCount
   let currentStep = 1
-  const dx = (shipX - x) / stepsCount
-  const dy = (shipY - y) / stepsCount
-
-  ctx.font = `${textSize}px helvetica`
-  ctx.textBaseline = 'top'
-  const wordMetrics = ctx.measureText(word)
-  const wordWidth = wordMetrics.width
 
   let start = performance.now()
 
   const redrawImage = () => {
+    const x = enemyModel.point.x
+    const y = enemyModel.point.y
     ctx.clearRect(x - size * 1.1, y - size * 1.2, size * 2.1, size * 2.1)
     ctx.drawImage(img, x - size, y - size, size * 2, size * 2)
   }
 
   const redrawText = () => {
-    ctx.clearRect(x - wordWidth * 1.1, y + size * 0.7, wordWidth * 1.1, textSize)
+    const x = enemyModel.point.x
+    const y = enemyModel.point.y
 
     ctx.save()
+    ctx.font = `${textSize}px helvetica`
+    ctx.textBaseline = 'top'
+    const wordMetrics = ctx.measureText(enemyModel.word)
+    const wordWidth = wordMetrics.width
+
+    ctx.clearRect(
+      x - wordWidth * 1.1,
+      y + size * 0.7,
+      wordWidth * 1.1,
+      textSize
+    )
+
     ctx.fillStyle = 'black'
     ctx.fillRect(x - wordWidth, y + size, wordWidth, textSize)
     ctx.fillStyle = '#e3d212'
-    ctx.font = `${textSize}px helvetica`
-    ctx.textBaseline = 'top'
-    ctx.fillText(word, x - wordWidth, y + size)
+    ctx.fillText(enemyModel.word, x - wordWidth, y + size)
     ctx.restore()
   }
 
@@ -121,8 +115,8 @@ function flyToShip(
     redrawImage()
     redrawText()
 
-    x += dx
-    y += dy
+    enemyModel.point.x += dx
+    enemyModel.point.y += dy
     currentStep++
 
     requestAnimationFrame(step)
