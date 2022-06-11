@@ -20,6 +20,7 @@ const GameContainer: Props = ({}) => {
   const [enemySize, setEnemySize] = useState(0)
   const [gameLevel, _setGameLevel] = useState(1)
   const [enemies, setEnemies] = useState<Array<EnemyModel>>([])
+  const [enemiesStore, setEnemiesStore] = useState<EnemiesStore>()
 
   useEffect(() => {
     if (!canvasRef.current) {
@@ -35,10 +36,9 @@ const GameContainer: Props = ({}) => {
 
     setShipPoint({ x: Math.floor(width / 2), y: height * 0.93 })
     setShipSize(height * 0.05)
-
-    const enemiesStore = new EnemiesStore(width, height * 0.05)
-    setEnemies(enemiesStore.getNextEnemies(5))
     setEnemySize(height * 0.02)
+
+    setEnemiesStore(new EnemiesStore(width, height * 0.05))
 
     setCanvasCtx(canvasContext)
 
@@ -48,25 +48,20 @@ const GameContainer: Props = ({}) => {
   }, [])
 
   useEffect(() => {
-    if (enemies.length === 0) {
+    if (typeof enemiesStore === 'undefined') {
       return
     }
+    setEnemies(enemiesStore.getNextEnemies(5))
+  }, [enemiesStore])
 
-    window.onkeydown = (e: KeyboardEvent) => {
-      const targetEnemy = enemies.find((enemy) => enemy.word.startsWith(e.key))
-
-      if (typeof targetEnemy === 'undefined') {
-        console.log('past')
-      } else {
-        console.log(targetEnemy)
-        targetEnemy.word = targetEnemy.word.substring(
-          1,
-          targetEnemy.word.length
-        )
-        console.log(targetEnemy)
-      }
+  useEffect(() => {
+    if (enemies.length === 0 || typeof enemiesStore === 'undefined') {
+      return
     }
-  }, [enemies])
+    window.onkeydown = (e: KeyboardEvent) => {
+      enemiesStore.shoot(e.key)
+    }
+  }, [enemies, enemiesStore])
 
   let renderCharacters: ReactNode = <></>
   if (canvasCtx) {

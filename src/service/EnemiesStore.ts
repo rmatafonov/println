@@ -35,7 +35,18 @@ export default class EnemiesStore {
         return result
     }
 
-    getEnemyWithWordStartingWith(letter: string) {
-        return
+    shoot(letter: string) {
+        const targetEnemy = this.enemies.find((enemy) => enemy.word.startsWith(letter))
+
+        if (typeof targetEnemy === 'undefined') {
+            console.log('past')
+        } else {
+            console.log(targetEnemy)
+            targetEnemy.word = targetEnemy.word.substring(
+                1,
+                targetEnemy.word.length
+            )
+            console.log(targetEnemy)
+        }
     }
 }
