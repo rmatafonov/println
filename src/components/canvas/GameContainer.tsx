@@ -6,12 +6,9 @@ import { Enemy, Ship } from '../characters'
 
 import './GameContainer.css'
 import { EnemyModel, EnemyEvents, EventBus, EnemiesStore } from '@/service'
+import { GameContainerProps } from './types'
 
-type OwnProps = {}
-
-type Props = React.FC<OwnProps>
-
-const GameContainer: Props = ({}) => {
+const GameContainer: GameContainerProps = ({}) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [canvasCtx, setCanvasCtx] =
     useState<Nullable<CanvasRenderingContext2D>>(null)
@@ -48,14 +45,14 @@ const GameContainer: Props = ({}) => {
   }, [])
 
   useEffect(() => {
-    if (typeof enemiesStore === 'undefined') {
+    if (!enemiesStore) {
       return
     }
     setEnemies(enemiesStore.getNextEnemies(5))
   }, [enemiesStore])
 
   useEffect(() => {
-    if (enemies.length === 0 || typeof enemiesStore === 'undefined') {
+    if (enemies.length === 0 || !enemiesStore) {
       return
     }
     window.onkeydown = (e: KeyboardEvent) => {
