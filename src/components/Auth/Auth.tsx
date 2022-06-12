@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AuthApi from 'api/AuthApi'
-import Validation from 'utils/validate'
+import Validation from '@/util/validate'
 
 import Input from 'components/Input'
 
