@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import Button from 'components/Button'
-import { useAppSelector } from '@/store/hooks'
+import { useAppSelector } from '@/redux/store/hooks'
 import { userSelector } from '@/redux/userSlice'
 
 import { ProfileFields } from './types'

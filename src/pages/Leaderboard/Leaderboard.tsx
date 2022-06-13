@@ -1,24 +1,24 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import Alert from 'components/Alert'
 import Button from 'components/Button'
 import Loader from 'components/Loader'
-import { useAppSelector } from '@/store/hooks'
+import { useGetFromLeaderboard } from '@/services/LeaderboardService'
+import { useAppSelector } from '@/redux/store/hooks'
 import { appSelector } from '@/redux/appSlice'
 import 'styles/widget.css'
 import './Leaderboard.css'
 
 const Leaderboard = () => {
   const appStore = useAppSelector(appSelector)
+  const leaderboards = useGetFromLeaderboard({
+    ratingFieldName: 'ratingFieldName',
+    cursor: 0,
+    limit: 100,
+  })
 
-  const [state] = useState([
-    { date: '2022, 23 мая, 10:00', accuracy: '75.5%', destroyed: 10 },
-    { date: '2022, 23 мая, 10:00', accuracy: '75.5%', destroyed: 10 },
-    { date: '2022, 23 мая, 10:00', accuracy: '75.5%', destroyed: 10 },
-  ])
   const navigate = useNavigate()
-
   const goToMenu = () => {
     navigate('/menu')
   }
@@ -41,13 +41,13 @@ const Leaderboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {state.map((data, index) => (
-                  <tr key={index}>
+                {leaderboards ? leaderboards.map(({ data }) => (
+                  <tr key={data.id}>
                     <td>{data.date}</td>
                     <td>{data.accuracy}</td>
                     <td>{data.destroyed}</td>
                   </tr>
-                ))}
+                )) : <p>Данных нет</p>}
               </tbody>
             </table>
           )}

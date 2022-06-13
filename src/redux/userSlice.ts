@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import authApi from '@/api/AuthApi'
 import { GetUserResponse } from '@/api/types'
-import { RootState } from '@/store/store'
+import { RootState } from '@/redux/store/store'
 
 type UserState = {
   data: null | GetUserResponse

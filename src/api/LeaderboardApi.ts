@@ -1,8 +1,8 @@
 import Api from './Api'
-import { AddToLeaderboardData, GetFromLeaderboardData } from './types'
+import { DataToLeaderboard, GetFromLeaderboardData } from './types'
 
 const leaderboardApi = {
-  add: async (data: AddToLeaderboardData) => {
+  add: async (data: DataToLeaderboard) => {
     try {
       return await Api.post('leaderboard', data)
     } catch (error: any) {

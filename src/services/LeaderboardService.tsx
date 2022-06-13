@@ -1,37 +1,51 @@
-import { useAppDispatch } from '@/store/hooks'
+import { useState, useEffect } from 'react'
+import { useAppDispatch } from '@/redux/store/hooks'
 import {
-  showLoader,
-  hideLoader,
-  showAlert,
-  hideAlert,
+  showLoader, hideLoader, showAlert, hideAlert
 } from '@/redux/appSlice'
 import leaderboardApi from '@/api/LeaderboardApi'
-import { AddToLeaderboardData, GetFromLeaderboardData } from '@/api/types'
+import { DataToLeaderboard, GetFromLeaderboardData } from '@/api/types'
 
-export const addToLeaderboard = async (data: AddToLeaderboardData) => {
+export const useAddToLeaderboard = (req: DataToLeaderboard) => {
   const dispatcher = useAppDispatch()
-  try {
-    dispatcher(showLoader)
-    await leaderboardApi.add(data)
-    dispatcher(hideLoader)
-  } catch (e: any) {
-    dispatcher(showAlert(e.reason))
-    setTimeout(() => {
-      dispatcher(hideAlert)
-    }, 3000)
+  const pushToLeaderboard = async (reqData: DataToLeaderboard) => {
+    try {
+      dispatcher(showLoader)
+      await leaderboardApi.add(reqData)
+      dispatcher(hideLoader)
+    } catch (e: any) {
+      dispatcher(showAlert(e.reason))
+      setTimeout(() => {
+        dispatcher(hideAlert)
+      }, 3000)
+    }
   }
+  useEffect(() => {
+    pushToLeaderboard(req)
+  }, [])
 }
 
-export const getFromLeaderboard = async (data: GetFromLeaderboardData) => {
+export const useGetFromLeaderboard = (
+  req: GetFromLeaderboardData
+): DataToLeaderboard[] | null => {
   const dispatcher = useAppDispatch()
-  try {
-    dispatcher(showLoader)
-    await leaderboardApi.get(data)
-    dispatcher(hideLoader)
-  } catch (e: any) {
-    dispatcher(showAlert(e.reason))
-    setTimeout(() => {
-      dispatcher(hideAlert)
-    }, 3000)
+  const [leaderboards, setLeaderboards] = useState(null)
+  const fetchLeaderboard = async (reqData: GetFromLeaderboardData) => {
+    try {
+      dispatcher(showLoader())
+      const { data } = await leaderboardApi.get(reqData)
+      setLeaderboards(data)
+      dispatcher(hideLoader())
+    } catch (e: any) {
+      dispatcher(showAlert(e.reason))
+      setTimeout(() => {
+        dispatcher(hideAlert())
+      }, 3000)
+    }
   }
+  useEffect(() => {
+    fetchLeaderboard(req)
+  }, [])
+
+  return leaderboards
 }

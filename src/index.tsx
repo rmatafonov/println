@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 
 import { fetchUser } from './redux/userSlice'
-import store from './store'
+import store from './redux/store'
 import ErrorBoundary from './components/ErrorBoundary'
 import App from './components/App'
 import './styles/index.css'

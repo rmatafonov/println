@@ -27,9 +27,10 @@ export type SignUpData = {
   phone: string
 }
 
-export type AddToLeaderboardData = {
+export type DataToLeaderboard = {
   ratingFieldName: string
   data: {
+    id: string
     date: string
     accuracy: string
     destroyed: string | number
@@ -38,6 +39,6 @@ export type AddToLeaderboardData = {
 
 export type GetFromLeaderboardData = {
   ratingFieldName: string
-  cursor: number
+  cursor: number | string
   limit: number
 }

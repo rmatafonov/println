@@ -9,6 +9,7 @@ export default class EventBus<
   E extends string = string,
   M extends { [K in E]: unknown[] } = Record<E, any[]>
 > {
+  // eslint-disable-next-line no-use-before-define
   private static instance: EventBus
 
   static getInstance() {
