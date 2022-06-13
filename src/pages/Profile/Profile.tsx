@@ -27,8 +27,8 @@ function Profile() {
           id: 1,
         },
         {
-          name: user.login,
-          value: 'Иванов Иван',
+          name: 'Логин',
+          value: user.login,
           id: 2,
         },
       ])
@@ -44,7 +44,9 @@ function Profile() {
     <div className="profile widget">
       <div className="widget__container container">
         <div className="profile__content widget__content">
-          <div className="profile__avatar">?</div>
+          <div className="profile__avatar">
+            <img src={`${process.env.RESOURCES}/${user?.avatar}`} />
+          </div>
           <ul className="profile__fields">
             {fields.map((field) => (
               <li className="profile__field profile-field" key={field.id}>
