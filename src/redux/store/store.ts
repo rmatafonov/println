@@ -1,11 +1,13 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import appReducer from '@/redux/appSlice'
 import userSlice from '@/redux/userSlice'
+import forumSlice from '@/redux/forumSlice'
 
 const store = configureStore({
   reducer: {
     app: appReducer,
     user: userSlice,
+    forum: forumSlice
   },
 })
 

@@ -5,9 +5,9 @@ import SignUp from 'pages/SignUp'
 import Menu from 'pages/Menu'
 import Leaderboard from 'pages/Leaderboard';
 import Profile from 'pages/Profile';
+import Forum from 'pages/Forum';
 
 import { GameContainer } from '../canvas'
-
 
 import './App.css'
 
@@ -23,6 +23,7 @@ export default function App() {
           <Route path="/menu" element={<Menu />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/forum" element={<Forum />} />
           <Route path="/game" element={<GameContainer />} />
         </Routes>
       </Router>
