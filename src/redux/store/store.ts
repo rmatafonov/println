@@ -1,11 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
-import appReducer from '@/redux/appSlice'
 import userSlice from '@/redux/userSlice'
+import leaderboardSlice from '@/redux/leaderboardSlice'
 
 const store = configureStore({
   reducer: {
-    app: appReducer,
     user: userSlice,
+    leaderboard: leaderboardSlice,
   },
 })
 

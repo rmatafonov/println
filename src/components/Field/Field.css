@@ -1,0 +1,21 @@
+.field {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-light);
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &__input {
+    text-align: right;
+    background-color: transparent;
+    color: var(--text-secondary);
+  }
+
+  &__error {
+    font-size: 11px;
+    color: var(--danger);
+  }
+}

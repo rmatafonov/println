@@ -18,6 +18,8 @@ export type GetUserResponse = {
   avatar: string
 }
 
+export type ChangeUserResponse = Omit<GetUserResponse, 'id' | 'avatar'>
+
 export type SignUpData = {
   first_name: string
   second_name: string
