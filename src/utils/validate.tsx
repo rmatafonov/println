@@ -9,7 +9,7 @@ class Validation {
     if (type === 'email') {
       return this._email(value);
     }
-    if (type === 'name' || type === 'lastName') {
+    if (type === 'name' || type === 'lastName' || type === 'first_name' || type === 'second_name') {
       return this._name(value);
     }
     if (type === 'phone') {

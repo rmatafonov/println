@@ -8,6 +8,7 @@ import Button from 'components/Button'
 import Avatar from 'components/Avatar'
 import Loader from 'components/Loader'
 import Field from 'components/Field'
+import Validation from 'utils/validate'
 import { ChangeUserResponse } from '@/api/types'
 import { useAppSelector, useAppDispatch } from '@/redux/store/hooks'
 import { userSelector, pushAvatar, updateUser } from '@/redux/userSlice'
@@ -30,34 +31,39 @@ function Profile() {
           id: 'field__name',
           readOnly: true,
           name: 'first_name',
+          error: '',
         },
         {
           label: 'Фамилия',
           defaultValue: data.second_name,
           id: 'field__lastname',
-          readOnly: false,
+          readOnly: true,
           name: 'second_name',
+          error: '',
         },
         {
           label: 'Логин',
           defaultValue: data.login,
           id: 'field__login',
-          readOnly: false,
+          readOnly: true,
           name: 'login',
+          error: '',
         },
         {
           label: 'Почта',
           defaultValue: data.email,
           id: 'field__email',
-          readOnly: false,
+          readOnly: true,
           name: 'email',
+          error: '',
         },
         {
           label: 'Телефон',
           defaultValue: data.phone,
           id: 'field__phone',
-          readOnly: false,
+          readOnly: true,
           name: 'phone',
+          error: ''
         },
       ])
     }
@@ -77,6 +83,39 @@ function Profile() {
     setEdit(!edit)
   }
 
+  const onFocusHandler = (event: SyntheticEvent) => {
+    if (!edit) {
+      return
+    }
+    const target = event.target as HTMLInputElement
+    const indexOfField = fields.findIndex((field) => field.name === target.name)
+    if (fields[indexOfField].error) {
+      const newFields = [...fields]
+      newFields[indexOfField].error = ''
+      setFields([...newFields])
+    }
+  }
+
+  const onBlurHandler = (event: SyntheticEvent) => {
+    if (!edit) {
+      return
+    }
+    const target = event.target as HTMLInputElement
+    const validate = new Validation()
+    const error = validate.by(target.name, target.value)
+    if (error) {
+      const indexOfField = fields.findIndex((field) => field.name === target.name)
+      const newFields = [...fields]
+      newFields[indexOfField].error = error
+      setFields([...newFields])
+    }
+  }
+
+  const isValidForm = (validatableData: ChangeUserResponse) => {
+    const validate = new Validation()
+    return Object.entries(validatableData).every(([key, value]) => !validate.by(key, value))
+  }
+
   const saveHandler = (event: FormEvent) => {
     event.preventDefault()
     const target = event.target as HTMLFormElement
@@ -91,8 +130,10 @@ function Profile() {
         [key]: value,
       }
     }
-    dispatcher(updateUser(newData))
-    editHandler()
+    if (isValidForm(newData)) {
+      dispatcher(updateUser(newData))
+      editHandler()
+    }
   }
 
   const changeAvatarHandler = (event: SyntheticEvent) => {
@@ -120,9 +161,7 @@ function Profile() {
             <ul className="profile__fields">
               {fields.map((field) => (
                 <li className="profile__field profile-field" key={field.id}>
-                  {/* <div className="profile-field__name">{field.name}</div>
-                <div className="profile-field__value">{field.value}</div> */}
-                  <Field {...field} />
+                  <Field {...field} onBlur={onBlurHandler} onFocus={onFocusHandler} />
                 </li>
               ))}
             </ul>

@@ -1,8 +1,9 @@
 .field {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border-light);
+  &__wrap {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+  }
 
   &:last-child {
     border-bottom: 0;
@@ -12,9 +13,11 @@
     text-align: right;
     background-color: transparent;
     color: var(--text-secondary);
+    padding: 0 5px;
   }
 
   &__error {
+    margin-top: 5px;
     font-size: 11px;
     color: var(--danger);
   }
