@@ -1,16 +1,15 @@
 import Api from './Api'
-import { AddToLeaderboardData, GetFromLeaderboardData } from './types'
+import { DataToLeaderboard, GetFromLeaderboardData } from './types'
 
-class Leaderboard {
-  async add(data: AddToLeaderboardData) {
+const leaderboardApi = {
+  add: async (data: DataToLeaderboard) => {
     try {
       return await Api.post('leaderboard', data)
     } catch (error: any) {
       return error
     }
-  }
-
-  async get(data: GetFromLeaderboardData) {
+  },
+  get: async (data: GetFromLeaderboardData) => {
     try {
       return await Api.post('leaderboard/all', data)
     } catch (error: any) {
@@ -19,4 +18,4 @@ class Leaderboard {
   }
 }
 
-export default Leaderboard
+export default leaderboardApi

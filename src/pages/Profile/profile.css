@@ -5,6 +5,7 @@
     align-items: center;
     justify-content: center;
   }
+
   &__avatar {
     width: 120px;
     height: 120px;
@@ -18,18 +19,23 @@
     color: var(--text-dark);
     margin-bottom: 20px;
   }
+
   &__fields {
     width: 100%;
     margin-bottom: 40px;
   }
+
   &__buttons {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
+
   &__button {
     margin-bottom: 15px;
+    text-align: center;
+
     &:last-child {
       margin-bottom: 0;
     }
@@ -42,9 +48,11 @@
   align-items: center;
   margin-bottom: 15px;
   border-bottom: 1px solid var(--border-light);
+
   &:last-child {
     margin-bottom: 0;
   }
+
   &__name {
     color: var(--text-secondary);
   }

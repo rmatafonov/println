@@ -1,8 +1,7 @@
 import React, { FC, useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import AuthApi from 'api/AuthApi'
-import Validation from '@/util/validate'
-
+import authApi from 'api/AuthApi'
+import Validation from 'utils/validate'
 import Input from 'components/Input'
 
 import { Props } from 'components/Auth/types'
@@ -12,7 +11,6 @@ import 'styles/widget.css'
 const Auth: FC<Props> = (({
   children, inputs, setInputs, setIsFailValidate, title
 }) => {
-  const authApi = new AuthApi();
   const navigate = useNavigate();
 
   useEffect(() => {

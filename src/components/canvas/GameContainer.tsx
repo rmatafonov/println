@@ -1,7 +1,7 @@
 import React, { ReactNode, useState } from 'react'
 import { useEffect, useRef } from 'react'
 
-import { domUtil } from '@/util'
+import { domUtil } from '@/utils'
 import { Enemy, Ship } from '../characters'
 
 import './GameContainer.css'

@@ -1,18 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import Button from 'components/Button'
+import Loader from 'components/Loader'
+import { useAppDispatch, useAppSelector } from '@/redux/store/hooks'
+import { leaderboardSelector, fetchLeaderboard } from '@/redux/leaderboardSlice'
 import 'styles/widget.css'
 import './Leaderboard.css'
 
 const Leaderboard = () => {
-  const [state] = useState([
-    { date: '2022, 23 мая, 10:00', accuracy: '75.5%', destroyed: 10 },
-    { date: '2022, 23 мая, 10:00', accuracy: '75.5%', destroyed: 10 },
-    { date: '2022, 23 мая, 10:00', accuracy: '75.5%', destroyed: 10 },
-  ])
+  const dispatcher = useAppDispatch()
+  useEffect(() => {
+    dispatcher(fetchLeaderboard({
+      ratingFieldName: 'ratingFieldName',
+      cursor: 0,
+      limit: 100,
+    }))
+  }, [])
+  const { items, loading } = useAppSelector(leaderboardSelector)
   const navigate = useNavigate()
-
   const goToMenu = () => {
     navigate('/menu')
   }
@@ -22,24 +28,35 @@ const Leaderboard = () => {
       <div className="widget__container container">
         <div className="widget__content text-center">
           <h1>Таблица рекордов</h1>
-          <table className="leaderboard__table">
-            <thead>
-              <tr>
-                <th>Дата</th>
-                <th>Точность</th>
-                <th>Уничтожено</th>
-              </tr>
-            </thead>
-            <tbody>
-              {state.map((data, index) => (
-                <tr key={index}>
-                  <td>{data.date}</td>
-                  <td>{data.accuracy}</td>
-                  <td>{data.destroyed}</td>
+          {loading ? (
+            <Loader />
+          ) : (
+            <table className="leaderboard__table">
+              <thead>
+                <tr>
+                  <th>Дата</th>
+                  <th>Точность</th>
+                  <th>Уничтожено</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {items ? (
+                  items.map(({ data }) => (
+                    <tr key={data.id}>
+                      <td>{data.date}</td>
+                      <td>{data.accuracy}</td>
+                      <td>{data.destroyed}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td>Данных нет</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          )}
+
           <Button onClick={goToMenu}>Меню</Button>
         </div>
       </div>

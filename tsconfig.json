@@ -2,11 +2,12 @@
   "compilerOptions": {
     "lib": [
       "dom",
+      "dom.iterable",
       "es2017"
     ],
     "module": "esnext",
     "moduleResolution": "node",
-    "target": "es5",
+    "target": "esnext",
     "jsx": "react",
     "noImplicitAny": true,
     "noImplicitThis": true,

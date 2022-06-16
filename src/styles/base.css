@@ -97,6 +97,10 @@ table {
   z-index: -1;
 }
 
+.form {
+  width: 100%;
+}
+
 @keyframes animated-background {
   from {
     background-position: 0 100%;

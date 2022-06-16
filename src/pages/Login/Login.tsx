@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import AuthApi from 'api/AuthApi'
+import authApi from 'api/AuthApi'
 
 import Button from 'components/Button'
 import Auth from 'components/Auth'
@@ -12,7 +12,6 @@ import 'styles/auth.css'
 import './login.css'
 
 function Login() {
-  const authApi = new AuthApi();
   const navigate = useNavigate();
   const [inputs, setInputs] = useState<InputType[]>([
     {

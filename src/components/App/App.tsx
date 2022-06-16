@@ -8,7 +8,6 @@ import Profile from 'pages/Profile';
 
 import { GameContainer } from '../canvas'
 
-
 import './App.css'
 
 export default function App() {

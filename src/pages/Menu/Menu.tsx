@@ -1,12 +1,11 @@
 import React, { useCallback } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-import AuthApi from 'api/AuthApi'
+import authApi from 'api/AuthApi'
 import 'styles/widget.css'
 import './menu.css'
 
 function Menu() {
-  const authApi = new AuthApi();
   const navigate = useNavigate();
 
   const logout = useCallback(async () => {
