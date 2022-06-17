@@ -1,9 +1,19 @@
 .forum {
+  position: relative;
   &__content {
     width: 100%;
   }
   &__title {
     margin-bottom: 20px;
+  }
+  &__add {
+    display: flex;
+    justify-content: flex-end;
+  }
+  &__back {
+    position: absolute;
+    left: 40px;
+    top: 40px;
   }
 }
 

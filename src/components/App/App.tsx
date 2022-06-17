@@ -6,6 +6,8 @@ import Menu from 'pages/Menu'
 import Leaderboard from 'pages/Leaderboard';
 import Profile from 'pages/Profile';
 import Forum from 'pages/Forum';
+import ForumTheme from '@/pages/Forum/ForumTheme';
+import ForumAdd from '@/pages/Forum/ForumAdd';
 
 import { GameContainer } from '../canvas'
 
@@ -24,6 +26,8 @@ export default function App() {
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/forum" element={<Forum />} />
+          <Route path="/forum/:id" element={<ForumTheme />} />
+          <Route path="/forum/add" element={<ForumAdd />} />
           <Route path="/game" element={<GameContainer />} />
         </Routes>
       </Router>
