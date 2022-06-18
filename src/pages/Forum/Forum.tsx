@@ -28,7 +28,7 @@ function Forum() {
       <div className="widget__container container">
         <div className="widget__content widget__content_full">
           <h1 className="forum__title text-center">Форум</h1>
-          <div className="forum__back">
+          <div className="widget__back">
             <Button onClick={goBack} className="button_simple">
               <SvgIcon
                 name="back-button"
@@ -51,7 +51,7 @@ function Forum() {
               </tr>
             </thead>
             <tbody className="forum-table__body">
-              {userThemes
+              {userThemes && userThemes
                 .map(({
                   title, comments, date, id
                 }) => (
@@ -64,6 +64,11 @@ function Forum() {
               }
             </tbody>
           </table>
+          {!userThemes &&
+            <div className="forum-table__empty">
+              <p>Не найдено ни одной темы</p>
+            </div>
+          }
         </div>
       </div>
     </div>

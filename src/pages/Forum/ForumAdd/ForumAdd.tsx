@@ -43,7 +43,7 @@ function ForumAdd() {
       <div className="widget__container container">
         <div className="widget__content widget__content_full">
           <h1 className="forum-add__title text-center">Добавить новую тему</h1>
-          <div className="forum-add__back">
+          <div className="widget__back">
             <Button onClick={goBack} className="button_simple">
               <SvgIcon
                 name="back-button"

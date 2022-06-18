@@ -73,4 +73,7 @@
   &__header {
     border-bottom: 1px solid var(--border-light);
   }
+  &__empty {
+    margin-top: 20px;
+  }
 }

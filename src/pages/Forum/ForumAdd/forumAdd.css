@@ -3,11 +3,6 @@
   &__title {
     margin-bottom: 40px;
   }
-  &__back {
-    position: absolute;
-    left: 40px;
-    top: 40px;
-  }
   &__input {
     margin-bottom: 20px;
   }

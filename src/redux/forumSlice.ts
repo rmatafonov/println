@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import moment from 'moment'
 import { RootState } from './store/store'
-import { ForumState, ForumTheme } from './types/forumTypes'
+import { ForumInnerTheme, ForumState, ForumTheme } from './types/forumTypes'
 
-const initialState: ForumState<ForumTheme> = {
+const initialState: ForumState<ForumTheme, ForumInnerTheme> = {
   forumThemes: {
     data: [
       {
@@ -19,6 +19,36 @@ const initialState: ForumState<ForumTheme> = {
         id: 2,
       }
     ]
+  },
+  forumInnerThemes: {
+    data: [
+      {
+        id: 1,
+        name: 'Важное',
+        content: [
+          {
+            userId: 14837,
+            message: 'Здесь хранится важная информация о будущих обновлениях',
+            avatar: null,
+            name: 'Никита',
+            innerComments: null,
+          }
+        ]
+      },
+      {
+        id: 2,
+        name: 'Флуд',
+        content: [
+          {
+            userId: 14837,
+            message: 'Флудилка',
+            avatar: null,
+            name: 'Никита',
+            innerComments: null,
+          }
+        ]
+      }
+    ]
   }
 }
 
@@ -28,14 +58,21 @@ const forumSlice = createSlice({
   reducers: {
     addNewTheme(state, action: PayloadAction<string>) {
       const title = action.payload;
-      const id = state.forumThemes.data[state.forumThemes.data.length - 1].id + 1
       const date = moment(new Date()).format('DD.MM.YYYY');
-      state.forumThemes.data.push({
-        title,
-        id,
-        date,
-        comments: 1
-      })
+      let id = 1
+      if (state.forumThemes.data) {
+        id = state.forumThemes.data[state.forumThemes.data.length - 1].id + 1
+        state.forumThemes.data.push({
+          title,
+          id,
+          date,
+          comments: 1
+        })
+        return
+      }
+      state.forumThemes.data = [{
+        title, id, date, comments: 1
+      }]
     }
   }
 });

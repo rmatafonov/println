@@ -5,8 +5,25 @@ export type ForumTheme = {
   id: number;
 }
 
-export type ForumState<T> = {
+export type Comment = {
+  userId: number;
+  message: string;
+  avatar: null | string;
+  name: string;
+  innerComments: null | Comment[];
+}
+
+export type ForumInnerTheme = {
+  id: number;
+  name: string;
+  content: Comment[];
+}
+
+export type ForumState<T, V> = {
   forumThemes: {
-    data: T[]
+    data: T[] | null;
+  }
+  forumInnerThemes: {
+    data: V[] | null;
   }
 }
