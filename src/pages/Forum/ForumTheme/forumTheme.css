@@ -1,0 +1,28 @@
+.forum-theme {
+  &__title {
+    margin-bottom: 40px;
+  }
+  &__item {
+    border-bottom: 1px solid var(--border-light);
+    margin-bottom: 40px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  &__body {
+    max-height: 70vh;
+    overflow-y: auto;
+    margin-right: -40px;
+    padding-right: 40px;
+    &::-webkit-scrollbar {
+      width: 3px;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 3px;
+      background-color: var(--text);
+      &:hover {
+        background-color: var(--text);
+      }
+    }
+  }
+}

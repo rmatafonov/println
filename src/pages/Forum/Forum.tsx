@@ -1,15 +1,36 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
+
 import { RootState } from '@/redux/store/store';
+import { setCommentsCount } from '@/redux/forumSlice';
+import { useAppDispatch } from '@/redux/store/hooks';
+
 import Button from '@/components/Button';
 import SvgIcon from '@/components/SvgIcon';
 
 import './forum.css'
 
 function Forum() {
-  const userThemes = useSelector((state: RootState) => state.forum.forumThemes.data);
+  const forumThemes = useSelector((state: RootState) => state.forum.forumThemes.data);
   const navigate = useNavigate();
+  const forums = useSelector((state: RootState) => state.forum.forumInnerThemes.data);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (forumThemes && forums) {
+      forumThemes.forEach((theme) => {
+        const currentForum = forums.find((forum) => forum.id === theme.id);
+        const commentsCount = currentForum!.content.reduce((acc, message) => {
+          if (message.innerComments) {
+            return acc + 1 + message.innerComments.length
+          }
+          return acc + 1
+        }, 0)
+        dispatch(setCommentsCount({ id: theme.id, count: commentsCount }))
+      })
+    }
+  }, [forums])
 
   const goToTheme = (id: number) => {
     navigate(`/forum/${id}`)
@@ -51,7 +72,7 @@ function Forum() {
               </tr>
             </thead>
             <tbody className="forum-table__body">
-              {userThemes && userThemes
+              {forumThemes && forumThemes
                 .map(({
                   title, comments, date, id
                 }) => (
@@ -64,7 +85,7 @@ function Forum() {
               }
             </tbody>
           </table>
-          {!userThemes &&
+          {!forumThemes &&
             <div className="forum-table__empty">
               <p>Не найдено ни одной темы</p>
             </div>

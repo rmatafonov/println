@@ -2,8 +2,12 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { RootState } from '@/redux/store/store';
+
 import Button from '@/components/Button';
 import SvgIcon from '@/components/SvgIcon';
+import ForumComment from '@/components/ForumComment';
+
+import './forumTheme.css'
 
 function ForumTheme() {
   const params = useParams();
@@ -15,7 +19,6 @@ function ForumTheme() {
   const goBack = () => {
     navigate('/forum')
   }
-  console.log(currentForum, forums, id)
   return (
     <div className="forum-theme widget">
       <div className="widget__container container">
@@ -30,7 +33,25 @@ function ForumTheme() {
             </Button>
           </div>
           {currentForum &&
-            <h1 className="forum-theme__title text-center">{currentForum.name}</h1>
+            <>
+              <h1 className="forum-theme__title text-center">{currentForum.name}</h1>
+              <div className="forum-theme__body">
+                <ul className="forum-theme__list">
+                  {currentForum.content
+                    .map((comment, ndx) => (
+                      <li key={ndx} className="forum-theme__item">
+                        <ForumComment
+                          time={comment.time}
+                          username={comment.name}
+                          avatar={comment.avatar}
+                          message={comment.message}
+                        />
+                      </li>
+                    ))
+                  }
+                </ul>
+              </div>
+            </>
           }
         </div>
       </div>

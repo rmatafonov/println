@@ -16,7 +16,7 @@ import './forumAdd.css'
 function ForumAdd() {
   const navigate = useNavigate()
   const [editorText, setEditorText] = useState('')
-  const userId = useSelector((state: RootState) => state.user.data?.id);
+  const user = useSelector((state: RootState) => state.user.data);
   const [themeName, setThemeName] = useState('');
   const dispatch = useAppDispatch();
 
@@ -34,8 +34,19 @@ function ForumAdd() {
 
   const createTheme = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(userId)
-    dispatch(addNewTheme(themeName))
+    if (user) {
+      const payload = {
+        id: user?.id,
+        username: user?.display_name || user?.first_name,
+        avatar: user?.avatar,
+        message: editorText,
+        themeName
+      }
+      dispatch(addNewTheme(payload))
+      navigate('/forum')
+    } else {
+      throw new Error('Что то пошло не по плану')
+    }
   }
 
   return (

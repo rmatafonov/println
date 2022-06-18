@@ -10,6 +10,7 @@ export type Comment = {
   message: string;
   avatar: null | string;
   name: string;
+  time: string;
   innerComments: null | Comment[];
 }
 
@@ -26,4 +27,17 @@ export type ForumState<T, V> = {
   forumInnerThemes: {
     data: V[] | null;
   }
+}
+
+export type AddForumPayload = {
+  id: number;
+  username: string;
+  avatar: string | null;
+  message: string;
+  themeName: string;
+}
+
+export type AddCommentsPayload = {
+  id: number;
+  count: number;
 }
