@@ -26,7 +26,7 @@ function Forum() {
   return (
     <div className="forum widget">
       <div className="widget__container container">
-        <div className="widget__content forum__content">
+        <div className="widget__content widget__content_full">
           <h1 className="forum__title text-center">Форум</h1>
           <div className="forum__back">
             <Button onClick={goBack} className="button_simple">

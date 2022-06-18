@@ -1,6 +1,6 @@
 export type ForumTheme = {
   title: string;
-  comments: number;
+  comments?: number;
   date: string;
   id: number;
 }

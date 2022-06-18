@@ -1,35 +1,37 @@
-import React, { useCallback } from 'react'
-import { EditorState } from 'draft-js';
+import React, { FC, useState } from 'react'
+import { EditorState, convertToRaw } from 'draft-js'
 import 'draft-js/dist/Draft.css'
-import { Editor } from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { Editor } from 'react-draft-wysiwyg'
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import './text-editor.css'
+import draftToHtml from 'draftjs-to-html'
+import { Props } from './types'
 
-function TextEditor() {
-  const [editorState, setEditorState] = React.useState(
+const TextEditor: FC<Props> = (({ setEditorText }) => {
+  const [editorState, setEditorState] = useState(
     () => EditorState.createEmpty(),
   );
 
-  const onEditorStateChange = useCallback((newState: React.SetStateAction<EditorState>) => {
-    console.log(newState)
+  const onEditorStateChange = (newState: React.SetStateAction<EditorState>) => {
     setEditorState(newState)
-  }, [])
+    setEditorText(draftToHtml(convertToRaw(editorState.getCurrentContent())))
+  }
 
   return (
     <div className="text-editor">
       <Editor
         editorState={editorState}
         onEditorStateChange={onEditorStateChange}
+        editorClassName="text-editor__input"
         toolbar={{
-          options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'history'],
+          options: ['inline', 'blockType', 'fontSize', 'list'],
           inline: { inDropdown: true },
           list: { inDropdown: true },
           textAlign: { inDropdown: true },
           link: { inDropdown: true },
-          history: { inDropdown: true },
         }}
       />
     </div>
   );
-}
+})
 export default TextEditor;

@@ -16,5 +16,8 @@
     border-radius: var(--border-radius-default);
     padding: var(--auth-container-padding);
     position: relative;
+    &_full {
+      width: 100%;
+    }
   }
 }
