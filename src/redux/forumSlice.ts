@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import moment from 'moment'
+import { momentConvert } from '@/utils/momentConvert'
 import { RootState } from './store/store'
 import {
   AddCommentsPayload,
-  AddForumPayload, ForumInnerTheme, ForumState, ForumTheme
+  AddForumPayload, ForumInnerTheme, ForumState, ForumTheme, SetThemeCommentPayload
 } from './types/forumTypes'
 
 const initialState: ForumState<ForumTheme, ForumInnerTheme> = {
@@ -99,8 +99,8 @@ const forumSlice = createSlice({
   reducers: {
     addNewTheme(state, action: PayloadAction<AddForumPayload>) {
       const title = action.payload.themeName;
-      const date = moment(new Date()).format('DD.MM.YYYY');
-      const commentTime = moment(new Date()).format('HH:mm:ss, DD MMM YYYY')
+      const date = momentConvert('forum', new Date());
+      const commentTime = momentConvert('message', new Date());
       let id = 1
 
       if (state.forumThemes.data) {
@@ -153,6 +153,26 @@ const forumSlice = createSlice({
         }
         return item
       })
+    },
+    setThemeComment(state, action: PayloadAction<SetThemeCommentPayload>) {
+      if (state.forumInnerThemes.data) {
+        const time = momentConvert('message', new Date())
+        state.forumInnerThemes.data.map((theme) => {
+          if (theme.id === action.payload.id) {
+            theme.content.push({
+              userId: action.payload.userId,
+              message: action.payload.message,
+              avatar: action.payload.avatar,
+              name: action.payload.name,
+              time,
+              innerComments: null,
+            })
+          }
+          return theme
+        })
+      } else {
+        throw new Error('Что то пошло не так')
+      }
     }
 
   }
@@ -162,4 +182,4 @@ export const forumSelector = (state: RootState) => state.forum
 
 export default forumSlice.reducer
 
-export const { addNewTheme, setCommentsCount } = forumSlice.actions
+export const { addNewTheme, setCommentsCount, setThemeComment } = forumSlice.actions

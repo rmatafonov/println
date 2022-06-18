@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { EditorState, convertToRaw } from 'draft-js'
 import 'draft-js/dist/Draft.css'
 import { Editor } from 'react-draft-wysiwyg'
@@ -7,10 +7,14 @@ import './text-editor.css'
 import draftToHtml from 'draftjs-to-html'
 import { Props } from './types'
 
-const TextEditor: FC<Props> = (({ setEditorText }) => {
+const TextEditor: FC<Props> = (({ setEditorText, isEmptyTriggered }) => {
   const [editorState, setEditorState] = useState(
     () => EditorState.createEmpty(),
   );
+
+  useEffect(() => {
+    setEditorState(EditorState.createEmpty())
+  }, [isEmptyTriggered])
 
   const onEditorStateChange = (newState: React.SetStateAction<EditorState>) => {
     setEditorState(newState)

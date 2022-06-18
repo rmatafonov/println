@@ -41,3 +41,11 @@ export type AddCommentsPayload = {
   id: number;
   count: number;
 }
+
+export type SetThemeCommentPayload = {
+  id: number;
+  userId: number;
+  message: string;
+  avatar: string | null;
+  name: string;
+}
