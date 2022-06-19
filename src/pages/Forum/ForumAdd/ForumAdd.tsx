@@ -72,7 +72,7 @@ function ForumAdd() {
                 <TextEditor setEditorText={changeEditorText} />
               </div>
               <div className="forum-add__button">
-                <Button>Создать</Button>
+                <Button isDisabled={!editorText && !themeName}>Создать</Button>
               </div>
             </form>
           </div>

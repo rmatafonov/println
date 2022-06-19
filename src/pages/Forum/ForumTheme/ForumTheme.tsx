@@ -10,8 +10,9 @@ import ForumComment from '@/components/ForumComment';
 // import TextEditor from '@/components/TextEditor';
 
 import './forumTheme.css'
-import { setThemeComment } from '@/redux/forumSlice';
+import { setInnerComment, setThemeComment } from '@/redux/forumSlice';
 import ForumAddCommentary from '@/components/ForumAddCommentary';
+import { isShowingReplyType } from './types';
 
 function ForumTheme() {
   const params = useParams();
@@ -23,7 +24,10 @@ function ForumTheme() {
   const currentForum = forums?.find((item) => item.id === id)
   const [editorText, setEditorText] = useState('')
   const [editorTextReply, setEditorTextReply] = useState('')
-  const [isShowingReply, setIsShowingReply] = useState(false)
+  const [isShowingReply, setIsShowingReply] = useState<isShowingReplyType>({
+    isShow: false,
+    messageId: null
+  })
   const [isEmptyTriggered, setIsEmptyTriggered] = useState(false)
   const [isEmptyTriggeredReply, setIsEmptyTriggeredReply] = useState(false)
 
@@ -35,8 +39,11 @@ function ForumTheme() {
     setEditorTextReply(value)
   }, [editorTextReply])
 
-  const showReplyForm = useCallback(() => {
-    setIsShowingReply(true)
+  const showReplyForm = useCallback((messageId: string) => {
+    setIsShowingReply({
+      isShow: true,
+      messageId
+    })
   }, [isShowingReply])
 
   const sendMessage = (e: FormEvent<HTMLFormElement>) => {
@@ -61,7 +68,22 @@ function ForumTheme() {
 
   const sendReplyMessage = (e: FormEvent<HTMLFormElement>, messageId: string) => {
     e.preventDefault();
-    console.log('submitReply', messageId)
+    if (user) {
+      dispatch(setInnerComment({
+        forumId: id,
+        userId: user.id,
+        message: editorTextReply,
+        avatar: user.avatar,
+        name: user.display_name || user.first_name,
+        messageId
+      }))
+      setIsShowingReply({
+        isShow: false,
+        messageId,
+      })
+    } else {
+      throw new Error('user не найден')
+    }
     setIsEmptyTriggeredReply(true)
     setTimeout(() => {
       setIsEmptyTriggeredReply(false)
@@ -98,14 +120,40 @@ function ForumTheme() {
                           avatar={comment.avatar}
                           message={comment.message}
                         />
-                        {ndx !== 0 && !isShowingReply &&
+                        {ndx !== 0 && !isShowingReply.isShow &&
                           <div className="forum-theme__reply">
-                            <Button onClick={showReplyForm} className="button_simple button_highlight">Ответить</Button>
+                            <Button onClick={() => showReplyForm(comment.messageId)} className="button_simple button_highlight">Ответить</Button>
                           </div>
                         }
-                        {isShowingReply &&
+                        {comment.innerComments &&
+                          <>
+                            <div className="forum-theme__reply-icon">
+                              <SvgIcon
+                                name="reply"
+                                size="20px"
+                                color="#8484f3"
+                              />
+                            </div>
+                            <ul className="forum-theme__inner-list">
+                              {comment.innerComments
+                                .map((innerComment) => (
+                                  <li key={innerComment.messageId} className="forum-theme__inner-item">
+                                    <ForumComment
+                                      time={innerComment.time}
+                                      username={innerComment.name}
+                                      avatar={innerComment.avatar}
+                                      message={innerComment.message}
+                                    />
+                                  </li>
+                                ))
+                              }
+                            </ul>
+                          </>
+                        }
+                        {isShowingReply.isShow && isShowingReply.messageId === comment.messageId &&
                           <div className="forum-theme__add">
                             <ForumAddCommentary
+                              isDisabledButton={!editorTextReply}
                               submit={(e) => sendReplyMessage(e, comment.messageId)}
                               isEmptyTriggered={isEmptyTriggeredReply}
                               setText={setReplyText}
@@ -118,6 +166,7 @@ function ForumTheme() {
                 </ul>
                 <div className="forum-theme__add">
                   <ForumAddCommentary
+                    isDisabledButton={!editorText}
                     submit={sendMessage}
                     isEmptyTriggered={isEmptyTriggered}
                     setText={setText}

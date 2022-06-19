@@ -6,7 +6,9 @@ import TextEditor from '@/components/TextEditor';
 
 import './forumAddCommentary.css'
 
-const ForumAddCommentary: FC<Props> = ({ submit, setText, isEmptyTriggered }) => (
+const ForumAddCommentary: FC<Props> = ({
+  submit, setText, isEmptyTriggered, isDisabledButton
+}) => (
   <div className="add-comment">
     <form onSubmit={submit} className="forum-add-commentary">
       <h3 className="add-comment__title">Добавьте комментарий</h3>
@@ -14,7 +16,7 @@ const ForumAddCommentary: FC<Props> = ({ submit, setText, isEmptyTriggered }) =>
         <TextEditor isEmptyTriggered={isEmptyTriggered} setEditorText={setText} />
       </div>
       <div className="add-comment__button">
-        <Button>Отправить</Button>
+        <Button isDisabled={isDisabledButton}>Отправить</Button>
       </div>
     </form>
   </div>

@@ -29,10 +29,25 @@ const TextEditor: FC<Props> = (({ setEditorText, isEmptyTriggered }) => {
         editorClassName="text-editor__input"
         toolbar={{
           options: ['inline', 'blockType', 'fontSize', 'list'],
-          inline: { inDropdown: true },
-          list: { inDropdown: true },
-          textAlign: { inDropdown: true },
-          link: { inDropdown: true },
+          inline: {
+            options: ['bold', 'italic']
+          },
+          blockType: {
+            options: [
+              'Normal',
+              'H2',
+              'H3',
+              'H4',
+              'H5',
+              'H6',
+            ],
+          },
+          fontSize: {
+            options: [8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36],
+          },
+          list: {
+            options: ['unordered', 'ordered'],
+          },
         }}
       />
     </div>

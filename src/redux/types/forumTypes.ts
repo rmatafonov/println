@@ -5,6 +5,15 @@ export type ForumTheme = {
   id: number;
 }
 
+export type InnerComment = {
+  messageId: string,
+  userId: number;
+  message: string;
+  avatar: null | string;
+  name: string;
+  time: string;
+}
+
 export type Comment = {
   messageId: string;
   userId: number;
@@ -12,7 +21,7 @@ export type Comment = {
   avatar: null | string;
   name: string;
   time: string;
-  innerComments: null | Comment[];
+  innerComments: null | InnerComment[];
 }
 
 export type ForumInnerTheme = {

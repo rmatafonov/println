@@ -43,10 +43,6 @@ const initialState: ForumState<ForumTheme, ForumInnerTheme> = {
             <ol>
             <li><span style="color: rgb(26,26,26);background-color: rgb(236,236,236);font-size: medium;font-family: Roboto, Arial, sans-serif;">какой то пункт</span>&nbsp;</li>
             <li><span style="color: rgb(26,26,26);background-color: rgb(236,236,236);font-size: medium;font-family: Roboto, Arial, sans-serif;">какой то пункт</span>&nbsp;</li>
-            <ol>
-            <li><span style="color: rgb(26,26,26);background-color: rgb(236,236,236);font-size: medium;font-family: Roboto, Arial, sans-serif;">какой то подпункт</span></li>
-            <li>&nbsp;&nbsp;еще один</li>
-            </ol>
             </ol>`,
             avatar: null,
             name: 'Никита',
@@ -56,8 +52,8 @@ const initialState: ForumState<ForumTheme, ForumInnerTheme> = {
           {
             messageId: nanoid(),
             userId: 14837,
-            message: `<h2>Внимание!</h2>
-            <p>Здесь будет храниться информация обо всех нововведениях и обновлениях</p>
+            message: `<h2>Внимание! Здесь еще более важная информация</h2>
+            <p>Очень сильно важная информация, прямо под этим текстом!</p>
             <ul>
             <li>какой то пункт</li>
             <li><span style="color: rgb(26,26,26);background-color: rgb(236,236,236);font-size: medium;font-family: Roboto, Arial, sans-serif;">какой то пункт</span>&nbsp;</li>
@@ -66,10 +62,6 @@ const initialState: ForumState<ForumTheme, ForumInnerTheme> = {
             <ol>
             <li><span style="color: rgb(26,26,26);background-color: rgb(236,236,236);font-size: medium;font-family: Roboto, Arial, sans-serif;">какой то пункт</span>&nbsp;</li>
             <li><span style="color: rgb(26,26,26);background-color: rgb(236,236,236);font-size: medium;font-family: Roboto, Arial, sans-serif;">какой то пункт</span>&nbsp;</li>
-            <ol>
-            <li><span style="color: rgb(26,26,26);background-color: rgb(236,236,236);font-size: medium;font-family: Roboto, Arial, sans-serif;">какой то подпункт</span></li>
-            <li>&nbsp;&nbsp;еще один</li>
-            </ol>
             </ol>`,
             avatar: null,
             name: 'Никита',
@@ -180,8 +172,41 @@ const forumSlice = createSlice({
       } else {
         throw new Error('Что то пошло не так')
       }
+    },
+    setInnerComment(state, action: PayloadAction<any>) {
+      const newMessageId = nanoid()
+      const time = momentConvert('message', new Date())
+      const {
+        forumId, userId, message, avatar, name, messageId
+      } = action.payload
+      if (state.forumInnerThemes.data) {
+        state.forumInnerThemes.data.map((innerTheme) => {
+          if (innerTheme.id === forumId) {
+            innerTheme.content.map((content) => {
+              if (content.messageId === messageId) {
+                const newMessage = {
+                  userId,
+                  message,
+                  avatar,
+                  name,
+                  time,
+                  messageId: newMessageId
+                }
+                if (!content.innerComments) {
+                  content.innerComments = [newMessage]
+                } else {
+                  content.innerComments.push(newMessage)
+                }
+              }
+              return content
+            })
+          }
+          return innerTheme
+        })
+      } else {
+        throw new Error('Что то пошло не так')
+      }
     }
-
   }
 });
 
@@ -189,4 +214,6 @@ export const forumSelector = (state: RootState) => state.forum
 
 export default forumSlice.reducer
 
-export const { addNewTheme, setCommentsCount, setThemeComment } = forumSlice.actions
+export const {
+  addNewTheme, setCommentsCount, setThemeComment, setInnerComment
+} = forumSlice.actions

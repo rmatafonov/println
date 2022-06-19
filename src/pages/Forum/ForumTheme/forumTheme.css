@@ -29,4 +29,22 @@
   &__add {
     margin-top: 40px;
   }
+  &__inner-list {
+    margin: 0 0 0 40px;
+  }
+  &__inner-item {
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-light);
+    &:last-child {
+      margin-bottom: 0;
+      border-bottom: none;
+    }
+  }
+  &__reply-icon {
+    transform: rotate(180deg);
+    display: flex;
+    width: 20px;
+    height: 20px;
+    margin: 20px 0 10px;
+  }
 }
