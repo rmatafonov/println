@@ -6,7 +6,7 @@ import Menu from 'pages/Menu'
 import Leaderboard from 'pages/Leaderboard';
 import Profile from 'pages/Profile';
 
-import { GameContainer } from '../canvas'
+import { GameContainer } from '../GameContainer'
 
 import './App.css'
 

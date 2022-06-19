@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import authApi from '@/api/AuthApi'
 import { GetUserResponse, ChangeUserResponse } from '@/api/types'
-import { RootState } from '@/redux/store/store'
+import { RootState } from '@/redux/store/types'
 import profileApi from '@/api/ProfileApi'
 
 type UserState = {
