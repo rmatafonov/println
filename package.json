@@ -76,6 +76,7 @@
     "bem-cn": "^3.0.1",
     "draft-js": "0.11.7",
     "moment": "2.29.3",
+    "nanoid": "4.0.0",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-draft-wysiwyg": "1.14.7",

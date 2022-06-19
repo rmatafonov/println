@@ -5,6 +5,7 @@
   &__item {
     border-bottom: 1px solid var(--border-light);
     margin-bottom: 40px;
+    padding-bottom: 10px;
     &:last-child {
       margin-bottom: 0;
     }
@@ -25,16 +26,7 @@
       }
     }
   }
-  &__list {
-    margin-bottom: 40px;
-  }
-}
-
-.add-comment {
-  &__title {
-    margin-bottom: 20px;
-  }
-  &__editor {
-    margin-bottom: 20px;
+  &__add {
+    margin-top: 40px;
   }
 }

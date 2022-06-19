@@ -6,6 +6,7 @@ export type ForumTheme = {
 }
 
 export type Comment = {
+  messageId: string;
   userId: number;
   message: string;
   avatar: null | string;

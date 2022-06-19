@@ -7,25 +7,37 @@ import { useAppDispatch } from '@/redux/store/hooks';
 import Button from '@/components/Button';
 import SvgIcon from '@/components/SvgIcon';
 import ForumComment from '@/components/ForumComment';
-import TextEditor from '@/components/TextEditor';
+// import TextEditor from '@/components/TextEditor';
 
 import './forumTheme.css'
 import { setThemeComment } from '@/redux/forumSlice';
+import ForumAddCommentary from '@/components/ForumAddCommentary';
 
 function ForumTheme() {
   const params = useParams();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch()
   const id = parseFloat(params.id as string);
   const forums = useSelector((state: RootState) => state.forum.forumInnerThemes.data)
   const user = useSelector((state: RootState) => state.user.data)
   const currentForum = forums?.find((item) => item.id === id)
   const [editorText, setEditorText] = useState('')
-  const dispatch = useAppDispatch()
+  const [editorTextReply, setEditorTextReply] = useState('')
+  const [isShowingReply, setIsShowingReply] = useState(false)
   const [isEmptyTriggered, setIsEmptyTriggered] = useState(false)
+  const [isEmptyTriggeredReply, setIsEmptyTriggeredReply] = useState(false)
 
   const setText = useCallback((value: string) => {
     setEditorText(value)
   }, [editorText])
+
+  const setReplyText = useCallback((value: string) => {
+    setEditorTextReply(value)
+  }, [editorTextReply])
+
+  const showReplyForm = useCallback(() => {
+    setIsShowingReply(true)
+  }, [isShowingReply])
 
   const sendMessage = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -45,6 +57,15 @@ function ForumTheme() {
     } else {
       throw new Error('user не найден')
     }
+  }
+
+  const sendReplyMessage = (e: FormEvent<HTMLFormElement>, messageId: string) => {
+    e.preventDefault();
+    console.log('submitReply', messageId)
+    setIsEmptyTriggeredReply(true)
+    setTimeout(() => {
+      setIsEmptyTriggeredReply(false)
+    });
   }
 
   const goBack = () => {
@@ -70,27 +91,37 @@ function ForumTheme() {
                 <ul className="forum-theme__list">
                   {currentForum.content
                     .map((comment, ndx) => (
-                      <li key={ndx} className="forum-theme__item">
+                      <li key={comment.messageId} className="forum-theme__item">
                         <ForumComment
                           time={comment.time}
                           username={comment.name}
                           avatar={comment.avatar}
                           message={comment.message}
                         />
+                        {ndx !== 0 && !isShowingReply &&
+                          <div className="forum-theme__reply">
+                            <Button onClick={showReplyForm} className="button_simple button_highlight">Ответить</Button>
+                          </div>
+                        }
+                        {isShowingReply &&
+                          <div className="forum-theme__add">
+                            <ForumAddCommentary
+                              submit={(e) => sendReplyMessage(e, comment.messageId)}
+                              isEmptyTriggered={isEmptyTriggeredReply}
+                              setText={setReplyText}
+                            />
+                          </div>
+                        }
                       </li>
                     ))
                   }
                 </ul>
-                <div className="forum-theme__add add-comment">
-                  <form onSubmit={sendMessage} className="add-comment__form">
-                    <h3 className="add-comment__title">Добавьте комментарий</h3>
-                    <div className="add-comment__editor">
-                      <TextEditor isEmptyTriggered={isEmptyTriggered} setEditorText={setText} />
-                    </div>
-                    <div className="add-comment__button">
-                      <Button>Отправить</Button>
-                    </div>
-                  </form>
+                <div className="forum-theme__add">
+                  <ForumAddCommentary
+                    submit={sendMessage}
+                    isEmptyTriggered={isEmptyTriggered}
+                    setText={setText}
+                  />
                 </div>
               </div>
             </>

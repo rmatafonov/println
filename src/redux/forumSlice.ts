@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { nanoid } from 'nanoid'
 import { momentConvert } from '@/utils/momentConvert'
 import { RootState } from './store/store'
 import {
@@ -30,6 +31,7 @@ const initialState: ForumState<ForumTheme, ForumInnerTheme> = {
         name: 'Важное',
         content: [
           {
+            messageId: nanoid(),
             userId: 14837,
             message: `<h2>Внимание!</h2>
             <p>Здесь будет храниться информация обо всех нововведениях и обновлениях</p>
@@ -52,6 +54,7 @@ const initialState: ForumState<ForumTheme, ForumInnerTheme> = {
             innerComments: null,
           },
           {
+            messageId: nanoid(),
             userId: 14837,
             message: `<h2>Внимание!</h2>
             <p>Здесь будет храниться информация обо всех нововведениях и обновлениях</p>
@@ -80,6 +83,7 @@ const initialState: ForumState<ForumTheme, ForumInnerTheme> = {
         name: 'Флуд',
         content: [
           {
+            messageId: nanoid(),
             userId: 14837,
             message: 'Флудилка',
             avatar: null,
@@ -128,6 +132,7 @@ const forumSlice = createSlice({
             avatar: action.payload.avatar,
             innerComments: null,
             time: commentTime,
+            messageId: nanoid(),
           }]
         })
       } else {
@@ -141,6 +146,7 @@ const forumSlice = createSlice({
             avatar: action.payload.avatar,
             innerComments: null,
             time: commentTime,
+            messageId: nanoid(),
           }]
         }]
       }
@@ -166,6 +172,7 @@ const forumSlice = createSlice({
               name: action.payload.name,
               time,
               innerComments: null,
+              messageId: nanoid(),
             })
           }
           return theme
