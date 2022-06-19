@@ -63,7 +63,7 @@ function Profile() {
           id: 'field__phone',
           readOnly: true,
           name: 'phone',
-          error: ''
+          error: '',
         },
       ])
     }
@@ -104,7 +104,9 @@ function Profile() {
     const validate = new Validation()
     const error = validate.by(target.name, target.value)
     if (error) {
-      const indexOfField = fields.findIndex((field) => field.name === target.name)
+      const indexOfField = fields.findIndex(
+        (field) => field.name === target.name
+      )
       const newFields = [...fields]
       newFields[indexOfField].error = error
       setFields([...newFields])
@@ -113,7 +115,9 @@ function Profile() {
 
   const isValidForm = (validatableData: ChangeUserResponse) => {
     const validate = new Validation()
-    return Object.entries(validatableData).every(([key, value]) => !validate.by(key, value))
+    return Object.entries(validatableData).every(
+      ([key, value]) => !validate.by(key, value)
+    )
   }
 
   const saveHandler = (event: FormEvent) => {
@@ -161,7 +165,11 @@ function Profile() {
             <ul className="profile__fields">
               {fields.map((field) => (
                 <li className="profile__field profile-field" key={field.id}>
-                  <Field {...field} onBlur={onBlurHandler} onFocus={onFocusHandler} />
+                  <Field
+                    {...field}
+                    onBlur={onBlurHandler}
+                    onFocus={onFocusHandler}
+                  />
                 </li>
               ))}
             </ul>

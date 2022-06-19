@@ -19,25 +19,25 @@ const Field: Props = ({
   onFocus,
   onBlur,
 }) => (
-  <div className="field">
-    <div className="field__wrap">
-      <label htmlFor={id} className="field__label">
-        {label}
-      </label>
-      <input
-        id={id}
-        type={type}
-        className="field__input"
-        defaultValue={defaultValue}
-        name={name}
-        readOnly={readOnly}
-        onFocus={onFocus}
-        onBlur={onBlur}
-      />
-    </div>
+    <div className="field input">
+      <div className="input__wrap">
+        <label htmlFor={id} className="input__label">
+          {label}
+        </label>
+        <input
+          id={id}
+          type={type}
+          className="input__input"
+          defaultValue={defaultValue}
+          name={name}
+          readOnly={readOnly}
+          onFocus={onFocus}
+          onBlur={onBlur}
+        />
+      </div>
 
-    {error && <div className="field__error">{error}</div>}
-  </div>
+      {error && <div className="input__error">{error}</div>}
+    </div>
 )
 
 export default Field
