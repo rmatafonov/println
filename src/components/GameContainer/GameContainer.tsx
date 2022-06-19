@@ -60,11 +60,9 @@ const GameContainer: GameContainerProps = ({}) => {
     const enemies = enemiesFactory.getNextEnemies(enemiesCount, gameLevel)
     dispatch(setEnemies(enemies))
     window.onkeydown = (e: KeyboardEvent) => {
-      // if (
-      //   e.key.search(/^[A-Z\u0410-\u042f][\u0430-\u044fa-z0-9\-]+$/gi) !== 0
-      // ) {
-      dispatch(shoot(e.key))
-      // }
+      if (e.key.search(/^[A-ZА-Я][а-яa-z]/gi) !== 0) {
+        dispatch(shoot(e.key))
+      }
     }
 
     setIsGameLoading(false)
@@ -89,6 +87,8 @@ const GameContainer: GameContainerProps = ({}) => {
       canvasCtx.font = `24px helvetica`
       canvasCtx.fillText('Всех порвал, один остался!', 15, 20)
     }
+
+    canvasCtx.shadowColor = 'rgba(0,0,0,0)'
 
     renderCharacters = (
       <>
