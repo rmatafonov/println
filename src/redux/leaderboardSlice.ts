@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { DataToLeaderboard, GetFromLeaderboardData } from '@/api/types'
-import { RootState } from '@/redux/store/store'
 import leaderboardApi from '@/api/LeaderboardApi'
+import { RootState } from './store/types'
 
 type LeaderboardState = {
   loading: boolean
