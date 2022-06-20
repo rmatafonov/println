@@ -21,7 +21,7 @@ function Menu() {
         <div className="widget__content">
           <ul className="menu__list">
             <li className="menu__item">
-              <Link className="menu__link" to="#">Играть</Link>
+              <Link className="menu__link" to="/game">Играть</Link>
             </li>
             <li className="menu__item">
               <Link className="menu__link" to="/leaderboard">Таблица рекордов</Link>
