@@ -1,6 +1,6 @@
+import React from 'react'
 import { enemiesSelector } from '@/redux/enemiesSlice'
 import { useAppSelector } from '@/redux/store/hooks'
-import React from 'react'
 import { Enemy } from '../Enemy'
 import { EnemiesContainerProps } from './types'
 

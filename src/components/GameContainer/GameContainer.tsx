@@ -1,5 +1,7 @@
-import React, { ReactNode, useState } from 'react'
-import { useEffect, useRef } from 'react'
+import React, {
+  ReactNode, useState, useEffect, useRef
+} from 'react'
+import { ActionCreatorWithoutPayload } from '@reduxjs/toolkit'
 
 import { Ship } from '../Ship'
 import { EnemiesContainer } from '../EnemiesContainer'
@@ -11,7 +13,6 @@ import EnemiesFactory from '@/service/EnemiesFactory'
 import './GameContainer.css'
 import { useAppDispatch } from '@/redux/store/hooks'
 import { AppDispatch } from '@/redux/store/types'
-import { ActionCreatorWithoutPayload } from '@reduxjs/toolkit'
 
 const FPS_60_PER_SEC = 1000 / 60
 

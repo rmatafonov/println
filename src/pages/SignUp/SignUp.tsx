@@ -44,6 +44,7 @@ function SignUp() {
     },
     {
       fieldType: 'phone',
+      type: 'tel',
       name: 'Телефон',
       value: '',
       error: null,
