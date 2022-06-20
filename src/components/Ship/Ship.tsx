@@ -16,11 +16,7 @@ const Ship: ShipProps = ({
   const [currentAxesAngle, _setAngle] = useState(0)
   const storeShipAngle = useAppSelector(enemiesSelector).shipAngle
 
-  useEffect(() => {
-    console.log(
-      `drawing ship with angle ${currentAxesAngle}, x ${x}, y ${y}, size: ${rectSide}`
-    )
-
+  const drawShip = () => {
     canvasContext.save()
 
     canvasContext.beginPath()
@@ -30,9 +26,18 @@ const Ship: ShipProps = ({
     canvasContext.drawImage(img, -xMax, -yMax, shipRect * 2, shipRect * 2)
 
     canvasContext.restore()
+  }
+
+  useEffect(() => {
+    console.log(
+      `drawing ship with angle ${currentAxesAngle}, x ${x}, y ${y}, size: ${rectSide}`
+    )
+
+    drawShip();
   }, [currentAxesAngle])
 
   useEffect(() => {
+    drawShip()
     _setAngle(storeShipAngle)
   }, [storeShipAngle])
 
