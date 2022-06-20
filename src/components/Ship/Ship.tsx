@@ -1,16 +1,20 @@
+import React, { useState, useEffect } from 'react'
 import { shipSvg } from '@/static/images'
-import React, { useState } from 'react'
-import { useEffect } from 'react'
 import { ShipProps } from './types'
+import { useAppSelector } from '@/redux/store/hooks'
+import { enemiesSelector } from '@/redux/enemiesSlice'
 
 const img = new Image()
 img.src = shipSvg
 
-const Ship: ShipProps = ({ canvasContext, x, y, rectSide }) => {
+const Ship: ShipProps = ({
+  canvasContext, x, y, rectSide
+}) => {
   const shipRect = rectSide * 0.9
   const xMax = shipRect * 0.95
   const yMax = shipRect * 0.95
   const [currentAxesAngle, _setAngle] = useState(0)
+  const storeShipAngle = useAppSelector(enemiesSelector).shipAngle
 
   useEffect(() => {
     console.log(
@@ -22,11 +26,15 @@ const Ship: ShipProps = ({ canvasContext, x, y, rectSide }) => {
     canvasContext.beginPath()
     canvasContext.translate(x, y)
     canvasContext.clearRect(-rectSide, -rectSide, rectSide * 2, rectSide * 2)
-    canvasContext.rotate(currentAxesAngle)
+    canvasContext.rotate((currentAxesAngle * Math.PI) / 180)
     canvasContext.drawImage(img, -xMax, -yMax, shipRect * 2, shipRect * 2)
 
     canvasContext.restore()
   }, [currentAxesAngle])
+
+  useEffect(() => {
+    _setAngle(storeShipAngle)
+  }, [storeShipAngle])
 
   return <></>
 }
