@@ -26,8 +26,8 @@ const GameContainer: GameContainerProps = () => {
 
   const [canvasCtx, setCanvasCtx] =
     useState<Nullable<CanvasRenderingContext2D>>(null)
-  const [gameLevel, _setGameLevel] = useState(1)
-  const [enemiesCount, _setEnemiesCount] = useState(5)
+  const [gameLevel] = useState(1)
+  const [enemiesCount] = useState(5)
   const [shipPoint, setShipPoint] = useState<Point>({ x: 0, y: 0 })
   const [shipSize, setShipSize] = useState(0)
   const [enemySize, setEnemySize] = useState(0)
@@ -140,10 +140,10 @@ export default GameContainer
 
 function startEnemies(
   dispatch: AppDispatch,
-  moveEnemies: ActionCreatorWithoutPayload<string>
+  moveEnemiesParam: ActionCreatorWithoutPayload<string>
 ) {
   setTimeout(() => {
     dispatch(moveEnemies())
-    startEnemies(dispatch, moveEnemies)
+    startEnemies(dispatch, moveEnemiesParam)
   }, FPS_60_PER_SEC)
 }

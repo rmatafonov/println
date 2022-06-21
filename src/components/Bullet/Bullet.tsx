@@ -2,6 +2,9 @@ import React, { FC, useEffect } from 'react'
 import { destroyEnemy } from '@/redux/enemiesSlice';
 import { useAppDispatch } from '@/redux/store/hooks';
 import { BulletProps } from './types';
+import {
+  BULLET_SPEED, BULLET_TIME, GAME_CONTAINER_WIDTH, SHIP_Y
+} from '@/constants/game';
 
 const Bullet: FC<BulletProps> = ({ canvasContext, bullet }) => {
   const dispatch = useAppDispatch()
@@ -10,13 +13,15 @@ const Bullet: FC<BulletProps> = ({ canvasContext, bullet }) => {
     dx, dy, targetWord
   } = bullet;
   const startCoords = {
-    dx: 250,
-    dy: 813.0400000000001,
+    dx: GAME_CONTAINER_WIDTH / 2,
+    dy: SHIP_Y + 10,
   }
-  const steps = 60
+  const steps = BULLET_SPEED
   let step = 0
-  const time = 1000;
+  let time = BULLET_TIME
   const animate = () => {
+    const remainingSteps = steps - step;
+    time = (remainingSteps / BULLET_SPEED) * BULLET_TIME;
     const stepTime = time / steps
     canvasContext.beginPath();
     if (!step) {
