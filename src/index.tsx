@@ -20,3 +20,16 @@ const app = (
 const rootElement = document.getElementById('root') as HTMLDivElement
 const root = createRoot(rootElement)
 root.render(app)
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('/service-worker.js')
+      .then((registration) => {
+        console.log('SW registered: ', registration)
+      })
+      .catch((registrationError) => {
+        console.log('SW registration failed: ', registrationError)
+      })
+  })
+}

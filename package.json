@@ -11,7 +11,8 @@
     "lint:all": "npm-run-all lint:js lint:css",
     "start": "cross-env NODE_ENV=development webpack serve --config config/webpack.dev.js",
     "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.js",
-    "test": "jest"
+    "test": "jest",
+    "server": "npm run build && node server.js"
   },
   "husky": {
     "hooks": {
@@ -29,15 +30,16 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/react-redux": "7.1.24",
-    "@types/redux": "3.6.0",
     "@testing-library/jest-dom": "5.16.4",
     "@testing-library/react": "13.3.0",
     "@types/jest": "28.1.1",
     "@types/node": "18.0.0",
+    "@types/react-redux": "7.1.24",
+    "@types/redux": "3.6.0",
     "@typescript-eslint/eslint-plugin": "5.26.0",
     "@typescript-eslint/parser": "5.26.0",
     "autoprefixer": "10.4.7",
+    "clean-webpack-plugin": "4.0.0",
     "cross-env": "7.0.3",
     "css-loader": "6.7.1",
     "css-minimizer-webpack-plugin": "4.0.0",
@@ -75,7 +77,8 @@
     "webpack": "5.72.1",
     "webpack-cli": "4.9.2",
     "webpack-dev-server": "4.9.0",
-    "webpack-merge": "5.8.0"
+    "webpack-merge": "5.8.0",
+    "workbox-webpack-plugin": "6.5.3"
   },
   "dependencies": {
     "@reduxjs/toolkit": "1.8.2",
@@ -84,6 +87,7 @@
     "@types/react-router-dom": "5.3.3",
     "axios": "0.27.2",
     "bem-cn": "^3.0.1",
+    "express": "4.18.1",
     "nanoid": "4.0.0",
     "react": "18.1.0",
     "react-dom": "18.1.0",
