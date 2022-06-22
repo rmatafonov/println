@@ -14,7 +14,7 @@ const enemiesSlice = createSlice({
   reducers: {
     setEnemies: (state, action: PayloadAction<Array<EnemyModel>>) => {
       state.enemies = {}
-      action.payload.forEach(enemy => state.enemies![enemy.id] = enemy)
+      action.payload.forEach((enemy) => state.enemies![enemy.id] = enemy)
     },
     moveEnemies: (state) => {
       if (!state.enemies) {
