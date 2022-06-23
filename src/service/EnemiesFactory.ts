@@ -1,15 +1,20 @@
-import { mathUtil } from '@/utils'
 import { nanoid } from 'nanoid'
+import { mathUtil } from '@/utils'
 
 const DEFAULT_TEXT = 'кот рука нога'
 const LEVEL_0_STEPS = 1000
 
 export default class EnemiesFactory {
   private words: Array<string>
+
   private currentIndex = 0
+
   private xMax: number
+
   private yMax: number
+
   private shipX: number
+
   private shipY: number
 
   constructor(xMax: number, yMax: number, shipX: number, shipY: number) {
@@ -32,9 +37,9 @@ export default class EnemiesFactory {
     }
 
     const stepsCount = LEVEL_0_STEPS - gameLevel * 3
-    const enemies = result.map(word => {
+    const enemies = result.map((word) => {
       const x = mathUtil.getRandomInt(this.xMax)
-      const y = mathUtil.getRandomInt(this.yMax - this.yMax * 2 / 3)
+      const y = mathUtil.getRandomInt(((this.yMax - this.yMax) * 2) / 3)
       return {
         id: nanoid(6),
         step: 1,

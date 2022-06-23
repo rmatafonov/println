@@ -21,6 +21,7 @@
     "max-len": "off",
     "@typescript-eslint/no-unused-vars": 2,
     "no-param-reassign": "off",
-    "default-param-last": "off"
+    "default-param-last": "off",
+    "no-use-before-define": "off"
   }
 }

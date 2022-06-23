@@ -7,14 +7,14 @@ const img = new Image()
 img.src = enemySvg
 
 const TEXT_SIZE = 20
+const TEXT_RECT_PADDING = 15
 
 const Enemy: EnemyProps = ({ canvasContext, enemyModel, rectSide }) => {
   if (!enemyModel.stepsCount) {
     throw Error('Не выставлено количество шагов')
   }
-  const x = enemyModel.currentPoint.x
-  const y = enemyModel.currentPoint.y
-  const word = enemyModel.word
+  const { x, y } = enemyModel.currentPoint
+  const { word } = enemyModel
 
   useEffect(() => {
     canvasContext.drawImage(
@@ -62,10 +62,13 @@ function drawText(
   ctx.save()
   configureForText(ctx)
   const wordWidth = getTextWidth(ctx, word)
-  ctx.fillStyle = 'black'
+  ctx.fillStyle = 'rgba(0, 0, 0, .7)'
+  if (!word) {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0)'
+  }
   ctx.fillRect(x - wordWidth, y + size, wordWidth, TEXT_SIZE)
   ctx.fillStyle = '#e3d212'
-  ctx.fillText(word, x - wordWidth, y + size)
+  ctx.fillText(word, x - wordWidth + (TEXT_RECT_PADDING / 2), y + size)
   ctx.restore()
 }
 
@@ -76,5 +79,5 @@ function configureForText(ctx: CanvasRenderingContext2D) {
 
 function getTextWidth(ctx: CanvasRenderingContext2D, word: string): number {
   const wordMetrics = ctx.measureText(word)
-  return wordMetrics.width
+  return wordMetrics.width + TEXT_RECT_PADDING
 }
