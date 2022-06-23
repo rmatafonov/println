@@ -1,5 +1,6 @@
 .widget {
   height: 100%;
+  position: relative;
 
   &__container {
     height: 100%;
@@ -16,5 +17,14 @@
     border-radius: var(--border-radius-default);
     padding: var(--auth-container-padding);
     position: relative;
+    &_full {
+      width: 100%;
+    }
+  }
+
+  &__back {
+    position: absolute;
+    left: 40px;
+    top: 40px;
   }
 }

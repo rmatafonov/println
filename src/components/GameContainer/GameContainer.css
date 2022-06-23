@@ -41,4 +41,5 @@
     width: calc(50% - 250px);;
     height: 100%;
   }
+  border: thick double #32a1ce;
 }

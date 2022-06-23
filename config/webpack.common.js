@@ -1,3 +1,4 @@
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const Dotenv = require('dotenv-webpack')
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
@@ -8,9 +9,11 @@ module.exports = {
   output: {
     path: paths.build,
     filename: '[name].bundle.js',
+    publicPath: '/',
     clean: true,
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new Dotenv(),
     new HtmlWebpackPlugin({
       template: `${paths.static}/index.html`,

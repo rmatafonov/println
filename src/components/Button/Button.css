@@ -9,6 +9,7 @@
   transition: 0.5s;
   background-size: 200% auto;
   text-align: center;
+  user-select: none;
 
   &:hover {
     background-position: right center;
@@ -21,6 +22,10 @@
     border: none;
     border-radius: 0;
     background: none;
+  }
+
+  &_highlight {
+    color: var(--highlight);
   }
 
   &_disabled {

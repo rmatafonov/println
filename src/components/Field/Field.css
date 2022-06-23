@@ -1,4 +1,4 @@
-.field {
+.input {
   &__wrap {
     display: flex;
     justify-content: space-between;
@@ -14,6 +14,7 @@
     background-color: transparent;
     color: var(--text-secondary);
     padding: 0 5px;
+    outline: none;
   }
 
   &__error {
