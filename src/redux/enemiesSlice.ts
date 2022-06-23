@@ -21,7 +21,6 @@ const enemiesSlice = createSlice({
         console.log('Нечего двигать');
         return
       }
-
       const newEnemies: Record<string, EnemyModel> = {}
       Object.entries(state.enemies)
         .filter(([_id, enemy]) => enemy.word !== '')

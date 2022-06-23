@@ -1,7 +1,7 @@
 import React, {
   ReactNode, useState, useEffect, useRef
 } from 'react'
-import { ActionCreatorWithoutPayload } from '@reduxjs/toolkit'
+// import { ActionCreatorWithoutPayload } from '@reduxjs/toolkit'
 
 import { Ship } from '../Ship'
 import { EnemiesContainer } from '../EnemiesContainer'
@@ -12,9 +12,9 @@ import EnemiesFactory from '@/service/EnemiesFactory'
 
 import './GameContainer.css'
 import { useAppDispatch } from '@/redux/store/hooks'
-import { AppDispatch } from '@/redux/store/types'
+// import { AppDispatch } from '@/redux/store/types'
 
-const FPS_60_PER_SEC = 1000 / 60
+// const FPS_60_PER_SEC = 1000 / 60
 
 const GameContainer: GameContainerProps = ({}) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -31,6 +31,7 @@ const GameContainer: GameContainerProps = ({}) => {
   const [enemiesFactory, setEnemiesFactory] = useState<EnemiesFactory>()
 
   const dispatch = useAppDispatch()
+  let rafId: number
 
   useEffect(() => {
     if (!canvasRef.current) {
@@ -69,11 +70,17 @@ const GameContainer: GameContainerProps = ({}) => {
     setIsGameLoading(false)
   }, [enemiesFactory])
 
+  const startEnemiesRaf = () => {
+    dispatch(moveEnemies())
+    rafId = requestAnimationFrame(startEnemiesRaf)
+  }
+
   useEffect(() => {
     if (isGameLoading) {
       return
     }
-    startEnemies(dispatch, moveEnemies)
+    // startEnemies(dispatch, moveEnemies)
+    startEnemiesRaf()
   }, [isGameLoading])
 
   let renderCharacters: ReactNode = <></>
@@ -82,11 +89,13 @@ const GameContainer: GameContainerProps = ({}) => {
       canvasCtx.fillStyle = 'red'
       canvasCtx.font = `24px helvetica`
       canvasCtx.fillText('Ба-бах!', 15, 20)
+      cancelAnimationFrame(rafId)
     }
     const handleEnemiesKilled = () => {
       canvasCtx.fillStyle = 'red'
       canvasCtx.font = `24px helvetica`
       canvasCtx.fillText('Всех порвал, один остался!', 15, 20)
+      cancelAnimationFrame(rafId)
     }
 
     canvasCtx.shadowColor = 'rgba(0,0,0,0)'
@@ -122,12 +131,12 @@ const GameContainer: GameContainerProps = ({}) => {
 
 export default GameContainer
 
-function startEnemies(
-  dispatch: AppDispatch,
-  moveEnemies: ActionCreatorWithoutPayload<string>
-) {
-  setTimeout(() => {
-    dispatch(moveEnemies())
-    startEnemies(dispatch, moveEnemies)
-  }, FPS_60_PER_SEC)
-}
+// function startEnemies(
+//   dispatch: AppDispatch,
+//   moveEnemies: ActionCreatorWithoutPayload<string>
+// ) {
+//   setTimeout(() => {
+//     dispatch(moveEnemies())
+//     startEnemies(dispatch, moveEnemies)
+//   }, FPS_60_PER_SEC)
+// }
