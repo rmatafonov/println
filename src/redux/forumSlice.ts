@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { nanoid } from 'nanoid'
 import { momentConvert } from '@/utils/momentConvert'
-import { RootState } from './store/store'
+import { RootState } from './store/types'
 import {
   AddCommentsPayload,
   AddForumPayload, ForumInnerTheme, ForumState, ForumTheme, SetThemeCommentPayload

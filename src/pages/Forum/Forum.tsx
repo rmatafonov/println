@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
 
-import { RootState } from '@/redux/store/store';
+import { RootState } from '@/redux/store/types';
 import { setCommentsCount } from '@/redux/forumSlice';
 import { useAppDispatch } from '@/redux/store/hooks';
 

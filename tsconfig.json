@@ -2,11 +2,12 @@
   "compilerOptions": {
     "lib": [
       "dom",
+      "dom.iterable",
       "es2017"
     ],
     "module": "esnext",
     "moduleResolution": "node",
-    "target": "es5",
+    "target": "esnext",
     "jsx": "react",
     "noImplicitAny": true,
     "noImplicitThis": true,
@@ -25,6 +26,7 @@
       "@/*": ["*"]
     },
     "typeRoots": ["typings/**/*.d.ts", "node_modules/@types"],
+    "types": ["jest"]
   },
   "include": [
     "src",

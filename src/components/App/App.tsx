@@ -9,7 +9,7 @@ import Forum from 'pages/Forum';
 import ForumTheme from '@/pages/Forum/ForumTheme';
 import ForumAdd from '@/pages/Forum/ForumAdd';
 
-import { GameContainer } from '../canvas'
+import { GameContainer } from '../GameContainer'
 
 import './App.css'
 

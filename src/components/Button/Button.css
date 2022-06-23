@@ -32,4 +32,8 @@
     pointer-events: none;
     opacity: 0.5;
   }
+
+  &_hidden {
+    display: none;
+  }
 }

@@ -34,6 +34,7 @@
 
   &__button {
     margin-bottom: 15px;
+    text-align: center;
 
     &:last-child {
       margin-bottom: 0;

@@ -3,7 +3,7 @@ import React, { FC } from 'react'
 import './Alert.css'
 
 type OwnProps = {
-  text: string | null
+  text: string
 }
 
 type Props = FC<OwnProps>

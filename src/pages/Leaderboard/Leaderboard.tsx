@@ -1,23 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import Alert from 'components/Alert'
 import Button from 'components/Button'
 import Loader from 'components/Loader'
-import { useGetFromLeaderboard } from '@/services/LeaderboardService'
-import { useAppSelector } from '@/redux/store/hooks'
-import { appSelector } from '@/redux/appSlice'
+import { useAppDispatch, useAppSelector } from '@/redux/store/hooks'
+import { leaderboardSelector, fetchLeaderboard } from '@/redux/leaderboardSlice'
 import 'styles/widget.css'
 import './Leaderboard.css'
 
 const Leaderboard = () => {
-  const appStore = useAppSelector(appSelector)
-  const leaderboards = useGetFromLeaderboard({
-    ratingFieldName: 'ratingFieldName',
-    cursor: 0,
-    limit: 100,
-  })
-
+  const dispatcher = useAppDispatch()
+  useEffect(() => {
+    dispatcher(fetchLeaderboard({
+      ratingFieldName: 'ratingFieldName',
+      cursor: 0,
+      limit: 100,
+    }))
+  }, [])
+  const { items, loading } = useAppSelector(leaderboardSelector)
   const navigate = useNavigate()
   const goToMenu = () => {
     navigate('/menu')
@@ -27,9 +27,8 @@ const Leaderboard = () => {
     <div className="leaderboard widget">
       <div className="widget__container container">
         <div className="widget__content text-center">
-          {appStore.alert && <Alert text={appStore.alert} />}
           <h1>Таблица рекордов</h1>
-          {appStore.loading ? (
+          {loading ? (
             <Loader />
           ) : (
             <table className="leaderboard__table">
@@ -41,13 +40,19 @@ const Leaderboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {leaderboards ? leaderboards.map(({ data }) => (
-                  <tr key={data.id}>
-                    <td>{data.date}</td>
-                    <td>{data.accuracy}</td>
-                    <td>{data.destroyed}</td>
+                {items ? (
+                  items.map(({ data }) => (
+                    <tr key={data.id}>
+                      <td>{data.date}</td>
+                      <td>{data.accuracy}</td>
+                      <td>{data.destroyed}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td>Данных нет</td>
                   </tr>
-                )) : <p>Данных нет</p>}
+                )}
               </tbody>
             </table>
           )}

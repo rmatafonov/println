@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-import { RootState } from '@/redux/store/store';
+import { RootState } from '@/redux/store/types';
 import { useAppDispatch } from '@/redux/store/hooks';
 import { addNewTheme } from '@/redux/forumSlice';
 

@@ -1,7 +1,7 @@
 import React, { FormEvent, useCallback, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { RootState } from '@/redux/store/store';
+import { RootState } from '@/redux/store/types';
 import { useAppDispatch } from '@/redux/store/hooks';
 
 import Button from '@/components/Button';

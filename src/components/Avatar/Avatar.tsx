@@ -1,18 +1,29 @@
-import React, { FC } from 'react'
+import React, { FC, SyntheticEvent } from 'react'
 
-import { enemySvg } from '@/static/images'
-import { AvatarType } from './types'
+import './Avatar.css'
 
-import './avatar.css'
+type OwnProps = {
+  avatar: string | undefined
+  onChange: (event: SyntheticEvent) => void
+}
 
-const Avatar: FC<AvatarType> = ({ avatar }) => (
+type Props = FC<OwnProps>
+
+const Avatar: Props = ({ avatar, onChange }) => (
   <div className="avatar">
-    {!avatar &&
-      <img src={enemySvg} className="avatar__image avatar__default" />
-    }
-    {avatar &&
-      <img src={`${process.env.RESOURCES}/${avatar}`} className="avatar__image" />
-    }
+    <label htmlFor="avatar__input" className="avatar__label">
+      <img
+        className="avatar__img"
+        src={avatar && `${process.env.RESOURCES}/${avatar}`}
+      />
+    </label>
+    <input
+      onChange={onChange}
+      type="file"
+      accept="image/*"
+      id="avatar__input"
+      className="avatar__input"
+    />
   </div>
 )
 
