@@ -6,7 +6,10 @@ import { EnemiesContainer } from '../EnemiesContainer'
 import { domUtil } from '@/utils'
 import { GameContainerProps } from './types'
 import {
-  enemiesSelector, moveEnemies, setEnemies, shoot
+  enemiesSelector,
+  moveEnemies,
+  setEnemies,
+  shoot,
 } from '@/redux/enemiesSlice'
 import EnemiesFactory from '@/service/EnemiesFactory'
 
@@ -28,9 +31,9 @@ const GameContainer: GameContainerProps = () => {
   const [enemySize, setEnemySize] = useState(0)
   const [enemiesFactory, setEnemiesFactory] = useState<EnemiesFactory>()
   const { bullet } = useAppSelector(enemiesSelector)
+  const [rafId, setRafId] = useState(0)
 
   const dispatch = useAppDispatch()
-  let rafId: number
 
   useEffect(() => {
     if (!canvasRef.current) {
@@ -65,13 +68,13 @@ const GameContainer: GameContainerProps = () => {
         dispatch(shoot(e.key))
       }
     }
-
     setIsGameLoading(false)
   }, [enemiesFactory])
 
   const startEnemiesRaf = () => {
     dispatch(moveEnemies())
-    rafId = requestAnimationFrame(startEnemiesRaf)
+    const id = requestAnimationFrame(startEnemiesRaf)
+    setRafId(id)
   }
 
   useEffect(() => {
