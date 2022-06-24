@@ -1,34 +1,33 @@
 import React, {
   ReactNode, useState, useEffect, useRef
 } from 'react'
-// import { ActionCreatorWithoutPayload } from '@reduxjs/toolkit'
-
 import { Ship } from '../Ship'
 import { EnemiesContainer } from '../EnemiesContainer'
 import { domUtil } from '@/utils'
 import { GameContainerProps } from './types'
-import { moveEnemies, setEnemies, shoot } from '@/redux/enemiesSlice'
+import {
+  enemiesSelector, moveEnemies, setEnemies, shoot
+} from '@/redux/enemiesSlice'
 import EnemiesFactory from '@/service/EnemiesFactory'
 
 import './GameContainer.css'
-import { useAppDispatch } from '@/redux/store/hooks'
-// import { AppDispatch } from '@/redux/store/types'
+import { useAppDispatch, useAppSelector } from '@/redux/store/hooks'
+import Bullet from '../Bullet/Bullet'
 
-// const FPS_60_PER_SEC = 1000 / 60
-
-const GameContainer: GameContainerProps = ({}) => {
+const GameContainer: GameContainerProps = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   const [isGameLoading, setIsGameLoading] = useState(true)
 
   const [canvasCtx, setCanvasCtx] =
     useState<Nullable<CanvasRenderingContext2D>>(null)
-  const [gameLevel, _setGameLevel] = useState(1)
-  const [enemiesCount, _setEnemiesCount] = useState(5)
+  const [gameLevel] = useState(1)
+  const [enemiesCount] = useState(5)
   const [shipPoint, setShipPoint] = useState<Point>({ x: 0, y: 0 })
   const [shipSize, setShipSize] = useState(0)
   const [enemySize, setEnemySize] = useState(0)
   const [enemiesFactory, setEnemiesFactory] = useState<EnemiesFactory>()
+  const { bullet } = useAppSelector(enemiesSelector)
 
   const dispatch = useAppDispatch()
   let rafId: number
@@ -79,7 +78,6 @@ const GameContainer: GameContainerProps = ({}) => {
     if (isGameLoading) {
       return
     }
-    // startEnemies(dispatch, moveEnemies)
     startEnemiesRaf()
   }, [isGameLoading])
 
@@ -87,13 +85,13 @@ const GameContainer: GameContainerProps = ({}) => {
   if (!isGameLoading && canvasCtx) {
     const handleShipKilled = () => {
       canvasCtx.fillStyle = 'red'
-      canvasCtx.font = `24px helvetica`
+      canvasCtx.font = '24px helvetica'
       canvasCtx.fillText('Ба-бах!', 15, 20)
       cancelAnimationFrame(rafId)
     }
     const handleEnemiesKilled = () => {
       canvasCtx.fillStyle = 'red'
-      canvasCtx.font = `24px helvetica`
+      canvasCtx.font = '24px helvetica'
       canvasCtx.fillText('Всех порвал, один остался!', 15, 20)
       cancelAnimationFrame(rafId)
     }
@@ -108,7 +106,14 @@ const GameContainer: GameContainerProps = ({}) => {
           y={shipPoint.y}
           rectSide={shipSize}
         />
-
+        <Bullet
+          canvasContext={canvasCtx}
+          bullet={{
+            dx: bullet.dx,
+            dy: bullet.dy,
+            targetWord: bullet.targetWord,
+          }}
+        />
         <EnemiesContainer
           canvasContext={canvasCtx}
           enemySize={enemySize}
@@ -122,21 +127,17 @@ const GameContainer: GameContainerProps = ({}) => {
   }
 
   return (
-    <div className="game-container">
-      <canvas ref={canvasRef} className="canvas-ship" />
-      {renderCharacters}
-    </div>
+    <>
+      <div className="blur blur_left"></div>
+      <div className="blur blur_top"></div>
+      <div className="blur blur_bottom"></div>
+      <div className="blur blur_right"></div>
+      <div className="game-container">
+        <canvas ref={canvasRef} className="canvas-ship" />
+        {renderCharacters}
+      </div>
+    </>
   )
 }
 
 export default GameContainer
-
-// function startEnemies(
-//   dispatch: AppDispatch,
-//   moveEnemies: ActionCreatorWithoutPayload<string>
-// ) {
-//   setTimeout(() => {
-//     dispatch(moveEnemies())
-//     startEnemies(dispatch, moveEnemies)
-//   }, FPS_60_PER_SEC)
-// }

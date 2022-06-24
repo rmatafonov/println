@@ -30,7 +30,7 @@ function Menu() {
               <Link className="menu__link" to="/profile">Профиль</Link>
             </li>
             <li className="menu__item">
-              <Link className="menu__link" to="#">Настройки</Link>
+              <Link className="menu__link" to="/forum">Форум</Link>
             </li>
             <li className="menu__item">
               <div className="menu__link" onClick={logout}>Выйти</div>
