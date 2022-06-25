@@ -81,6 +81,7 @@ const GameContainer: GameContainerProps = () => {
       return
     }
     startEnemiesRaf()
+    return () => cancelAnimationFrame(rafIdRef.current)
   }, [isGameLoading])
 
   let renderCharacters: ReactNode = <></>
