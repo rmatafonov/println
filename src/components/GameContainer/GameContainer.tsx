@@ -9,7 +9,7 @@ import {
   enemiesSelector,
   moveEnemies,
   setEnemies,
-  shoot,
+  shoot
 } from '@/redux/enemiesSlice'
 import EnemiesFactory from '@/service/EnemiesFactory'
 
@@ -31,7 +31,7 @@ const GameContainer: GameContainerProps = () => {
   const [enemySize, setEnemySize] = useState(0)
   const [enemiesFactory, setEnemiesFactory] = useState<EnemiesFactory>()
   const { bullet } = useAppSelector(enemiesSelector)
-  const [rafId, setRafId] = useState(0)
+  const rafIdRef = React.useRef(0)
 
   const dispatch = useAppDispatch()
 
@@ -73,8 +73,7 @@ const GameContainer: GameContainerProps = () => {
 
   const startEnemiesRaf = () => {
     dispatch(moveEnemies())
-    const id = requestAnimationFrame(startEnemiesRaf)
-    setRafId(id)
+    rafIdRef.current = requestAnimationFrame(startEnemiesRaf)
   }
 
   useEffect(() => {
@@ -90,13 +89,13 @@ const GameContainer: GameContainerProps = () => {
       canvasCtx.fillStyle = 'red'
       canvasCtx.font = '24px helvetica'
       canvasCtx.fillText('Ба-бах!', 15, 20)
-      cancelAnimationFrame(rafId)
+      cancelAnimationFrame(rafIdRef.current)
     }
     const handleEnemiesKilled = () => {
       canvasCtx.fillStyle = 'red'
       canvasCtx.font = '24px helvetica'
       canvasCtx.fillText('Всех порвал, один остался!', 15, 20)
-      cancelAnimationFrame(rafId)
+      cancelAnimationFrame(rafIdRef.current)
     }
 
     canvasCtx.shadowColor = 'rgba(0,0,0,0)'
@@ -128,7 +127,6 @@ const GameContainer: GameContainerProps = () => {
       </>
     )
   }
-
   return (
     <>
       <div className="blur blur_left"></div>

@@ -15,7 +15,7 @@ const initialState: EnemiesState = {
     dy: 0,
     targetWord: null,
   },
-  shipAngle: 0,
+  shipAngle: 0
 }
 
 const FPS = 60
