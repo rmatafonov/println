@@ -1,5 +1,5 @@
 import React from 'react'
-import { createRoot } from 'react-dom/client'
+import { hydrateRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 
 import { fetchUser } from './redux/userSlice'
@@ -18,18 +18,17 @@ const app = (
   </Provider>
 )
 const rootElement = document.getElementById('root') as HTMLDivElement
-const root = createRoot(rootElement)
-root.render(app)
+hydrateRoot(rootElement, app)
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker
-      .register('/service-worker.js')
-      .then((registration) => {
-        console.log('SW registered: ', registration)
-      })
-      .catch((registrationError) => {
-        console.log('SW registration failed: ', registrationError)
-      })
-  })
-}
+// if ('serviceWorker' in navigator) {
+//   window.addEventListener('load', () => {
+//     navigator.serviceWorker
+//       .register('/service-worker.js')
+//       .then((registration) => {
+//         console.log('SW registered: ', registration)
+//       })
+//       .catch((registrationError) => {
+//         console.log('SW registration failed: ', registrationError)
+//       })
+//   })
+// }
