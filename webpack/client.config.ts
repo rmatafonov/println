@@ -27,7 +27,7 @@ const config: Configuration = {
     // IS_DEV && '@gatsbyjs/webpack-hot-middleware/client?path=/__webpack_hmr',
     // IS_DEV && 'webpack-hot-middleware/client',
     // IS_DEV && 'css-hot-loader/hotModuleReplacement',
-    path.join(SRC_DIR, 'client'),
+    path.join(SRC_DIR, 'client.tsx'),
   ].filter(Boolean) as unknown as Entry,
   module: {
     rules: [...fileLoader.client, cssLoader.client, jsLoader.client],
@@ -47,7 +47,6 @@ const config: Configuration = {
       components: COMPONENTS_DIR,
       styles: STYLES_DIR,
       pages: PAGES_DIR,
-      'react-dom': '@hot-loader/react-dom',
     },
     extensions: ['*', '.js', '.jsx', '.json', '.ts', '.tsx'],
     plugins: [new TsconfigPathsPlugin({ configFile: './tsconfig.json' })],

@@ -4,12 +4,10 @@ import { ShipProps } from './types'
 import { useAppSelector } from '@/redux/store/hooks'
 import { enemiesSelector } from '@/redux/enemiesSlice'
 
-const img = new Image()
+const img: any = new Image()
 img.src = shipSvg
 
-const Ship: ShipProps = ({
-  canvasContext, x, y, rectSide
-}) => {
+const Ship: ShipProps = ({ canvasContext, x, y, rectSide }) => {
   const shipRect = rectSide * 0.9
   const xMax = shipRect * 0.95
   const yMax = shipRect * 0.95
@@ -33,7 +31,7 @@ const Ship: ShipProps = ({
       `drawing ship with angle ${currentAxesAngle}, x ${x}, y ${y}, size: ${rectSide}`
     )
 
-    drawShip();
+    drawShip()
   }, [currentAxesAngle])
 
   useEffect(() => {

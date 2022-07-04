@@ -7,7 +7,7 @@
     ],
     "module": "commonjs",
     "moduleResolution": "node",
-    "target": "esnext",
+    "target": "ES6",
     "jsx": "react",
     "noImplicitAny": true,
     "noImplicitThis": true,
