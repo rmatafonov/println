@@ -9,7 +9,7 @@ import Profile from 'pages/Profile'
 // import ForumTheme from '@/pages/Forum/ForumTheme';
 // import ForumAdd from '@/pages/Forum/ForumAdd';
 
-// import { GameContainer } from '../GameContainer'
+import { GameContainer } from '../GameContainer'
 
 import './App.css'
 
@@ -25,9 +25,9 @@ export default function App() {
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/profile" element={<Profile />} />
         {/* <Route path="/forum" element={<Forum />} />
-          <Route path="/forum/:id" element={<ForumTheme />} />
-          <Route path="/forum/add" element={<ForumAdd />} />
-          <Route path="/game" element={<GameContainer />} /> */}
+        <Route path="/forum/:id" element={<ForumTheme />} />
+        <Route path="/forum/add" element={<ForumAdd />} /> */}
+        <Route path="/game" element={<GameContainer />} />
       </Routes>
     </div>
   )

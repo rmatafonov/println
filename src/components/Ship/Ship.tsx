@@ -3,6 +3,7 @@ import { shipSvg } from '@/static/images'
 import { ShipProps } from './types'
 import { useAppSelector } from '@/redux/store/hooks'
 import { enemiesSelector } from '@/redux/enemiesSlice'
+import { isServer } from '@/utils/isServer'
 
 const img: any = new Image()
 img.src = shipSvg

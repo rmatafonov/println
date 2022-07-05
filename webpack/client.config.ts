@@ -5,8 +5,7 @@ import {
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import CompressionPlugin from 'compression-webpack-plugin'
-import LoadablePlugin from '@loadable/webpack-plugin'
-// import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin'
 
 import {
   IS_DEV,
@@ -24,9 +23,7 @@ import jsLoader from './loaders/js'
 
 const config: Configuration = {
   entry: [
-    // IS_DEV && '@gatsbyjs/webpack-hot-middleware/client?path=/__webpack_hmr',
-    // IS_DEV && 'webpack-hot-middleware/client',
-    // IS_DEV && 'css-hot-loader/hotModuleReplacement',
+    IS_DEV && 'webpack-hot-middleware/client.js?path=/__webpack_hmr',
     path.join(SRC_DIR, 'client.tsx'),
   ].filter(Boolean) as unknown as Entry,
   module: {
@@ -53,14 +50,13 @@ const config: Configuration = {
   },
   plugins: [
     IS_DEV && new HotModuleReplacementPlugin(),
-    // IS_DEV && new ReactRefreshPlugin({
-    //   overlay: {
-    //     sockIntegration: 'whm',
-    //   },
-    // }),
+    IS_DEV && new ReactRefreshPlugin({
+      overlay: {
+        sockIntegration: 'whm',
+      },
+    }),
     new MiniCssExtractPlugin({ filename: '[name].css' }),
-    !IS_DEV && new CompressionPlugin(),
-    new LoadablePlugin(),
+    !IS_DEV && new CompressionPlugin()
   ].filter(Boolean) as Plugin[],
 
   devtool: 'source-map',
