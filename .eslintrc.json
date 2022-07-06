@@ -1,12 +1,16 @@
 {
-  "extends": ["airbnb-base"],
+  "extends": [
+    "airbnb-base"
+  ],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
+  "plugins": [
+    "@typescript-eslint"
+  ],
   "rules": {
     "import/no-extraneous-dependencies": 0,
     "operator-linebreak": 0,
     "comma-dangle": 0,
-    "consistent-return":"warn",
+    "consistent-return": "warn",
     "import/prefer-default-export": 0,
     "camelcase": "warn",
     "no-undef": "off",
@@ -22,6 +26,7 @@
     "@typescript-eslint/no-unused-vars": 2,
     "no-param-reassign": "off",
     "default-param-last": "off",
-    "no-use-before-define": "off"
+    "no-use-before-define": "off",
+    "implicit-arrow-linebreak": "off"
   }
 }
