@@ -5,11 +5,11 @@ import SignUp from 'pages/SignUp'
 import Menu from 'pages/Menu'
 import Leaderboard from 'pages/Leaderboard'
 import Profile from 'pages/Profile'
-// import Forum from 'pages/Forum';
-// import ForumTheme from '@/pages/Forum/ForumTheme';
-// import ForumAdd from '@/pages/Forum/ForumAdd';
-
+// import Forum from 'pages/Forum'
+// import ForumTheme from '@/pages/Forum/ForumTheme'
+// import ForumAdd from '@/pages/Forum/ForumAdd'
 import { GameContainer } from '../GameContainer'
+// import { isServer } from '@/utils/isServer'
 
 import './App.css'
 

@@ -6,8 +6,11 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import './text-editor.css'
 import draftToHtml from 'draftjs-to-html'
 import { Props } from './types'
+import useIsSsr from '@/utils/isSsr'
 
 const TextEditor: FC<Props> = (({ setEditorText, isEmptyTriggered }) => {
+  const isSsr = useIsSsr()
+  if (isSsr) return null
   const [editorState, setEditorState] = useState(
     () => EditorState.createEmpty(),
   );

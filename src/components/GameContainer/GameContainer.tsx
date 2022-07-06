@@ -31,7 +31,7 @@ const GameContainer: GameContainerProps = () => {
   const [enemySize, setEnemySize] = useState(0)
   const [enemiesFactory, setEnemiesFactory] = useState<EnemiesFactory>()
   const { bullet } = useAppSelector(enemiesSelector)
-  const rafIdRef = React.useRef(0)
+  const rafIdRef = useRef(0)
 
   const dispatch = useAppDispatch()
 

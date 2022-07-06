@@ -1,15 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 import { enemySvg } from '@/static/images'
 import { EnemyProps } from './types'
-
-const img = new Image()
-img.src = enemySvg
 
 const TEXT_SIZE = 20
 const TEXT_RECT_PADDING = 15
 
 const Enemy: EnemyProps = ({ canvasContext, enemyModel, rectSide }) => {
+  const img = useRef(new Image())
+  img.current.src = enemySvg
   if (!enemyModel.stepsCount) {
     throw Error('Не выставлено количество шагов')
   }
@@ -18,7 +17,7 @@ const Enemy: EnemyProps = ({ canvasContext, enemyModel, rectSide }) => {
 
   useEffect(() => {
     canvasContext.drawImage(
-      img,
+      img.current,
       x - rectSide,
       y - rectSide,
       rectSide * 2,
