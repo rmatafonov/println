@@ -1,16 +1,21 @@
 import React, { FC, useEffect, useState } from 'react'
 import { EditorState, convertToRaw } from 'draft-js'
 import 'draft-js/dist/Draft.css'
-import { Editor } from 'react-draft-wysiwyg'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import './text-editor.css'
 import draftToHtml from 'draftjs-to-html'
 import { Props } from './types'
-import useIsSsr from '@/utils/isSsr'
+import { isServer } from '@/utils/isServer'
+
+// @ts-ignore
+let Editor
+if (!isServer) {
+  import('react-draft-wysiwyg').then((mod) => {
+    Editor = mod.Editor
+  })
+}
 
 const TextEditor: FC<Props> = (({ setEditorText, isEmptyTriggered }) => {
-  const isSsr = useIsSsr()
-  if (isSsr) return null
   const [editorState, setEditorState] = useState(
     () => EditorState.createEmpty(),
   );

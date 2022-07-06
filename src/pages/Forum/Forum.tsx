@@ -5,15 +5,12 @@ import { useNavigate } from 'react-router-dom'
 import { RootState } from '@/redux/store/types';
 import { setCommentsCount } from '@/redux/forumSlice';
 import { useAppDispatch } from '@/redux/store/hooks';
-import useIsSsr from '@/utils/isSsr';
 import Button from '@/components/Button';
 import SvgIcon from '@/components/SvgIcon';
 
 import './forum.css'
 
 function Forum() {
-  const isSsr = useIsSsr()
-  if (isSsr) return null
   const forumThemes = useSelector((state: RootState) => state.forum.forumThemes.data);
   const navigate = useNavigate();
   const forums = useSelector((state: RootState) => state.forum.forumInnerThemes.data);
