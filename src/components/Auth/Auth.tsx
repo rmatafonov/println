@@ -14,12 +14,7 @@ const Auth: FC<Props> = (({
   const navigate = useNavigate();
 
   useEffect(() => {
-    const checkAuth = async () => {
-      const response = await authApi.getUser();
-      return response
-    }
-    const checkAuthResponse = checkAuth();
-    checkAuthResponse.then((res) => {
+    authApi.isAuthenticated().then((res) => {
       if (res) {
         navigate('/menu')
       }

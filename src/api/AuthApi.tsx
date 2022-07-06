@@ -1,5 +1,5 @@
 import Api from './Api'
-import { SignInData, AuthResponse, SignUpData } from './types'
+import { SignInData, AuthResponse, SignUpData, GetUserResponse } from './types'
 
 const authApi = {
   signIn: async (data: SignInData): Promise<AuthResponse> => {
@@ -30,14 +30,18 @@ const authApi = {
       }
     }
   },
-  getUser: async (): Promise<any> => {
-    try {
-      const response = await Api.get('auth/user')
-      return response
-    } catch (error) {
-      console.log(error)
+  getUser: async (): Promise<GetUserResponse> => {
+    const response = await Api.get<GetUserResponse>('auth/user')
+    if (response.status !== 200) {
+      throw Error(JSON.parse(response.statusText).reason)
     }
+    return response.data
   },
+  isAuthenticated: () =>
+    authApi
+      .getUser()
+      .then((res: GetUserResponse) => Boolean(res))
+      .catch(() => false),
   logout: async () => {
     try {
       const response = await Api.post('auth/logout')
@@ -45,7 +49,7 @@ const authApi = {
     } catch (error) {
       console.log(error)
     }
-  }
+  },
 }
 
 export default authApi
