@@ -4,13 +4,16 @@ import forumSlice from '@/redux/forumSlice'
 import enemiesSlice from '@/redux/enemiesSlice'
 import leaderboardSlice from '@/redux/leaderboardSlice'
 
-const store = configureStore({
-  reducer: {
-    user: userSlice,
-    forum: forumSlice,
-    enemiesSlice,
-    leaderboard: leaderboardSlice,
-  },
-})
+function configureAppStore(preloadedState?: any) {
+  return configureStore({
+    reducer: {
+      user: userSlice,
+      forum: forumSlice,
+      enemiesSlice,
+      leaderboard: leaderboardSlice,
+    },
+    preloadedState,
+  })
+}
 
-export default store
+export default configureAppStore

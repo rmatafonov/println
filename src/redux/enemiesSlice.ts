@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { BulletModel } from '@/components/Bullet/types';
+import { BulletModel } from '@/components/Bullet/types'
 import { RootState } from './store/types'
 
 type EnemiesState = {
-  enemies?: Record<string, EnemyModel>;
-  targetEnemyId?: string;
-  bullet: BulletModel;
-  shipAngle: number;
+  enemies?: Record<string, EnemyModel>
+  targetEnemyId?: string
+  bullet: BulletModel
+  shipAngle: number
 }
 
 const initialState: EnemiesState = {
@@ -15,7 +15,7 @@ const initialState: EnemiesState = {
     dy: 0,
     targetWord: null,
   },
-  shipAngle: 0,
+  shipAngle: 0
 }
 
 const FPS = 60
@@ -26,25 +26,23 @@ const enemiesSlice = createSlice({
   reducers: {
     setEnemies: (state, action: PayloadAction<Array<EnemyModel>>) => {
       state.enemies = {}
-      action.payload.forEach((enemy) => state.enemies![enemy.id] = enemy)
+      action.payload.forEach((enemy) => { state.enemies![enemy.id] = enemy })
     },
     moveEnemies: (state) => {
       if (!state.enemies) {
-        console.log('Нечего двигать');
+        console.log('Нечего двигать')
         return
       }
-
       const newEnemies: Record<string, EnemyModel> = {}
       Object.entries(state.enemies)
-        // .filter(([_id, enemy]) => Boolean(enemy.word))
         .forEach(([id, enemy]) => {
           newEnemies[id] = {
             ...enemy,
             currentPoint: {
               x: enemy.currentPoint.x + enemy.dx,
-              y: enemy.currentPoint.y + enemy.dy
+              y: enemy.currentPoint.y + enemy.dy,
             },
-            step: enemy.step + 1
+            step: enemy.step + 1,
           }
         })
       state.enemies = newEnemies
@@ -80,10 +78,18 @@ const enemiesSlice = createSlice({
         const { word } = state.enemies[targetId]
         const newWord = word.substring(1, word.length)
         state.enemies[targetId].word = newWord
-        state.bullet.dx = state.enemies[targetId].currentPoint.x + (state.enemies[targetId].dx * FPS)
+        state.bullet.dx =
+          state.enemies[targetId].currentPoint.x +
+          state.enemies[targetId].dx * FPS
         state.bullet.dy = state.enemies[targetId].currentPoint.y + FPS
         state.bullet.targetWord = word
-        const shipAngle = (Math.atan2(state.enemies[targetId].currentPoint.y, state.enemies[targetId].currentPoint.x) * 45) / Math.PI
+        const shipAngle =
+          (Math.atan2(
+            state.enemies[targetId].currentPoint.y,
+            state.enemies[targetId].currentPoint.x
+          ) *
+            45) /
+          Math.PI
         if (state.enemies[targetId].currentPoint.x >= 250) {
           state.shipAngle = shipAngle
         } else {
@@ -93,13 +99,14 @@ const enemiesSlice = createSlice({
           state.targetEnemyId = undefined
         }
       }
-    }
+    },
   },
 })
 
 export const {
   setEnemies, moveEnemies, shoot, destroyEnemy
-} = enemiesSlice.actions
+} =
+  enemiesSlice.actions
 
 export const enemiesSelector = (state: RootState) => state.enemiesSlice
 

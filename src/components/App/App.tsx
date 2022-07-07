@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import Login from 'pages/Login'
 import SignUp from 'pages/SignUp'
 import Menu from 'pages/Menu'
@@ -8,7 +8,6 @@ import Profile from 'pages/Profile'
 import Forum from 'pages/Forum'
 import ForumTheme from '@/pages/Forum/ForumTheme'
 import ForumAdd from '@/pages/Forum/ForumAdd'
-
 import { GameContainer } from '../GameContainer'
 
 import './App.css'
@@ -26,19 +25,17 @@ export default function App() {
   return (
     <div className="app">
       <div className="background"></div>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/menu" element={<AuthorizedMenu />} />
-          <Route path="/leaderboard" element={<AuthorizedLeaderboard />} />
-          <Route path="/profile" element={<AuthorizedProfile />} />
-          <Route path="/forum" element={<AuthorizedForum />} />
-          <Route path="/forum/:id" element={<AuthorizedForumTheme />} />
-          <Route path="/forum/add" element={<AuthorizedForumAdd />} />
-          <Route path="/game" element={<AuthorizedGameContainer />} />
-        </Routes>
-      </Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/menu" element={<AuthorizedMenu />} />
+        <Route path="/leaderboard" element={<AuthorizedLeaderboard />} />
+        <Route path="/profile" element={<AuthorizedProfile />} />
+        <Route path="/forum" element={<AuthorizedForum />} />
+        <Route path="/forum/:id" element={<AuthorizedForumTheme />} />
+        <Route path="/forum/add" element={<AuthorizedForumAdd />} />
+        <Route path="/game" element={<AuthorizedGameContainer />} />
+      </Routes>
     </div>
   )
 }
