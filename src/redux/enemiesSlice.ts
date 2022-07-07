@@ -35,7 +35,6 @@ const enemiesSlice = createSlice({
       }
       const newEnemies: Record<string, EnemyModel> = {}
       Object.entries(state.enemies)
-        // .filter(([_id, enemy]) => Boolean(enemy.word))
         .forEach(([id, enemy]) => {
           newEnemies[id] = {
             ...enemy,
