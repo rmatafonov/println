@@ -16,10 +16,8 @@ const initialState: UserState = {
   data: null,
 }
 
-export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
-  const response = await authApi.getUser()
-  return response.data
-})
+// eslint-disable-next-line no-return-await
+export const fetchUser = createAsyncThunk('user/fetchUser', async () => await authApi.getUser())
 
 export const pushAvatar = createAsyncThunk(
   'user/pushAvatar',
