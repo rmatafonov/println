@@ -4,6 +4,7 @@ import { renderToString } from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom/server'
 import { Request, Response } from 'express'
 import Helmet, { HelmetData } from 'react-helmet'
+import { RootState } from './redux/store/types'
 import configureAppStore from './redux/store'
 import App from './components/App'
 
@@ -21,7 +22,7 @@ export default (req: Request, res: Response) => {
   res.send(getHtml(reactHtml, store, helmetData))
 }
 
-function getHtml(reactHtml: string, appStore: any, helmetData: HelmetData) {
+function getHtml(reactHtml: string, appStore: RootState, helmetData: HelmetData) {
   return `
         <!DOCTYPE html>
         <html lang="en">

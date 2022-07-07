@@ -26,7 +26,7 @@ const enemiesSlice = createSlice({
   reducers: {
     setEnemies: (state, action: PayloadAction<Array<EnemyModel>>) => {
       state.enemies = {}
-      action.payload.forEach((enemy) => (state.enemies![enemy.id] = enemy))
+      action.payload.forEach((enemy) => { state.enemies![enemy.id] = enemy })
     },
     moveEnemies: (state) => {
       if (!state.enemies) {
@@ -35,7 +35,7 @@ const enemiesSlice = createSlice({
       }
       const newEnemies: Record<string, EnemyModel> = {}
       Object.entries(state.enemies)
-        .filter(([_id, enemy]) => Boolean(enemy.word))
+        // .filter(([_id, enemy]) => Boolean(enemy.word))
         .forEach(([id, enemy]) => {
           newEnemies[id] = {
             ...enemy,
