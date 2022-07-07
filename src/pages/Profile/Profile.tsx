@@ -12,7 +12,6 @@ import Validation from 'utils/validate'
 import { ChangeUserResponse } from '@/api/types'
 import { useAppSelector, useAppDispatch } from '@/redux/store/hooks'
 import { userSelector, pushAvatar, updateUser } from '@/redux/userSlice'
-
 import 'styles/widget.css'
 import './profile.css'
 import { FieldProps } from '@/components/Field/Field'

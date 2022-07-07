@@ -1,23 +1,21 @@
 import React, {
   ReactNode, useState, useEffect, useRef
 } from 'react'
-
-import { ActionCreatorWithoutPayload } from '@reduxjs/toolkit'
 import { Ship } from '../Ship'
 import { EnemiesContainer } from '../EnemiesContainer'
 import { domUtil } from '@/utils'
 import { GameContainerProps } from './types'
 import {
-  enemiesSelector, moveEnemies, setEnemies, shoot
+  enemiesSelector,
+  moveEnemies,
+  setEnemies,
+  shoot
 } from '@/redux/enemiesSlice'
 import EnemiesFactory from '@/service/EnemiesFactory'
 
 import './GameContainer.css'
 import { useAppDispatch, useAppSelector } from '@/redux/store/hooks'
-import { AppDispatch } from '@/redux/store/types'
 import Bullet from '../Bullet/Bullet'
-
-const FPS_60_PER_SEC = 1000 / 60
 
 const GameContainer: GameContainerProps = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -33,8 +31,10 @@ const GameContainer: GameContainerProps = () => {
   const [enemySize, setEnemySize] = useState(0)
   const [enemiesFactory, setEnemiesFactory] = useState<EnemiesFactory>()
   const { bullet } = useAppSelector(enemiesSelector)
+  const rafIdRef = useRef(0)
 
   const dispatch = useAppDispatch()
+
   useEffect(() => {
     if (!canvasRef.current) {
       throw Error('canvasRef не инициализировался')
@@ -68,15 +68,20 @@ const GameContainer: GameContainerProps = () => {
         dispatch(shoot(e.key))
       }
     }
-
     setIsGameLoading(false)
   }, [enemiesFactory])
+
+  const startEnemiesRaf = () => {
+    dispatch(moveEnemies())
+    rafIdRef.current = requestAnimationFrame(startEnemiesRaf)
+  }
 
   useEffect(() => {
     if (isGameLoading) {
       return
     }
-    startEnemies(dispatch, moveEnemies)
+    startEnemiesRaf()
+    return () => cancelAnimationFrame(rafIdRef.current)
   }, [isGameLoading])
 
   let renderCharacters: ReactNode = <></>
@@ -85,11 +90,13 @@ const GameContainer: GameContainerProps = () => {
       canvasCtx.fillStyle = 'red'
       canvasCtx.font = '24px helvetica'
       canvasCtx.fillText('Ба-бах!', 15, 20)
+      cancelAnimationFrame(rafIdRef.current)
     }
     const handleEnemiesKilled = () => {
       canvasCtx.fillStyle = 'red'
       canvasCtx.font = '24px helvetica'
       canvasCtx.fillText('Всех порвал, один остался!', 15, 20)
+      cancelAnimationFrame(rafIdRef.current)
     }
 
     canvasCtx.shadowColor = 'rgba(0,0,0,0)'
@@ -121,7 +128,6 @@ const GameContainer: GameContainerProps = () => {
       </>
     )
   }
-
   return (
     <>
       <div className="blur blur_left"></div>
@@ -137,13 +143,3 @@ const GameContainer: GameContainerProps = () => {
 }
 
 export default GameContainer
-
-function startEnemies(
-  dispatch: AppDispatch,
-  moveEnemiesParam: ActionCreatorWithoutPayload<string>
-) {
-  setTimeout(() => {
-    dispatch(moveEnemies())
-    startEnemies(dispatch, moveEnemiesParam)
-  }, FPS_60_PER_SEC)
-}

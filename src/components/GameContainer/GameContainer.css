@@ -19,27 +19,32 @@
 
 .blur {
   position: absolute;
-  background-color: rgba(0,0,0, .8);
+  background-color: rgb(0 0 0 / 80%);
   filter: blur(15px);
+
   &_left {
     left: 0;
     width: calc(50% - 250px);
     height: 100%;
   }
+
   &_top {
     top: 0;
     height: 20px;
     width: 100%;
   }
+
   &_bottom {
     bottom: 0;
     height: 20px;
     width: 100%;
   }
+
   &_right {
     right: 0;
-    width: calc(50% - 250px);;
+    width: calc(50% - 250px);
     height: 100%;
   }
+
   border: thick double #32a1ce;
 }
