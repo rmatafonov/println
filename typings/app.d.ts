@@ -1,5 +1,9 @@
 declare global {
   export type Nullable<T> = T | null
+  export type Indexed<T = unknown> = { [key in any]: T }
+
+  export type LocationState = { from: Location }
+
   export type Point = { x: number, y: number }
 
   export type EnemyModel = {

@@ -25,6 +25,12 @@
     }
   }
 
+  &__button-icon {
+    height: 80%;
+    margin-right: 0.2em;
+    vertical-align: middle;
+  }
+
   &__error {
     position: absolute;
     bottom: 20px;

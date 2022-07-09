@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import { Navigate, useLocation } from 'react-router-dom'
 import authApi from '@/api/AuthApi'
 import Loader from '../Loader'
-import Login from '@/pages/Login'
 
 function withAuthorizedOrLogin(WrappedComponent: React.ComponentType) {
   return ({ ...props }) => {
+    const location = useLocation()
     const [isLoading, setLoading] = useState(true)
     const [isAuthorized, setAuthorized] = useState(false)
 
@@ -21,7 +22,8 @@ function withAuthorizedOrLogin(WrappedComponent: React.ComponentType) {
     if (isAuthorized) {
       return <WrappedComponent {...props} />
     }
-    return <Login></Login>
+
+    return <Navigate to="/" state={{ from: location }} replace />
   }
 }
 
