@@ -2,6 +2,10 @@
   "name": "ztype",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": ">=15.0.0"
+  },
+  "source": "static/index.html",
   "scripts": {
     "clean": "rimraf dist/",
     "build": "NODE_ENV=production NODE_PATH=. npm run clean && webpack --mode production",
