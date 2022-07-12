@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { enemiesSelector } from '@/redux/enemiesSlice'
 import { useAppSelector } from '@/redux/store/hooks'
 import { Enemy } from '../Enemy'
@@ -18,17 +18,19 @@ const EnemiesContainer: EnemiesContainerProps = ({
     return <></>
   }
 
-  if (Object.values(enemies).length === 0) {
-    onAllEnemiesKilled()
-  }
+  useEffect(() => {
+    if (Object.values(enemies).length === 0) {
+      onAllEnemiesKilled()
+    }
 
-  if (
-    Object.values(enemies).some(
-      (enemy) => enemy.stepsCount && enemy.step > enemy.stepsCount
-    )
-  ) {
-    onEnemyGotShip()
-  }
+    if (
+      Object.values(enemies).some(
+        (enemy) => enemy.stepsCount && enemy.step > enemy.stepsCount
+      )
+    ) {
+      onEnemyGotShip()
+    }
+  })
 
   return (
     <>

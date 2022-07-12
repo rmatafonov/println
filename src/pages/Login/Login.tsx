@@ -51,7 +51,11 @@ function Login() {
           const state: YandexOAuthSearchParamsState = JSON.parse(
             searchParams.state
           )
-          navigate(state.currentPath)
+          if (state.currentPath !== '/') {
+            navigate(state.currentPath)
+          } else {
+            navigate(nextPath)
+          }
         } else {
           navigate(nextPath)
         }

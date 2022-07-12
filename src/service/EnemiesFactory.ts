@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid'
 import { mathUtil } from '@/utils'
 
-const DEFAULT_TEXT = 'кот рука нога'
+const DEFAULT_TEXT = 'сел на кресло стоявшее стола опустился против него на низкий тахта опершись руки колени наклонил голову внимательно стал слушать что говорил ему свободно говоривший сказал что князь хотя знает прошедшее желает от него самого узнать его историю'
 const LEVEL_0_STEPS = 1000
 
 export default class EnemiesFactory {
@@ -39,7 +39,7 @@ export default class EnemiesFactory {
     const stepsCount = LEVEL_0_STEPS - gameLevel * 3
     const enemies = result.map((word) => {
       const x = mathUtil.getRandomInt(this.xMax)
-      const y = mathUtil.getRandomInt(((this.yMax - this.yMax) * 2) / 3)
+      const y = mathUtil.getRandomInt(this.yMax) - this.yMax * 2
       return {
         id: nanoid(6),
         step: 1,
