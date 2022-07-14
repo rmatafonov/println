@@ -60,7 +60,8 @@ const enemiesSlice = createSlice({
     },
     shoot: (state, action: PayloadAction<string>) => {
       if (!state.enemies || Object.keys(state.enemies).length === 0) {
-        throw Error('Не во что стрелять ¯\\_(ツ)_/¯')
+        console.warn('Не во что стрелять ¯\\_(ツ)_/¯')
+        return
       }
 
       const letter = action.payload
@@ -108,6 +109,6 @@ export const {
 } =
   enemiesSlice.actions
 
-export const enemiesSelector = (state: RootState) => state.enemiesSlice
+export const enemiesSelector = (state: RootState): Record<string, EnemyModel> => state.enemiesSlice
 
 export default enemiesSlice.reducer

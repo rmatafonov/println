@@ -67,7 +67,7 @@ function drawText(
   }
   ctx.fillRect(x - wordWidth, y + size, wordWidth, TEXT_SIZE)
   ctx.fillStyle = '#e3d212'
-  ctx.fillText(word, x - wordWidth + (TEXT_RECT_PADDING / 2), y + size)
+  ctx.fillText(word, x - wordWidth + TEXT_RECT_PADDING / 2, y + size)
   ctx.restore()
 }
 
