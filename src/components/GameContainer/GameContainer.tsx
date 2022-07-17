@@ -1,4 +1,4 @@
-import React, { ReactNode, useState, useEffect, useRef } from 'react'
+import React, { ReactNode, useState, useEffect, useRef, useContext } from 'react'
 import { Ship } from '../Ship'
 import { EnemiesContainer } from '../EnemiesContainer'
 import { domUtil, keyboardUtils } from '@/utils'
@@ -15,9 +15,12 @@ import './GameContainer.css'
 import { useAppDispatch, useAppSelector } from '@/redux/store/hooks'
 import Bullet from '../Bullet/Bullet'
 import { Screensaver } from '../Screensaver'
+import BackgroundBubbles from './BackgroundBubbles'
+import { ThemeContext } from '../context'
 
 const GameContainer: GameContainerProps = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const themeContext = useContext(ThemeContext)
 
   const [isLevelLoading, setLevelLoading] = useState(true)
   const [showScreensaver, setShowScreensaver] = useState(false)
@@ -176,11 +179,8 @@ const GameContainer: GameContainerProps = () => {
   }
   return (
     <>
-      <div className="blur blur_left"></div>
-      <div className="blur blur_top"></div>
-      <div className="blur blur_bottom"></div>
-      <div className="blur blur_right"></div>
-      <div className="game-container">
+      <div className={`game-container game-container__${themeContext.theme}`}>
+        <BackgroundBubbles></BackgroundBubbles>
         <canvas ref={canvasRef} className="canvas-ship" />
         {renderCharacters}
         {renderScreensaver}

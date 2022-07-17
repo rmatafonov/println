@@ -93,7 +93,7 @@ hr {
   text-align: center;
 }
 
-.background {
+.background__dark {
   position: absolute;
   height: 100%;
   width: 100%;
@@ -103,8 +103,22 @@ hr {
   background-repeat: repeat;
   background-position: 0 -100%;
   background-size: auto auto;
-  animation: animated-background 700s linear infinite;
+  /* animation: animated-background 700s linear infinite; */
   z-index: -1;
+}
+
+.background__light {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: url('../../static/images/app-bg-light.jpg');
+  background-repeat: repeat;
+  background-position: 0 -100%;
+  background-size: auto auto;
+  /* animation: animated-background 700s linear infinite; */
+  z-index: -1;  
 }
 
 .form {

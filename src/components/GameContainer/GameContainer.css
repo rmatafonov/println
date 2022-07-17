@@ -3,8 +3,15 @@
 .game-container {
   margin: auto;
   width: 500px;
-  height: 100%;
-  padding: 20px 0;
+  height: 95%;
+
+  &__dark {
+    background-color: #0c192c;
+  }
+
+  &__light {
+    background-color: #87abe2;
+  }
 }
 
 .canvas-ship {
@@ -15,36 +22,13 @@
   top: 0;
   bottom: 0;
   margin: auto;
+
+  &__dark {
+    border: thick solid #32a1ce;
+  }
+
+  &__dark {
+    border: thick solid #0a77a1;
+  }
 }
 
-.blur {
-  position: absolute;
-  background-color: rgb(0 0 0 / 80%);
-  filter: blur(15px);
-
-  &_left {
-    left: 0;
-    width: calc(50% - 250px);
-    height: 100%;
-  }
-
-  &_top {
-    top: 0;
-    height: 20px;
-    width: 100%;
-  }
-
-  &_bottom {
-    bottom: 0;
-    height: 20px;
-    width: 100%;
-  }
-
-  &_right {
-    right: 0;
-    width: calc(50% - 250px);
-    height: 100%;
-  }
-
-  border: thick double #32a1ce;
-}
