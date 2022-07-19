@@ -7,6 +7,9 @@ type EnemiesState = {
   targetEnemyId?: string
   bullet: BulletModel
   shipAngle: number
+  date: Date
+  destroyed: number
+  accuracy: number
 }
 
 const initialState: EnemiesState = {
@@ -15,7 +18,10 @@ const initialState: EnemiesState = {
     dy: 0,
     targetWord: null,
   },
-  shipAngle: 0
+  shipAngle: 0,
+  date: new Date(),
+  destroyed: 0,
+  accuracy: 0,
 }
 
 const FPS = 60
@@ -56,6 +62,7 @@ const enemiesSlice = createSlice({
             newEnemies[id] = { ...enemy }
           })
         state.enemies = newEnemies
+        console.log('убит')
       }
     },
     shoot: (state, action: PayloadAction<string>) => {
@@ -74,6 +81,7 @@ const enemiesSlice = createSlice({
       }
 
       if (targetId) {
+        console.log('попал')
         state.targetEnemyId = targetId
         const { word } = state.enemies[targetId]
         const newWord = word.substring(1, word.length)

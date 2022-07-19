@@ -1,7 +1,17 @@
-const { app } = require('./dist/server.js')
+require('dotenv').config()
+const {
+  app, startApp
+} = require('./dist/server.js')
 
-const port = process.env.PORT || 9001
+const PORT = process.env.PORT || 9001
 
-app.listen(port, () => {
-  console.log(`Application is started on localhost:${port}`)
-})
+const start = async () => {
+  try {
+    startApp()
+    app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+start()

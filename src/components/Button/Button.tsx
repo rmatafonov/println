@@ -1,5 +1,5 @@
 import React, { FC, ButtonHTMLAttributes } from 'react'
-import './button.css'
+import './Button.css'
 
 type OwnProps = {
   isDisabled?: boolean

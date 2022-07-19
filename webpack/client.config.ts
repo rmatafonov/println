@@ -1,12 +1,12 @@
 import path from 'path'
 import {
-  Configuration, HotModuleReplacementPlugin, WebpackPluginInstance as Plugin, Entry
+  Configuration, HotModuleReplacementPlugin, WebpackPluginInstance as Plugin, Entry,
 } from 'webpack'
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import CompressionPlugin from 'compression-webpack-plugin'
 import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin'
-
+import Dotenv from 'dotenv-webpack'
 import {
   IS_DEV,
   DIST_DIR,
@@ -49,6 +49,7 @@ const config: Configuration = {
     plugins: [new TsconfigPathsPlugin({ configFile: './tsconfig.json' })],
   },
   plugins: [
+    new Dotenv(),
     IS_DEV && new HotModuleReplacementPlugin(),
     IS_DEV && new ReactRefreshPlugin({
       overlay: {
@@ -56,7 +57,7 @@ const config: Configuration = {
       },
     }),
     new MiniCssExtractPlugin({ filename: '[name].css' }),
-    !IS_DEV && new CompressionPlugin()
+    !IS_DEV && new CompressionPlugin(),
   ].filter(Boolean) as Plugin[],
 
   devtool: 'source-map',
