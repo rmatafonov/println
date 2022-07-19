@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Login from 'pages/Login'
 import SignUp from 'pages/SignUp'
@@ -8,12 +8,13 @@ import Profile from 'pages/Profile'
 import Forum from 'pages/Forum'
 import ForumTheme from '@/pages/Forum/ForumTheme'
 import ForumAdd from '@/pages/Forum/ForumAdd'
-import { GameContainer } from '../GameContainer'
 
 import './App.css'
 import withAuthorizedOrLogin from '../hoc/withAuthorizedOrLogin'
 import { ThemeContext } from '../context'
 import { AppTheme } from '../context/types'
+import { Game } from '@/pages/Game'
+import { ThemeSwitcher } from '../ThemeSwitcher'
 
 export default function App() {
   const [theme, setTheme] = useState(AppTheme.dark)
@@ -24,33 +25,31 @@ export default function App() {
   const AuthorizedForum = withAuthorizedOrLogin(Forum)
   const AuthorizedForumTheme = withAuthorizedOrLogin(ForumTheme)
   const AuthorizedForumAdd = withAuthorizedOrLogin(ForumAdd)
-  const AuthorizedGameContainer = withAuthorizedOrLogin(GameContainer)
+  const AuthorizedGameContainer = withAuthorizedOrLogin(Game)
 
   const handleThemeChange = (theme: AppTheme) => {
-    useEffect(() => {
-      setTheme(theme)
-    })
+    setTheme(theme)
   }
 
   return (
     <div className="app">
-      <div className={`background__${theme}`}>
-        <ThemeContext.Provider
-          value={{ theme: AppTheme.dark, changeTheme: handleThemeChange }}
-        >
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/sign-up" element={<SignUp />} />
-            <Route path="/menu" element={<AuthorizedMenu />} />
-            <Route path="/leaderboard" element={<AuthorizedLeaderboard />} />
-            <Route path="/profile" element={<AuthorizedProfile />} />
-            <Route path="/forum" element={<AuthorizedForum />} />
-            <Route path="/forum/:id" element={<AuthorizedForumTheme />} />
-            <Route path="/forum/add" element={<AuthorizedForumAdd />} />
-            <Route path="/game" element={<AuthorizedGameContainer />} />
-          </Routes>
-        </ThemeContext.Provider>
-      </div>
+      <div className={`background background__${theme}`}></div>
+      <ThemeContext.Provider
+        value={{ theme, changeTheme: handleThemeChange }}
+      >
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/menu" element={<AuthorizedMenu />} />
+          <Route path="/leaderboard" element={<AuthorizedLeaderboard />} />
+          <Route path="/profile" element={<AuthorizedProfile />} />
+          <Route path="/forum" element={<AuthorizedForum />} />
+          <Route path="/forum/:id" element={<AuthorizedForumTheme />} />
+          <Route path="/forum/add" element={<AuthorizedForumAdd />} />
+          <Route path="/game" element={<AuthorizedGameContainer />} />
+        </Routes>
+        <ThemeSwitcher onThemeChanged={handleThemeChange}></ThemeSwitcher>
+      </ThemeContext.Provider>
     </div>
   )
 }

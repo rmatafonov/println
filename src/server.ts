@@ -9,15 +9,9 @@ import { IS_DEV } from '../webpack/env'
 import config from '../webpack/client.config'
 import 'babel-polyfill'
 import serverRenderMiddleware from './server-render-middleware'
-// import { dbConnect, UserTheme } from './server/db'
+import { dbConnect } from './server/db'
 
-// dbConnect().then(() => {
-//   console.log('Connected');
-//   UserTheme.create({
-//     userId: 1,
-//     theme: 'dark'
-//   })
-// })
+dbConnect()
 
 const app = express()
 

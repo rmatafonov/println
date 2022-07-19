@@ -1,4 +1,10 @@
-import React, { ReactNode, useState, useEffect, useRef, useContext } from 'react'
+import React, {
+  ReactNode,
+  useState,
+  useEffect,
+  useRef,
+  useContext,
+} from 'react'
 import { Ship } from '../Ship'
 import { EnemiesContainer } from '../EnemiesContainer'
 import { domUtil, keyboardUtils } from '@/utils'
@@ -15,10 +21,9 @@ import './GameContainer.css'
 import { useAppDispatch, useAppSelector } from '@/redux/store/hooks'
 import Bullet from '../Bullet/Bullet'
 import { Screensaver } from '../Screensaver'
-import BackgroundBubbles from './BackgroundBubbles'
 import { ThemeContext } from '../context'
 
-const GameContainer: GameContainerProps = () => {
+const GameContainer: GameContainerProps = ({ className }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const themeContext = useContext(ThemeContext)
 
@@ -152,11 +157,13 @@ const GameContainer: GameContainerProps = () => {
 
     renderCharacters = (
       <>
-        <Ship
+        <EnemiesContainer
           canvasContext={canvasCtx}
-          x={shipPoint.x}
-          y={shipPoint.y}
-          rectSide={shipSize}
+          enemySize={enemySize}
+          shipX={shipPoint.x}
+          shipY={shipPoint.y - shipSize / 2}
+          onEnemyGotShip={handleShipKilled}
+          onAllEnemiesKilled={handleEnemiesKilled}
         />
         <Bullet
           canvasContext={canvasCtx}
@@ -166,26 +173,21 @@ const GameContainer: GameContainerProps = () => {
             targetWord: bullet.targetWord,
           }}
         />
-        <EnemiesContainer
+        <Ship
           canvasContext={canvasCtx}
-          enemySize={enemySize}
-          shipX={shipPoint.x}
-          shipY={shipPoint.y - shipSize / 2}
-          onEnemyGotShip={handleShipKilled}
-          onAllEnemiesKilled={handleEnemiesKilled}
+          x={shipPoint.x}
+          y={shipPoint.y}
+          rectSide={shipSize}
         />
       </>
     )
   }
   return (
-    <>
-      <div className={`game-container game-container__${themeContext.theme}`}>
-        <BackgroundBubbles></BackgroundBubbles>
-        <canvas ref={canvasRef} className="canvas-ship" />
-        {renderCharacters}
-        {renderScreensaver}
-      </div>
-    </>
+    <div className='game-container'>
+      <canvas ref={canvasRef} className="canvas-ship" />
+      {renderCharacters}
+      {renderScreensaver}
+    </div>
   )
 }
 
