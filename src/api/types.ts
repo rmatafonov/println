@@ -44,3 +44,12 @@ export type GetFromLeaderboardData = {
   cursor: number | string
   limit: number
 }
+
+export type YandexOAuthSearchParamsState = {
+  currentPath: string
+}
+
+export type YandexOAuthSearchParams = {
+  code?: string
+  state?: string
+}

@@ -32,9 +32,6 @@ const authApi = {
   },
   getUser: async (): Promise<GetUserResponse> => {
     const response = await Api.get<GetUserResponse>('auth/user')
-    if (response.status !== 200) {
-      throw Error(JSON.parse(response.statusText).reason)
-    }
     return response.data
   },
   isAuthenticated: () =>

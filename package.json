@@ -2,13 +2,17 @@
   "name": "ztype",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": ">=15.0.0"
+  },
+  "source": "static/index.html",
   "scripts": {
     "clean": "rimraf dist/",
-    "build": "NODE_ENV=production NODE_PATH=. npm run clean && webpack --mode production",
+    "fullClean": "rimraf dist/ node_modules/",
+    "build": "cross-env NODE_ENV=production NODE_PATH=. npm run clean && webpack --mode production",
     "start:webpack": "webpack --mode=development --watch",
     "start:server": "node index.js --watch dist/server.js",
     "start": "NODE_ENV=development npm-run-all --parallel start:*",
-    "fullClean": "rimraf dist/ node_modules/",
     "lint:js": "eslint '**/*{.tsx,.js}'",
     "lint:css": "stylelint '**/*.css'",
     "lint:all": "npm-run-all lint:js lint:css",

@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState, useCallback, useEffect, FormEvent } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import authApi from 'api/AuthApi'
 
 import Button from 'components/Button'
@@ -10,9 +10,19 @@ import { SubmitEventType } from './types'
 
 import 'styles/auth.css'
 import './login.css'
+import { oAuth, urlUtils } from '@/utils'
+import { yandexOAuthSvg } from '@/static/images'
+import { YandexOAuthSearchParamsState } from '@/api/types'
 
 function Login() {
   const navigate = useNavigate()
+  const location = useLocation()
+
+  let nextPath = '/menu'
+  if (location.state) {
+    nextPath = (location.state as LocationState).from?.pathname
+  }
+
   const [inputs, setInputs] = useState<InputType[]>([
     {
       fieldType: 'login',
@@ -32,6 +42,26 @@ function Login() {
   ])
   const [responseError, setResponseError] = useState<null | string>(null)
   const [isFailValidate, setIsFailValidate] = useState(true)
+
+  useEffect(() => {
+    const searchParams = urlUtils.getUrlParams()
+    if (searchParams.code) {
+      oAuth.authServer(searchParams.code).then(() => {
+        if (searchParams.state) {
+          const state: YandexOAuthSearchParamsState = JSON.parse(
+            searchParams.state
+          )
+          if (state.currentPath !== '/') {
+            navigate(state.currentPath)
+          } else {
+            navigate(nextPath)
+          }
+        } else {
+          navigate(nextPath)
+        }
+      })
+    }
+  })
 
   const goToSignUp = () => {
     navigate('/sign-up')
@@ -53,18 +83,21 @@ function Login() {
       )
       if (response.error) {
         setResponseError(response.error)
-      } else if (window.location.pathname !== '/') {
-        window.location.reload()
       } else {
-        navigate('/menu')
+        navigate(nextPath)
       }
     },
     [inputs]
   )
 
+  const formSubmit = (e: FormEvent) => {
+    e.preventDefault()
+  }
+
   return (
     <div className="login">
-      <form className="login__form" onSubmit={submit}>
+      <form className="login__form" onSubmit={formSubmit}>
+        {responseError && <div className="auth__error">{responseError}</div>}
         <Auth
           inputs={inputs}
           setInputs={setInputs}
@@ -82,8 +115,16 @@ function Login() {
                 Нет аккаунта?
               </Button>
             </li>
+            <li>
+              <hr />
+            </li>
+            <li className="auth__button">
+              <Button onClick={oAuth.yandex}>
+                <img className="auth__button-icon" src={yandexOAuthSvg}></img>
+                Войти с Яндекс ID
+              </Button>
+            </li>
           </ul>
-          {responseError && <div className="auth__error">{responseError}</div>}
         </Auth>
       </form>
     </div>
