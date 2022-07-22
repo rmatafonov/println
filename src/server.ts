@@ -9,9 +9,6 @@ import { IS_DEV } from '../webpack/env'
 import config from '../webpack/client.config'
 import 'babel-polyfill'
 import serverRenderMiddleware from './server-render-middleware'
-import { dbConnect } from './server/db'
-
-dbConnect()
 
 const app = express()
 

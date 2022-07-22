@@ -1,25 +1,16 @@
-import React, { useContext } from 'react'
+import React from 'react'
 
 import './ThemeSwitcher.css'
 import Button from '../Button'
-import { ThemeContext } from '../context'
-import { AppTheme } from '../context/types'
 import { ThemeSwitcherProps } from './types'
-// import { useAppSelector } from '@/redux/store/hooks'
-// import { userSelector } from '@/redux/userSlice'
+import { AppTheme } from '../App/types'
 
-const ThemeSwitcher: ThemeSwitcherProps = ({ onThemeChanged }) => {
-  // const { data: userData } = useAppSelector(userSelector)
-  const themeContext = useContext(ThemeContext)
-
+const ThemeSwitcher: ThemeSwitcherProps = ({ currentTheme, onThemeChange }) => {
   const changeTheme = () => {
     const newTheme =
-      themeContext.theme === AppTheme.dark ? AppTheme.light : AppTheme.dark
+      currentTheme === AppTheme.dark ? AppTheme.light : AppTheme.dark
 
-    // if (userData !== null) {
-    // }
-
-    onThemeChanged(newTheme)
+    onThemeChange(newTheme)
   }
 
   return <Button onClick={changeTheme}>Сменить тему</Button>
