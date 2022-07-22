@@ -1,11 +1,11 @@
 .theme {
   &_dark {
-    --background-pic: url('../../static/images/app-bg.jpg');
+    --app-background: url('../../static/images/app-bg.jpg');
     --game-background: url('../../static/images/stars.jpg');
   }
 
   &_light {
-    --background-pic: url('../../static/images/app-bg-light.jpg');
+    --app-background: url('../../static/images/app-bg-light.jpg');
     --game-background: url('../../static/images/bubbles.png');
   }
 }
