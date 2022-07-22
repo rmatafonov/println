@@ -3,7 +3,6 @@ import React, {
   useState,
   useEffect,
   useRef,
-  useContext,
 } from 'react'
 import { Ship } from '../Ship'
 import { EnemiesContainer } from '../EnemiesContainer'
@@ -21,11 +20,9 @@ import './GameContainer.css'
 import { useAppDispatch, useAppSelector } from '@/redux/store/hooks'
 import Bullet from '../Bullet/Bullet'
 import { Screensaver } from '../Screensaver'
-import { ThemeContext } from '../context'
 
-const GameContainer: GameContainerProps = ({ className }) => {
+const GameContainer: GameContainerProps = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const themeContext = useContext(ThemeContext)
 
   const [isLevelLoading, setLevelLoading] = useState(true)
   const [showScreensaver, setShowScreensaver] = useState(false)

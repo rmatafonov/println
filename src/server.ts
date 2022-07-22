@@ -15,6 +15,10 @@ dbConnect()
 
 const app = express()
 
+app.get('/api/v1/theme', (_req: express.Request, resp: express.Response) => {
+  resp.status(200).send('This will return theme')
+})
+
 if (IS_DEV) {
   const compiler = webpack({ ...config, mode: 'development' })
   app.use(

@@ -1,13 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import authApi from '@/api/AuthApi'
-import { GetUserResponse, ChangeUserResponse } from '@/api/types'
+import { ChangeUserResponse, UserEnrichedData } from '@/api/types'
 import { RootState } from '@/redux/store/types'
 import profileApi from '@/api/ProfileApi'
+import gameApi from '@/api/gameApi'
 
 type UserState = {
   loading: boolean
-  data: null | GetUserResponse
+  data: null | UserEnrichedData
   message?: unknown
 }
 
@@ -16,8 +17,14 @@ const initialState: UserState = {
   data: null,
 }
 
-// eslint-disable-next-line no-return-await
-export const fetchUser = createAsyncThunk('user/fetchUser', async () => await authApi.getUser())
+export const fetchUser = createAsyncThunk(
+  'user/fetchUser',
+  async (): Promise<UserEnrichedData> => {
+    const user = await authApi.getUser()
+    const theme = await gameApi.getTheme()
+    return { user, theme }
+  }
+)
 
 export const pushAvatar = createAsyncThunk(
   'user/pushAvatar',
@@ -50,6 +57,9 @@ const userSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(fetchUser.pending, (state) => {
+      state.loading = true
+    })
     builder.addCase(fetchUser.fulfilled, (state, action) => {
       state.data = action.payload
     })
