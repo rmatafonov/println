@@ -12,8 +12,8 @@ import ForumAdd from '@/pages/Forum/ForumAdd'
 import './App.css'
 import withAuthorizedOrLogin from '../hoc/withAuthorizedOrLogin'
 import { Game } from '@/pages/Game'
-import { ThemeSwitcher } from '../ThemeSwitcher'
-import { AppTheme } from './types'
+import { ThemeContext } from '../context'
+import { AppTheme } from '../context/types'
 
 export default function App() {
   const [theme, setTheme] = useState(AppTheme.dark)
@@ -33,21 +33,19 @@ export default function App() {
   return (
     <div className={`app theme_${theme}`}>
       <div className="background"></div>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/menu" element={<AuthorizedMenu />} />
-        <Route path="/leaderboard" element={<AuthorizedLeaderboard />} />
-        <Route path="/profile" element={<AuthorizedProfile />} />
-        <Route path="/forum" element={<AuthorizedForum />} />
-        <Route path="/forum/:id" element={<AuthorizedForumTheme />} />
-        <Route path="/forum/add" element={<AuthorizedForumAdd />} />
-        <Route path="/game" element={<AuthorizedGameContainer />} />
-      </Routes>
-      <ThemeSwitcher
-        currentTheme={theme}
-        onThemeChange={handleThemeChange}
-      ></ThemeSwitcher>
+      <ThemeContext.Provider value={{ theme, changeTheme: handleThemeChange }}>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/menu" element={<AuthorizedMenu />} />
+          <Route path="/leaderboard" element={<AuthorizedLeaderboard />} />
+          <Route path="/profile" element={<AuthorizedProfile />} />
+          <Route path="/forum" element={<AuthorizedForum />} />
+          <Route path="/forum/:id" element={<AuthorizedForumTheme />} />
+          <Route path="/forum/add" element={<AuthorizedForumAdd />} />
+          <Route path="/game" element={<AuthorizedGameContainer />} />
+        </Routes>
+      </ThemeContext.Provider>
     </div>
   )
 }

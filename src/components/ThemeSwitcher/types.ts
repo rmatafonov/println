@@ -1,8 +1,3 @@
-import { AppTheme } from '../App/types'
-
-type ThemeSwitcherOwnProps = {
-  currentTheme: AppTheme
-  onThemeChange: (newTheme: AppTheme) => void
-}
+type ThemeSwitcherOwnProps = {}
 
 export type ThemeSwitcherProps = React.FC<ThemeSwitcherOwnProps>

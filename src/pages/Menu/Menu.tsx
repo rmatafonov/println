@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import authApi from 'api/AuthApi'
 import 'styles/widget.css'
 import './menu.css'
+import { ThemeSwitcher } from '@/components/ThemeSwitcher'
 
 function Menu() {
   const navigate = useNavigate();
@@ -21,19 +22,32 @@ function Menu() {
         <div className="widget__content">
           <ul className="menu__list">
             <li className="menu__item">
-              <Link className="menu__link" to="/game">Играть</Link>
+              <ThemeSwitcher></ThemeSwitcher>
             </li>
             <li className="menu__item">
-              <Link className="menu__link" to="/leaderboard">Таблица рекордов</Link>
+              <Link className="menu__link" to="/game">
+                Играть
+              </Link>
             </li>
             <li className="menu__item">
-              <Link className="menu__link" to="/profile">Профиль</Link>
+              <Link className="menu__link" to="/leaderboard">
+                Таблица рекордов
+              </Link>
             </li>
             <li className="menu__item">
-              <Link className="menu__link" to="/forum">Форум</Link>
+              <Link className="menu__link" to="/profile">
+                Профиль
+              </Link>
             </li>
             <li className="menu__item">
-              <div className="menu__link" onClick={logout}>Выйти</div>
+              <Link className="menu__link" to="/forum">
+                Форум
+              </Link>
+            </li>
+            <li className="menu__item">
+              <div className="menu__link" onClick={logout}>
+                Выйти
+              </div>
             </li>
           </ul>
         </div>
