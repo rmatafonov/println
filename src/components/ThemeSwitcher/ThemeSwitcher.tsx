@@ -57,17 +57,21 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 const ThemeSwitcher: ThemeSwitcherProps = () => {
   const themeContext = useContext(ThemeContext)
 
-  const changeTheme = () => {
-    const newTheme =
-      themeContext.theme === AppTheme.dark ? AppTheme.light : AppTheme.dark
+  const isDark = () => themeContext.theme === AppTheme.dark
 
+  const changeTheme = () => {
+    const newTheme = isDark() ? AppTheme.light : AppTheme.dark
     themeContext.changeTheme(newTheme)
   }
 
   return (
     <FormControlLabel
       control={
-        <MaterialUISwitch sx={{ m: 1 }} checked={themeContext.theme === AppTheme.dark} onChange={changeTheme} />
+        <MaterialUISwitch
+          sx={{ m: 1 }}
+          checked={isDark()}
+          onChange={changeTheme}
+        />
       }
       label="Тема"
     />
