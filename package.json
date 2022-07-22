@@ -16,8 +16,7 @@
     "lint:js": "eslint '**/*{.tsx,.js}'",
     "lint:css": "stylelint '**/*.css'",
     "lint:all": "npm-run-all lint:js lint:css",
-    "test": "jest",
-    "tmp": "ts-node server.ts"
+    "test": "jest"
   },
   "husky": {
     "hooks": {
