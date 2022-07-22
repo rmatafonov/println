@@ -11,10 +11,9 @@ import ForumAdd from '@/pages/Forum/ForumAdd'
 
 import './App.css'
 import withAuthorizedOrLogin from '../hoc/withAuthorizedOrLogin'
+import { Game } from '@/pages/Game'
 import { ThemeContext } from '../context'
 import { AppTheme } from '../context/types'
-import { Game } from '@/pages/Game'
-import { ThemeSwitcher } from '../ThemeSwitcher'
 
 export default function App() {
   const [theme, setTheme] = useState(AppTheme.dark)
@@ -27,16 +26,14 @@ export default function App() {
   const AuthorizedForumAdd = withAuthorizedOrLogin(ForumAdd)
   const AuthorizedGameContainer = withAuthorizedOrLogin(Game)
 
-  const handleThemeChange = (theme: AppTheme) => {
-    setTheme(theme)
+  const handleThemeChange = (newTheme: AppTheme) => {
+    setTheme(newTheme)
   }
 
   return (
-    <div className="app">
-      <div className={`background background__${theme}`}></div>
-      <ThemeContext.Provider
-        value={{ theme, changeTheme: handleThemeChange }}
-      >
+    <div className={`app theme_${theme}`}>
+      <div className="background"></div>
+      <ThemeContext.Provider value={{ theme, changeTheme: handleThemeChange }}>
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/sign-up" element={<SignUp />} />
@@ -48,7 +45,6 @@ export default function App() {
           <Route path="/forum/add" element={<AuthorizedForumAdd />} />
           <Route path="/game" element={<AuthorizedGameContainer />} />
         </Routes>
-        <ThemeSwitcher onThemeChanged={handleThemeChange}></ThemeSwitcher>
       </ThemeContext.Provider>
     </div>
   )

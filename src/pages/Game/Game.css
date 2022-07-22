@@ -20,14 +20,7 @@
   background-position: 0 -100%;
   animation: animated-background 700s linear infinite;
   z-index: -1;
-
-  &__dark {
-    background: url('../../../static/images/stars.jpg');
-  }
-
-  &__light {
-    background: url('../../../static/images/bubbles.png');
-  }
+  background: var(--game-background);
 }
 
 @keyframes animated-background {
