@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import authApi from '@/api/AuthApi'
 import { ChangeUserResponse, UserEnrichedData } from '@/api/types'
@@ -21,7 +21,7 @@ export const fetchUser = createAsyncThunk(
   'user/fetchUser',
   async (): Promise<UserEnrichedData> => {
     const user = await authApi.getUser()
-    const theme = await gameApi.getTheme()
+    const theme = await gameApi.getTheme(user.id)
     return { user, theme }
   }
 )
@@ -55,13 +55,26 @@ export const updateUser = createAsyncThunk(
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    setUser: (state, action: PayloadAction<null | UserEnrichedData>) => {
+      state.data = action.payload
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchUser.pending, (state) => {
+      console.log('loading user')
       state.loading = true
     })
     builder.addCase(fetchUser.fulfilled, (state, action) => {
+      console.log('loaded user')
       state.data = action.payload
+      state.loading = false
+    })
+    builder.addCase(fetchUser.rejected, (state, action) => {
+      console.log('loading user failed', action)
+      state.message = `${action.error.code}: ${action.error.message}`
+      state.data = null
+      state.loading = false
     })
     builder.addCase(pushAvatar.pending, (state) => {
       state.loading = true
@@ -87,6 +100,8 @@ const userSlice = createSlice({
     })
   },
 })
+
+export const { setUser } = userSlice.actions
 
 export const userSelector = (state: RootState) => state.user
 

@@ -9,6 +9,11 @@ import { startApp } from './db'
 
 const app = express()
 
+app.get('/api/v1/users/:userId/theme', (req: express.Request, resp: express.Response) => {
+  console.log('userId', req.params.userId)
+  resp.status(200).send('light')
+})
+
 if (IS_DEV) {
   app.use(hmr)
 }

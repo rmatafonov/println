@@ -12,7 +12,7 @@
     "build": "cross-env NODE_ENV=production NODE_PATH=. npm run clean && webpack --mode production",
     "start:webpack": "webpack --mode=development --watch",
     "start:server": "node index.js --watch dist/server.js",
-    "start": "NODE_ENV=development npm-run-all --parallel start:*",
+    "start": "cross-env NODE_ENV=development npm-run-all --parallel start:*",
     "lint:js": "eslint '**/*{.tsx,.js}'",
     "lint:css": "stylelint '**/*.css'",
     "lint:all": "npm-run-all lint:js lint:css",

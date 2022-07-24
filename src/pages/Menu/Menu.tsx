@@ -5,15 +5,15 @@ import authApi from 'api/AuthApi'
 import 'styles/widget.css'
 import './menu.css'
 import { ThemeSwitcher } from '@/components/ThemeSwitcher'
+import { useAppDispatch } from '@/redux/store/hooks'
+import { setUser } from '@/redux/userSlice'
 
 function Menu() {
-  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
   const logout = useCallback(async () => {
-    const response = await authApi.logout()
-    if (response) {
-      navigate('/')
-    }
+    await authApi.logout()
+    dispatch(setUser(null))
   }, [])
 
   return (

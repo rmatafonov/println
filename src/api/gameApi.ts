@@ -6,7 +6,7 @@ export const gameAxios = axios.create({
 })
 
 const gameApi = {
-  getTheme: async (): Promise<AppTheme> => gameAxios.get<AppTheme>('/api/v1/theme').then((resp) => resp.data)
+  getTheme: async (userId: number): Promise<AppTheme> => gameAxios.get<AppTheme>(`/api/v1/users/${userId}/theme`).then((resp) => resp.data)
 }
 
 export default gameApi
