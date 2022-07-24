@@ -2,11 +2,19 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { BulletModel } from '@/components/Bullet/types'
 import { RootState } from './store/types'
 
+type StatisticsType = {
+  date: Date
+  destroyed: number
+  accuracy: number
+  numberOfShots: number
+}
+
 type EnemiesState = {
   enemies?: Record<string, EnemyModel>
   targetEnemyId?: string
   bullet: BulletModel
   shipAngle: number
+  statistics: StatisticsType
 }
 
 const initialState: EnemiesState = {
@@ -15,7 +23,13 @@ const initialState: EnemiesState = {
     dy: 0,
     targetWord: null,
   },
-  shipAngle: 0
+  shipAngle: 0,
+  statistics: {
+    date: new Date(),
+    destroyed: 0,
+    accuracy: 0,
+    numberOfShots: 0,
+  },
 }
 
 const FPS = 60
@@ -26,7 +40,9 @@ const enemiesSlice = createSlice({
   reducers: {
     setEnemies: (state, action: PayloadAction<Array<EnemyModel>>) => {
       state.enemies = {}
-      action.payload.forEach((enemy) => { state.enemies![enemy.id] = enemy })
+      action.payload.forEach((enemy) => {
+        state.enemies![enemy.id] = enemy
+      })
     },
     moveEnemies: (state) => {
       if (!state.enemies) {
@@ -34,17 +50,16 @@ const enemiesSlice = createSlice({
         return
       }
       const newEnemies: Record<string, EnemyModel> = {}
-      Object.entries(state.enemies)
-        .forEach(([id, enemy]) => {
-          newEnemies[id] = {
-            ...enemy,
-            currentPoint: {
-              x: enemy.currentPoint.x + enemy.dx,
-              y: enemy.currentPoint.y + enemy.dy,
-            },
-            step: enemy.step + 1,
-          }
-        })
+      Object.entries(state.enemies).forEach(([id, enemy]) => {
+        newEnemies[id] = {
+          ...enemy,
+          currentPoint: {
+            x: enemy.currentPoint.x + enemy.dx,
+            y: enemy.currentPoint.y + enemy.dy,
+          },
+          step: enemy.step + 1,
+        }
+      })
       state.enemies = newEnemies
     },
     destroyEnemy(state) {
@@ -56,6 +71,7 @@ const enemiesSlice = createSlice({
             newEnemies[id] = { ...enemy }
           })
         state.enemies = newEnemies
+        state.statistics.destroyed += 1
       }
     },
     shoot: (state, action: PayloadAction<string>) => {
@@ -63,12 +79,13 @@ const enemiesSlice = createSlice({
         console.warn('Не во что стрелять ¯\\_(ツ)_/¯')
         return
       }
-
+      state.statistics.numberOfShots += 1
       const letter = action.payload
 
       let targetId = state.targetEnemyId
       if (!targetId) {
-        targetId = Object.keys(state.enemies).find((enemyId) => state.enemies?.[enemyId].word.startsWith(letter))
+        targetId = Object.keys(state.enemies).find((enemyId) =>
+          state.enemies?.[enemyId].word.startsWith(letter))
       } else if (!state.enemies[targetId].word.startsWith(letter)) {
         console.log('Не попал ◔_◔')
         return
@@ -104,11 +121,10 @@ const enemiesSlice = createSlice({
   },
 })
 
-export const {
-  setEnemies, moveEnemies, shoot, destroyEnemy
-} =
+export const { setEnemies, moveEnemies, shoot, destroyEnemy } =
   enemiesSlice.actions
 
-export const enemiesSelector = (state: RootState): Record<string, EnemyModel> => state.enemiesSlice
+export const enemiesSelector = (state: RootState): Record<string, EnemyModel> =>
+  state.enemiesSlice
 
 export default enemiesSlice.reducer
