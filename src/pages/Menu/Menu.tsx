@@ -7,12 +7,12 @@ import './menu.css'
 import { ThemeSwitcher } from '@/components/ThemeSwitcher'
 
 function Menu() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const logout = useCallback(async () => {
-    const response = await authApi.logout();
+    const response = await authApi.logout()
     if (response) {
-      navigate('/');
+      navigate('/')
     }
   }, [])
 
@@ -55,4 +55,4 @@ function Menu() {
     </div>
   )
 }
-export default Menu;
+export default Menu

@@ -17,6 +17,7 @@
     "strict": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "declaration": false,
     "sourceMap": false,
@@ -32,8 +33,9 @@
   "include": [
     "src",
     "typings/**/*.d.ts",
-    "./node_modules/@types"
-, "server.ts"  ],
+    "./node_modules/@types", 
+    "server/render/hmr.ts"  
+  ],
   "exclude": [
     "**/*.js"
   ]
