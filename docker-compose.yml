@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  postgres:
+    container_name: postgres-db
+    image: postgres:14.4-alpine
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: ztype-db
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: always
+    networks:
+      - awesome
+    env_file:
+      - ./.env
+  pgadmin:
+    container_name: pgadmin-db
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: secret
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+    networks:
+      - awesome
+networks:
+  awesome:
+    driver: bridge
+volumes:
+  postgres:
+  pgadmin:

@@ -6,12 +6,12 @@ import 'styles/widget.css'
 import './menu.css'
 
 function Menu() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const logout = useCallback(async () => {
-    const response = await authApi.logout();
+    const response = await authApi.logout()
     if (response) {
-      navigate('/');
+      navigate('/')
     }
   }, [])
 
@@ -21,19 +21,29 @@ function Menu() {
         <div className="widget__content">
           <ul className="menu__list">
             <li className="menu__item">
-              <Link className="menu__link" to="/game">Играть</Link>
+              <Link className="menu__link" to="/game">
+                  Играть
+              </Link>
             </li>
             <li className="menu__item">
-              <Link className="menu__link" to="/leaderboard">Таблица рекордов</Link>
+              <Link className="menu__link" to="/leaderboard">
+                Таблица рекордов
+              </Link>
             </li>
             <li className="menu__item">
-              <Link className="menu__link" to="/profile">Профиль</Link>
+              <Link className="menu__link" to="/profile">
+                Профиль
+              </Link>
             </li>
             <li className="menu__item">
-              <Link className="menu__link" to="/forum">Форум</Link>
+              <Link className="menu__link" to="/forum">
+                Форум
+              </Link>
             </li>
             <li className="menu__item">
-              <div className="menu__link" onClick={logout}>Выйти</div>
+              <div className="menu__link" onClick={logout}>
+                Выйти
+              </div>
             </li>
           </ul>
         </div>
@@ -41,4 +51,4 @@ function Menu() {
     </div>
   )
 }
-export default Menu;
+export default Menu
