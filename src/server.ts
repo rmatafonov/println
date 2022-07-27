@@ -1,5 +1,5 @@
 import path from 'path'
-import express from 'express'
+import express, { Router } from 'express'
 import compression from 'compression'
 import { IS_DEV } from '../webpack/env'
 import 'babel-polyfill'
@@ -11,6 +11,11 @@ const app = express()
 
 app.get('/api/v1/users/:userId/theme', (req: express.Request, resp: express.Response) => {
   console.log('userId', req.params.userId)
+  resp.status(200).send('light')
+})
+
+app.post('/api/v1/users/:userId/theme', (req: express.Request, resp: express.Response) => {
+  console.log('userId', req.body)
   resp.status(200).send('light')
 })
 

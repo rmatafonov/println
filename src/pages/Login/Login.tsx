@@ -13,15 +13,12 @@ import './login.css'
 import { oAuth, urlUtils } from '@/utils'
 import { yandexOAuthSvg } from '@/static/images'
 import { YandexOAuthSearchParamsState } from '@/api/types'
+import { useAppDispatch } from '@/redux/store/hooks'
+import { setUser } from '@/redux/userSlice'
 
 function Login() {
   const navigate = useNavigate()
   const location = useLocation()
-
-  let nextPath = '/menu'
-  if (location.state) {
-    nextPath = (location.state as LocationState).from?.pathname
-  }
 
   const [inputs, setInputs] = useState<InputType[]>([
     {
@@ -43,6 +40,21 @@ function Login() {
   const [responseError, setResponseError] = useState<null | string>(null)
   const [isFailValidate, setIsFailValidate] = useState(true)
 
+  const dispatch = useAppDispatch()
+  let nextPath = '/menu'
+  if (location.state) {
+    console.log('location.state', location.state)
+    nextPath = (location.state as LocationState).from?.pathname
+  }
+  const fetchUserAndGoAhead = () => {
+    console.log('Going to', nextPath)
+    authApi.getEnrichedUser().then((user) => {
+      console.log('Enriched user', user)
+      dispatch(setUser(user))
+      navigate(nextPath)
+    })
+  }
+
   useEffect(() => {
     const searchParams = urlUtils.getUrlParams()
     if (searchParams.code) {
@@ -54,10 +66,10 @@ function Login() {
           if (state.currentPath !== '/') {
             navigate(state.currentPath)
           } else {
-            navigate(nextPath)
+            fetchUserAndGoAhead()
           }
         } else {
-          navigate(nextPath)
+          fetchUserAndGoAhead()
         }
       })
     }
@@ -84,7 +96,7 @@ function Login() {
       if (response.error) {
         setResponseError(response.error)
       } else {
-        navigate(nextPath)
+        fetchUserAndGoAhead()
       }
     },
     [inputs]

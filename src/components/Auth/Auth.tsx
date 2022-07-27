@@ -21,6 +21,7 @@ const Auth: FC<Props> = ({
   const user = useAppSelector(userSelector)
   useEffect(() => {
     if (!user.loading && user.data) {
+      console.log('navigating to menu')
       navigate('/menu')
     }
   }, [user])

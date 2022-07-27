@@ -5,15 +5,10 @@ import { ChangeUserResponse, UserEnrichedData } from '@/api/types'
 import { RootState } from '@/redux/store/types'
 import profileApi from '@/api/ProfileApi'
 import gameApi from '@/api/gameApi'
-
-type UserState = {
-  loading: boolean
-  data: null | UserEnrichedData
-  message?: unknown
-}
+import { UserState } from './types/userTypes'
 
 const initialState: UserState = {
-  loading: false,
+  loading: true,
   data: null,
 }
 
@@ -58,13 +53,10 @@ const userSlice = createSlice({
   reducers: {
     setUser: (state, action: PayloadAction<null | UserEnrichedData>) => {
       state.data = action.payload
+      state.message = undefined
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchUser.pending, (state) => {
-      console.log('loading user')
-      state.loading = true
-    })
     builder.addCase(fetchUser.fulfilled, (state, action) => {
       console.log('loaded user')
       state.data = action.payload

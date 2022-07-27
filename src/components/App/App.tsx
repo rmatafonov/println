@@ -14,21 +14,24 @@ import withAuthorizedOrLogin from '../hoc/withAuthorizedOrLogin'
 import { Game } from '@/pages/Game'
 import { ThemeContext } from '../context'
 import { AppTheme } from '../context/types'
+import { useAppSelector } from '@/redux/store/hooks'
+import { userSelector } from '@/redux/userSlice'
 
 export default function App() {
-  const [theme, setTheme] = useState(AppTheme.dark)
+  const user = useAppSelector(userSelector)
+  const theme = user.data?.theme ? user.data.theme : AppTheme.dark
+  console.log('App - user', user)
 
-  const AuthorizedMenu = withAuthorizedOrLogin(Menu)
-  const AuthorizedLeaderboard = withAuthorizedOrLogin(Leaderboard)
-  const AuthorizedProfile = withAuthorizedOrLogin(Profile)
-  const AuthorizedForum = withAuthorizedOrLogin(Forum)
-  const AuthorizedForumTheme = withAuthorizedOrLogin(ForumTheme)
-  const AuthorizedForumAdd = withAuthorizedOrLogin(ForumAdd)
-  const AuthorizedGameContainer = withAuthorizedOrLogin(Game)
+  const AuthorizedMenu = withAuthorizedOrLogin(Menu, user)
+  const AuthorizedLeaderboard = withAuthorizedOrLogin(Leaderboard, user)
+  const AuthorizedProfile = withAuthorizedOrLogin(Profile, user)
+  const AuthorizedForum = withAuthorizedOrLogin(Forum, user)
+  const AuthorizedForumTheme = withAuthorizedOrLogin(ForumTheme, user)
+  const AuthorizedForumAdd = withAuthorizedOrLogin(ForumAdd, user)
+  const AuthorizedGameContainer = withAuthorizedOrLogin(Game, user)
 
-  const handleThemeChange = (newTheme: AppTheme) => {
-    setTheme(newTheme)
-  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
+  const handleThemeChange = (newTheme: AppTheme) => {}
 
   return (
     <div className={`app theme_${theme}`}>

@@ -1,28 +1,11 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
-import authApi from '@/api/AuthApi'
 import Loader from '../Loader'
-import { gameApi } from '@/api'
-import { useAppDispatch, useAppSelector } from '@/redux/store/hooks'
-import { setUser, userSelector } from '@/redux/userSlice'
+import { UserState } from '@/redux/types/userTypes'
 
-function withAuthorizedOrLogin(WrappedComponent: React.ComponentType) {
+function withAuthorizedOrLogin(WrappedComponent: React.ComponentType, user: UserState) {
   return ({ ...props }) => {
     const location = useLocation()
-
-    const user = useAppSelector(userSelector)
-    console.log('withAuthorizedOrLogin', user)
-    const dispatch = useAppDispatch()
-
-    useEffect(() => {
-      authApi.getUser().then((authenticatedUser) => {
-        gameApi.getTheme(authenticatedUser.id).then((userTheme) => {
-          console.log(authenticatedUser)
-          console.log(userTheme)
-          dispatch(setUser({ user, theme: userTheme }))
-        })
-      })
-    }, [])
 
     if (user.loading) {
       console.log('rendering loader');
