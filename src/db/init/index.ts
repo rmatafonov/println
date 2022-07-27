@@ -1,6 +1,7 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
 import { leaderboardModel } from '../models/Leaderboard'
 import { userModel } from '../models/User'
+import { userThemeModel } from '../models/UserTheme'
 
 const sequelizeOptions: SequelizeOptions = {
   host: process.env.PSQL_HOST,
@@ -18,6 +19,8 @@ export const User = sequelize.define('User', userModel)
 export const Leaderboard = sequelize.define('Leaderboard', leaderboardModel)
 
 User.hasMany(Leaderboard)
+
+export const UserTheme = sequelize.define('UserTheme', userThemeModel);
 
 export async function dbConnect() {
   try {

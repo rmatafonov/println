@@ -6,6 +6,7 @@ import { RootState } from '@/redux/store/types'
 import profileApi from '@/api/ProfileApi'
 import gameApi from '@/api/gameApi'
 import { UserState } from './types/userTypes'
+import { AppTheme } from '@/components/context/types'
 
 const initialState: UserState = {
   loading: true,
@@ -16,8 +17,12 @@ export const fetchUser = createAsyncThunk(
   'user/fetchUser',
   async (): Promise<UserEnrichedData> => {
     const user = await authApi.getUser()
-    const theme = await gameApi.getTheme(user.id)
-    return { user, theme }
+    try {
+      const theme = await gameApi.getTheme(user.id)
+      return { user, theme }
+    } catch (e) {
+      return { user, theme: AppTheme.dark }
+    }
   }
 )
 

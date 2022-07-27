@@ -14,24 +14,28 @@ import withAuthorizedOrLogin from '../hoc/withAuthorizedOrLogin'
 import { Game } from '@/pages/Game'
 import { ThemeContext } from '../context'
 import { AppTheme } from '../context/types'
-import { useAppSelector } from '@/redux/store/hooks'
-import { userSelector } from '@/redux/userSlice'
+import { useAppDispatch, useAppSelector } from '@/redux/store/hooks'
+import { setUser, userSelector } from '@/redux/userSlice'
+import { gameApi } from '@/api'
 
 export default function App() {
-  const user = useAppSelector(userSelector)
-  const theme = user.data?.theme ? user.data.theme : AppTheme.dark
-  console.log('App - user', user)
+  const enrichedUser = useAppSelector(userSelector)
+  const theme = enrichedUser.data?.theme ? enrichedUser.data.theme : AppTheme.dark
+  console.log('App - user', enrichedUser)
 
-  const AuthorizedMenu = withAuthorizedOrLogin(Menu, user)
-  const AuthorizedLeaderboard = withAuthorizedOrLogin(Leaderboard, user)
-  const AuthorizedProfile = withAuthorizedOrLogin(Profile, user)
-  const AuthorizedForum = withAuthorizedOrLogin(Forum, user)
-  const AuthorizedForumTheme = withAuthorizedOrLogin(ForumTheme, user)
-  const AuthorizedForumAdd = withAuthorizedOrLogin(ForumAdd, user)
-  const AuthorizedGameContainer = withAuthorizedOrLogin(Game, user)
+  const AuthorizedMenu = withAuthorizedOrLogin(Menu, enrichedUser)
+  const AuthorizedLeaderboard = withAuthorizedOrLogin(Leaderboard, enrichedUser)
+  const AuthorizedProfile = withAuthorizedOrLogin(Profile, enrichedUser)
+  const AuthorizedForum = withAuthorizedOrLogin(Forum, enrichedUser)
+  const AuthorizedForumTheme = withAuthorizedOrLogin(ForumTheme, enrichedUser)
+  const AuthorizedForumAdd = withAuthorizedOrLogin(ForumAdd, enrichedUser)
+  const AuthorizedGameContainer = withAuthorizedOrLogin(Game, enrichedUser)
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-  const handleThemeChange = (newTheme: AppTheme) => {}
+  const dispatch = useAppDispatch()
+  const handleThemeChange = (newTheme: AppTheme) => {
+    dispatch(setUser({ user: enrichedUser.data.user, theme: newTheme }))
+    gameApi.setTheme(enrichedUser.data.user.id, newTheme)
+  }
 
   return (
     <div className={`app theme_${theme}`}>
