@@ -7,6 +7,7 @@ type StatisticsType = {
   destroyed: number
   accuracy: number
   numberOfShots: number
+  numberOfHits: number
 }
 
 type EnemiesState = {
@@ -29,6 +30,7 @@ const initialState: EnemiesState = {
     destroyed: 0,
     accuracy: 0,
     numberOfShots: 0,
+    numberOfHits: 0,
   },
 }
 
@@ -92,6 +94,7 @@ const enemiesSlice = createSlice({
       }
 
       if (targetId) {
+        state.statistics.numberOfHits += 1
         state.targetEnemyId = targetId
         const { word } = state.enemies[targetId]
         const newWord = word.substring(1, word.length)

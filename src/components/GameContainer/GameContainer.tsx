@@ -34,7 +34,7 @@ const GameContainer: GameContainerProps = () => {
   const [shipSize, setShipSize] = useState(0)
   const [enemySize, setEnemySize] = useState(0)
   const [enemiesFactory, setEnemiesFactory] = useState<EnemiesFactory>()
-  const { bullet } = useAppSelector(enemiesSelector)
+  const { bullet, statistics } = useAppSelector(enemiesSelector)
   const rafIdRef = useRef(0)
 
   const dispatch = useAppDispatch()
@@ -105,6 +105,13 @@ const GameContainer: GameContainerProps = () => {
     rafIdRef.current = requestAnimationFrame(startEnemiesRaf)
   }
 
+  const getAccuracy = () => {
+    // @ts-ignore
+    if (statistics.numberOfShots) {
+      console.log((statistics.numberOfHits / statistics.numberOfShots) * 100)
+    }
+  }
+
   useEffect(() => {
     if (isLevelLoading) {
       return undefined
@@ -131,12 +138,14 @@ const GameContainer: GameContainerProps = () => {
   if (!isLevelLoading && canvasCtx) {
     const handleShipKilled = () => {
       cancelAnimationFrame(rafIdRef.current)
+      getAccuracy()
       setScreensaverText('Ба-бах!')
       setShowScreensaver(true)
     }
     const handleEnemiesKilled = () => {
       cancelAnimationFrame(rafIdRef.current)
       setScreensaverText('Всех порвал, один остался!')
+      getAccuracy()
       setShowScreensaver(true)
       setLevelLoading(true)
       setTimeout(() => {

@@ -5,7 +5,7 @@ import { IS_DEV } from '../webpack/env'
 import 'babel-polyfill'
 import serverRenderMiddleware from './server-render-middleware'
 import hmr from './hmr'
-import { startApp } from './db'
+// import { startApp } from './db'
 
 const app = express()
 
@@ -24,5 +24,5 @@ app
 app.get('*', serverRenderMiddleware)
 
 export {
-  app, startApp
+  app, /* startApp */
 }
