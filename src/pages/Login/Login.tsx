@@ -13,8 +13,8 @@ import './login.css'
 import { oAuth, urlUtils } from '@/utils'
 import { yandexOAuthSvg } from '@/static/images'
 import { YandexOAuthSearchParamsState } from '@/api/types'
-import { useAppDispatch } from '@/redux/store/hooks'
-import { setUser } from '@/redux/userSlice'
+import { useAppDispatch, useAppSelector } from '@/redux/store/hooks'
+import { setUser, userSelector } from '@/redux/userSlice'
 
 function Login() {
   const navigate = useNavigate()
@@ -40,7 +40,6 @@ function Login() {
   const [responseError, setResponseError] = useState<null | string>(null)
   const [isFailValidate, setIsFailValidate] = useState(true)
 
-  const dispatch = useAppDispatch()
   let nextPath = '/menu'
   if (location.state) {
     console.log('location.state', location.state)
@@ -55,7 +54,13 @@ function Login() {
     })
   }
 
+  const dispatch = useAppDispatch()
+  const userInfo = useAppSelector(userSelector)
+
   useEffect(() => {
+    if (userInfo.loading) {
+      return
+    }
     const searchParams = urlUtils.getUrlParams()
     if (searchParams.code) {
       oAuth.authServer(searchParams.code).then(() => {
@@ -73,7 +78,7 @@ function Login() {
         }
       })
     }
-  })
+  }, [userInfo])
 
   const goToSignUp = () => {
     navigate('/sign-up')

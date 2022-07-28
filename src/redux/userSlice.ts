@@ -4,9 +4,7 @@ import authApi from '@/api/AuthApi'
 import { ChangeUserResponse, UserEnrichedData } from '@/api/types'
 import { RootState } from '@/redux/store/types'
 import profileApi from '@/api/ProfileApi'
-import gameApi from '@/api/gameApi'
 import { UserState } from './types/userTypes'
-import { AppTheme } from '@/components/context/types'
 
 const initialState: UserState = {
   loading: true,
@@ -15,15 +13,7 @@ const initialState: UserState = {
 
 export const fetchUser = createAsyncThunk(
   'user/fetchUser',
-  async (): Promise<UserEnrichedData> => {
-    const user = await authApi.getUser()
-    try {
-      const theme = await gameApi.getTheme(user.id)
-      return { user, theme }
-    } catch (e) {
-      return { user, theme: AppTheme.dark }
-    }
-  }
+  async (): Promise<UserEnrichedData> => authApi.getEnrichedUser()
 )
 
 export const pushAvatar = createAsyncThunk(
