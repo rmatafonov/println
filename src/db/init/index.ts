@@ -1,4 +1,5 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
+import { ForumModel } from '../models/Forum'
 import { leaderboardModel } from '../models/Leaderboard'
 import { userModel } from '../models/User'
 
@@ -16,6 +17,8 @@ export const sequelize = new Sequelize(sequelizeOptions)
 export const User = sequelize.define('User', userModel)
 
 export const Leaderboard = sequelize.define('Leaderboard', leaderboardModel)
+
+export const Forum = sequelize.define('users', ForumModel)
 
 User.hasMany(Leaderboard)
 

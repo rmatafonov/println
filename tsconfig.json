@@ -27,13 +27,13 @@
       "@/*": ["*"]
     },
     "typeRoots": ["typings/**/*.d.ts", "node_modules/@types"],
-    "types": ["jest"]
+    "types": ["jest"],
   },
   "include": [
     "src",
     "typings/**/*.d.ts",
     "./node_modules/@types"
-, "server/render/hmr.ts"  ],
+, "server.ts"  ],
   "exclude": [
     "**/*.js"
   ]

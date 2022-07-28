@@ -39,7 +39,7 @@ export default class EnemiesFactory {
     const stepsCount = LEVEL_0_STEPS - gameLevel * 3
     const enemies = result.map((word) => {
       const x = mathUtil.getRandomInt(this.xMax)
-      const y = mathUtil.getRandomInt(this.yMax) - this.yMax * 2
+      const y = mathUtil.getRandomArbitrary(-this.yMax * 2, this.yMax)
       return {
         id: nanoid(6),
         step: 1,

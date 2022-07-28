@@ -1,4 +1,9 @@
-import React, { ReactNode, useState, useEffect, useRef } from 'react'
+import React, {
+  ReactNode,
+  useState,
+  useEffect,
+  useRef,
+} from 'react'
 import { Ship } from '../Ship'
 import { EnemiesContainer } from '../EnemiesContainer'
 import { domUtil, keyboardUtils } from '@/utils'
@@ -158,11 +163,13 @@ const GameContainer: GameContainerProps = () => {
 
     renderCharacters = (
       <>
-        <Ship
+        <EnemiesContainer
           canvasContext={canvasCtx}
-          x={shipPoint.x}
-          y={shipPoint.y}
-          rectSide={shipSize}
+          enemySize={enemySize}
+          shipX={shipPoint.x}
+          shipY={shipPoint.y - shipSize / 2}
+          onEnemyGotShip={handleShipKilled}
+          onAllEnemiesKilled={handleEnemiesKilled}
         />
         <Bullet
           canvasContext={canvasCtx}
@@ -172,29 +179,21 @@ const GameContainer: GameContainerProps = () => {
             targetWord: bullet.targetWord,
           }}
         />
-        <EnemiesContainer
+        <Ship
           canvasContext={canvasCtx}
-          enemySize={enemySize}
-          shipX={shipPoint.x}
-          shipY={shipPoint.y - shipSize / 2}
-          onEnemyGotShip={handleShipKilled}
-          onAllEnemiesKilled={handleEnemiesKilled}
+          x={shipPoint.x}
+          y={shipPoint.y}
+          rectSide={shipSize}
         />
       </>
     )
   }
   return (
-    <>
-      <div className="blur blur_left"></div>
-      <div className="blur blur_top"></div>
-      <div className="blur blur_bottom"></div>
-      <div className="blur blur_right"></div>
-      <div className="game-container">
-        <canvas ref={canvasRef} className="canvas-ship" />
-        {renderCharacters}
-        {renderScreensaver}
-      </div>
-    </>
+    <div className='game-container'>
+      <canvas ref={canvasRef} className="canvas-ship" />
+      {renderCharacters}
+      {renderScreensaver}
+    </div>
   )
 }
 

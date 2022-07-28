@@ -9,6 +9,10 @@ import hmr from './hmr'
 
 const app = express()
 
+app.get('/api/v1/theme', (_req: express.Request, resp: express.Response) => {
+  resp.status(200).send('This will return theme')
+})
+
 // I recommend use it only for development
 // In production env you can use Nginx or CDN
 
