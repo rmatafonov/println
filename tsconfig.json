@@ -27,13 +27,15 @@
       "@/*": ["*"]
     },
     "typeRoots": ["typings/**/*.d.ts", "node_modules/@types"],
-    "types": ["jest"]
+    "types": ["jest"],
+    "emitDecoratorMetadata": true,
   },
   "include": [
     "src",
     "typings/**/*.d.ts",
-    "./node_modules/@types"
-, "server/render/hmr.ts"  ],
+    "./node_modules/@types", 
+    "server/render/hmr.ts"  
+  ],
   "exclude": [
     "**/*.js"
   ]

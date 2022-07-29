@@ -1,23 +1,20 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import authApi from '@/api/AuthApi'
-import { GetUserResponse, ChangeUserResponse } from '@/api/types'
+import { ChangeUserResponse, UserEnrichedData } from '@/api/types'
 import { RootState } from '@/redux/store/types'
 import profileApi from '@/api/ProfileApi'
-
-type UserState = {
-  loading: boolean
-  data: null | GetUserResponse
-  message?: unknown
-}
+import { UserState } from './types/userTypes'
 
 const initialState: UserState = {
-  loading: false,
+  loading: true,
   data: null,
 }
 
-// eslint-disable-next-line no-return-await
-export const fetchUser = createAsyncThunk('user/fetchUser', async () => await authApi.getUser())
+export const fetchUser = createAsyncThunk(
+  'user/fetchUser',
+  async (): Promise<UserEnrichedData> => authApi.getEnrichedUser()
+)
 
 export const pushAvatar = createAsyncThunk(
   'user/pushAvatar',
@@ -48,10 +45,23 @@ export const updateUser = createAsyncThunk(
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    setUser: (state, action: PayloadAction<null | UserEnrichedData>) => {
+      state.data = action.payload
+      state.message = undefined
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchUser.fulfilled, (state, action) => {
+      console.log('loaded user')
       state.data = action.payload
+      state.loading = false
+    })
+    builder.addCase(fetchUser.rejected, (state, action) => {
+      console.log('loading user failed', action)
+      state.message = `${action.error.code}: ${action.error.message}`
+      state.data = null
+      state.loading = false
     })
     builder.addCase(pushAvatar.pending, (state) => {
       state.loading = true
@@ -77,6 +87,8 @@ const userSlice = createSlice({
     })
   },
 })
+
+export const { setUser } = userSlice.actions
 
 export const userSelector = (state: RootState) => state.user
 

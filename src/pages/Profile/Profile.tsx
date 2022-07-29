@@ -22,11 +22,11 @@ function Profile() {
   const [fields, setFields] = useState<FieldProps[]>([])
   const [edit, setEdit] = useState(false)
   useEffect(() => {
-    if (data) {
+    if (!loading && data) {
       setFields([
         {
           label: 'Имя',
-          defaultValue: data.first_name,
+          defaultValue: data.user.first_name,
           id: 'field__name',
           readOnly: true,
           name: 'first_name',
@@ -34,7 +34,7 @@ function Profile() {
         },
         {
           label: 'Фамилия',
-          defaultValue: data.second_name,
+          defaultValue: data.user.second_name,
           id: 'field__lastname',
           readOnly: true,
           name: 'second_name',
@@ -42,7 +42,7 @@ function Profile() {
         },
         {
           label: 'Логин',
-          defaultValue: data.login,
+          defaultValue: data.user.login,
           id: 'field__login',
           readOnly: true,
           name: 'login',
@@ -50,7 +50,7 @@ function Profile() {
         },
         {
           label: 'Почта',
-          defaultValue: data.email,
+          defaultValue: data.user.email,
           id: 'field__email',
           readOnly: true,
           name: 'email',
@@ -58,7 +58,7 @@ function Profile() {
         },
         {
           label: 'Телефон',
-          defaultValue: data.phone,
+          defaultValue: data.user.phone,
           id: 'field__phone',
           readOnly: true,
           name: 'phone',
@@ -124,7 +124,7 @@ function Profile() {
     const target = event.target as HTMLFormElement
     const formData = new FormData(target)
     let newData = {
-      display_name: data?.first_name,
+      display_name: data?.user.first_name,
     } as ChangeUserResponse
 
     for (const [key, value] of formData.entries()) {

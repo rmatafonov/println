@@ -1,3 +1,5 @@
+@import './themes.css';
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -87,6 +89,7 @@ hr {
   position: relative;
   width: 100%;
   height: 100vh;
+  padding-top: 2%;
 }
 
 .text-center {
@@ -99,24 +102,10 @@ hr {
   width: 100%;
   top: 0;
   left: 0;
-  background: url('../../static/images/app-bg.jpg');
-  background-repeat: repeat;
-  background-position: 0 -100%;
-  background-size: auto auto;
-  animation: animated-background 700s linear infinite;
   z-index: -1;
+  background: var(--app-background);
 }
 
 .form {
   width: 100%;
-}
-
-@keyframes animated-background {
-  from {
-    background-position: 0 100%;
-  }
-
-  to {
-    background-position: 0 -5000%;
-  }
 }

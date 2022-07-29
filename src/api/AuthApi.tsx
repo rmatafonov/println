@@ -1,5 +1,13 @@
+import { AppTheme } from '@/components/context/types'
 import Api from './Api'
-import { SignInData, AuthResponse, SignUpData, GetUserResponse } from './types'
+import gameApi from './gameApi'
+import {
+  SignInData,
+  AuthResponse,
+  SignUpData,
+  GetUserResponse,
+  UserEnrichedData,
+} from './types'
 
 const authApi = {
   signIn: async (data: SignInData): Promise<AuthResponse> => {
@@ -34,6 +42,13 @@ const authApi = {
     const response = await Api.get<GetUserResponse>('auth/user')
     return response.data
   },
+  getEnrichedUser: async (): Promise<UserEnrichedData> =>
+    authApi.getUser().then((user) =>
+      gameApi
+        .getTheme(user.id)
+        .then((theme) => ({ user, theme }))
+        .catch(() => ({ user, theme: AppTheme.dark }))
+    ),
   isAuthenticated: () =>
     authApi
       .getUser()
