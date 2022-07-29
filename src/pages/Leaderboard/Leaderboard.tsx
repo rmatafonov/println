@@ -1,23 +1,27 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import Button from 'components/Button'
 import Loader from 'components/Loader'
-import { useAppDispatch, useAppSelector } from '@/redux/store/hooks'
-import { leaderboardSelector, fetchLeaderboard } from '@/redux/leaderboardSlice'
+import { useAppSelector } from '@/redux/store/hooks'
+import { userSelector } from '@/redux/userSlice'
+import { LeaderboardType } from './types'
+import gameApi from '@/api/gameApi'
 import 'styles/widget.css'
 import './Leaderboard.css'
 
 const Leaderboard = () => {
-  const dispatcher = useAppDispatch()
+  const {
+    data: { user },
+  } = useAppSelector(userSelector)
+  const [leaderboards, setLeaderboards] = useState<LeaderboardType[] | null>(
+    null
+  )
   useEffect(() => {
-    dispatcher(fetchLeaderboard({
-      ratingFieldName: 'ratingFieldName',
-      cursor: 0,
-      limit: 100,
-    }))
+    gameApi.getLeaderboards(user.id).then((data) => {
+      setLeaderboards(data)
+    })
   }, [])
-  const { items, loading } = useAppSelector(leaderboardSelector)
   const navigate = useNavigate()
   const goToMenu = () => {
     navigate('/menu')
@@ -28,7 +32,7 @@ const Leaderboard = () => {
       <div className="widget__container container">
         <div className="widget__content text-center">
           <h1>Таблица рекордов</h1>
-          {loading ? (
+          {!leaderboards ? (
             <Loader />
           ) : (
             <table className="leaderboard__table">
@@ -40,17 +44,17 @@ const Leaderboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {items ? (
-                  items.map((item) => (
-                    <tr key={item.data.id}>
-                      <td>{item.data.date}</td>
-                      <td>{item.data.accuracy}</td>
-                      <td>{item.data.destroyed}</td>
+                {leaderboards.length ? (
+                  leaderboards.map((item) => (
+                    <tr key={item.id}>
+                      <td>{item.date}</td>
+                      <td>{item.accuracy}</td>
+                      <td>{item.destroyed}</td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td>Данных нет</td>
+                    <td>Нет данных!</td>
                   </tr>
                 )}
               </tbody>

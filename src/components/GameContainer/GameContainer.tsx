@@ -4,7 +4,6 @@ import React, {
   useEffect,
   useRef,
 } from 'react'
-import { nanoid } from 'nanoid'
 import { Ship } from '../Ship'
 import { EnemiesContainer } from '../EnemiesContainer'
 import { domUtil, keyboardUtils } from '@/utils'
@@ -15,13 +14,14 @@ import {
   setEnemies,
   shoot,
 } from '@/redux/enemiesSlice'
+import { userSelector } from '@/redux/userSlice'
 import EnemiesFactory from '@/service/EnemiesFactory'
 
 import './GameContainer.css'
 import { useAppDispatch, useAppSelector } from '@/redux/store/hooks'
 import Bullet from '../Bullet/Bullet'
 import { Screensaver } from '../Screensaver'
-import { pushToLeaderboard } from '@/redux/leaderboardSlice'
+import gameApi from '@/api/gameApi'
 
 const GameContainer: GameContainerProps = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -42,6 +42,7 @@ const GameContainer: GameContainerProps = () => {
   const [enemySize, setEnemySize] = useState(0)
   const [enemiesFactory, setEnemiesFactory] = useState<EnemiesFactory>()
   const { bullet, statistics } = useAppSelector(enemiesSelector)
+  const { data: { user } } = useAppSelector(userSelector)
   const rafIdRef = useRef(0)
 
   const dispatch = useAppDispatch()
@@ -129,17 +130,8 @@ const GameContainer: GameContainerProps = () => {
     return `${day}.${mounth}.${year}/${hours}:${minutes}`
   }
 
-  const setLeaderboard = () => {
-    dispatch(pushToLeaderboard({
-      ratingFieldName: 'ratingFieldName',
-      data: {
-        id: nanoid(),
-        date: getDate(),
-        accuracy: getAccuracy(),
-        destroyed: statistics.destroyed,
-        ratingFieldName: 'ratingFieldName'
-      },
-    }))
+  const addToLeaderboard = () => {
+    gameApi.setLeaderboard(+user.id, getDate(), getAccuracy(), statistics.destroyed)
   }
 
   useEffect(() => {
@@ -168,14 +160,13 @@ const GameContainer: GameContainerProps = () => {
   if (!isLevelLoading && canvasCtx) {
     const handleShipKilled = () => {
       cancelAnimationFrame(rafIdRef.current)
-      setLeaderboard()
       setScreensaverText('Ба-бах!')
       setShowScreensaver(true)
     }
     const handleEnemiesKilled = () => {
       cancelAnimationFrame(rafIdRef.current)
       setScreensaverText('Всех порвал, один остался!')
-      setLeaderboard()
+      addToLeaderboard()
       setShowScreensaver(true)
       setLevelLoading(true)
       setTimeout(() => {

@@ -1,7 +1,7 @@
 import { DataType, Model } from 'sequelize-typescript'
 import { ModelAttributes } from 'sequelize/types'
 
-export type UserThemeType = {
+type UserThemeType = {
   id: number,
   userId: number,
   theme: string

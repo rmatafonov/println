@@ -1,5 +1,5 @@
 import { AppTheme } from '@/components/context/types';
-import { UserTheme } from '@/db/init';
+import { UserTheme } from '../db/dao';
 
 export const themeService = {
   find: (userId: string) => UserTheme.findOne({ where: { userId } }),
