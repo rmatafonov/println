@@ -6,7 +6,7 @@ import React, {
 } from 'react'
 import { Ship } from '../Ship'
 import { EnemiesContainer } from '../EnemiesContainer'
-import { domUtil, keyboardUtils } from '@/utils'
+import { domUtil, keyboardUtils, getDate } from '@/utils'
 import { GameContainerProps } from './types'
 import {
   enemiesSelector,
@@ -118,16 +118,6 @@ const GameContainer: GameContainerProps = () => {
       return Math.round((statistics.numberOfHits / statistics.numberOfShots) * 100)
     }
     return 0
-  }
-
-  const getDate = () => {
-    const date = new Date()
-    const day = date.getDate()
-    const mounth = date.getMonth()
-    const year = date.getFullYear()
-    const hours = date.getHours()
-    const minutes = date.getMinutes()
-    return `${day}.${mounth}.${year}/${hours}:${minutes}`
   }
 
   const addToLeaderboard = () => {
