@@ -1,3 +1,5 @@
+import { AppTheme } from '@/components/context/types'
+
 export type SignInData = {
   login: string
   password: string
@@ -16,6 +18,11 @@ export type GetUserResponse = {
   email: string
   phone: string
   avatar: string
+}
+
+export type UserEnrichedData = {
+  user: GetUserResponse
+  theme?: AppTheme
 }
 
 export type ChangeUserResponse = Omit<GetUserResponse, 'id' | 'avatar'>

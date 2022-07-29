@@ -1,0 +1,34 @@
+.game {
+  width: 500px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  height: 95%;
+}
+
+.game-background,
+.game-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.game-background {
+  background-repeat: repeat;
+  background-position: 0 -100%;
+  animation: animated-background 700s linear infinite;
+  z-index: -1;
+  background: var(--game-background);
+}
+
+@keyframes animated-background {
+  from {
+    background-position: 0 100%;
+  }
+
+  to {
+    background-position: 0 -5000%;
+  }
+}

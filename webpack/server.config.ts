@@ -12,7 +12,7 @@ const config: Configuration = {
   name: 'server',
   target: 'node',
   node: { __dirname: false },
-  entry: path.join(SRC_DIR, 'server'),
+  entry: path.join(`${SRC_DIR}/server/main`, 'server'),
   module: {
     rules: [fileLoader.server, cssLoader.server, jsLoader.server],
   },

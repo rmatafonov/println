@@ -11,6 +11,8 @@ import { SubmitEventType } from 'pages/Login/types'
 
 import 'styles/auth.css'
 import './signUp.css'
+import { useAppDispatch } from '@/redux/store/hooks'
+import { setUser } from '@/redux/userSlice'
 
 function SignUp() {
   const [inputs, setInputs] = useState<InputType[]>([
@@ -59,31 +61,55 @@ function SignUp() {
       id: 5,
     },
   ])
-  const [isFailValidate, setIsFailValidate] = useState(true);
-  const [responseError, setResponseError] = useState<null | string>(null);
-  const navigate = useNavigate();
+  const [isFailValidate, setIsFailValidate] = useState(true)
+  const [responseError, setResponseError] = useState<null | string>(null)
+  const navigate = useNavigate()
 
-  const submit = useCallback(async (e: SubmitEventType) => {
-    e.preventDefault();
-    const first_name = inputs.find((item) => item.fieldType === 'name')?.value ?? '';
-    const second_name = inputs.find((item) => item.fieldType === 'lastName')?.value ?? '';
-    const email = inputs.find((item) => item.fieldType === 'email')?.value ?? '';
-    const phone = inputs.find((item) => item.fieldType === 'phone')?.value ?? '';
-    const login = inputs.find((item) => item.fieldType === 'login')?.value ?? '';
-    const password = inputs.find((item) => item.fieldType === 'password')?.value ?? '';
-    const response = await authApi.signUp({
-      login, password, first_name, second_name, email, phone
-    });
-    setInputs(inputs.map((input) => {
-      input.value = '';
-      return input;
-    }))
-    if (response.error) {
-      setResponseError(response.error)
-    } else {
+  const dispatch = useAppDispatch()
+  const fetchUserAndGoAhead = () => {
+    authApi.getEnrichedUser().then((user) => {
+      dispatch(setUser(user))
       navigate('/menu')
-    }
-  }, [inputs])
+    })
+  }
+
+  const submit = useCallback(
+    async (e: SubmitEventType) => {
+      e.preventDefault()
+      const first_name =
+        inputs.find((item) => item.fieldType === 'name')?.value ?? ''
+      const second_name =
+        inputs.find((item) => item.fieldType === 'lastName')?.value ?? ''
+      const email =
+        inputs.find((item) => item.fieldType === 'email')?.value ?? ''
+      const phone =
+        inputs.find((item) => item.fieldType === 'phone')?.value ?? ''
+      const login =
+        inputs.find((item) => item.fieldType === 'login')?.value ?? ''
+      const password =
+        inputs.find((item) => item.fieldType === 'password')?.value ?? ''
+      const response = await authApi.signUp({
+        login,
+        password,
+        first_name,
+        second_name,
+        email,
+        phone,
+      })
+      setInputs(
+        inputs.map((input) => {
+          input.value = ''
+          return input
+        })
+      )
+      if (response.error) {
+        setResponseError(response.error)
+      } else {
+        fetchUserAndGoAhead()
+      }
+    },
+    [inputs]
+  )
 
   const goToLogin = () => {
     navigate('/')
@@ -91,7 +117,12 @@ function SignUp() {
   return (
     <div className="sign-up">
       <form className="sign-up__form" onSubmit={submit}>
-        <Auth inputs={inputs} setInputs={setInputs} setIsFailValidate={setIsFailValidate} title="Регистрация">
+        <Auth
+          inputs={inputs}
+          setInputs={setInputs}
+          setIsFailValidate={setIsFailValidate}
+          title="Регистрация"
+        >
           <ul className="auth__buttons">
             <li className="auth__button">
               <Button isDisabled={isFailValidate} onClick={submit}>
@@ -99,18 +130,16 @@ function SignUp() {
               </Button>
             </li>
             <li className="auth__button">
-              <Button onClick={goToLogin} className="button_simple">Войти</Button>
+              <Button onClick={goToLogin} className="button_simple">
+                Войти
+              </Button>
             </li>
           </ul>
-          {responseError &&
-            <div className="auth__error">
-              {responseError}
-            </div>
-          }
+          {responseError && <div className="auth__error">{responseError}</div>}
         </Auth>
       </form>
     </div>
-  );
+  )
 }
 
 export default SignUp
