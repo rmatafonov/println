@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { themesRoutes } from './theme/themesRoutes';
+import { themeRoutes } from './theme.controller';
 
 const router: Router = Router()
 
-themesRoutes(router)
+themeRoutes(router)
 
 export default router

@@ -13,8 +13,8 @@
     "start:webpack": "webpack --mode=development --watch",
     "start:server": "node index.js --watch dist/server.js",
     "start": "cross-env NODE_ENV=development npm-run-all --parallel start:*",
-    "lint:js": "eslint '**/*{.tsx,.js}'",
-    "lint:css": "stylelint '**/*.css'",
+    "lint:js": "eslint .",
+    "lint:css": "stylelint **/*.scss",
     "lint:all": "npm-run-all lint:js lint:css",
     "test": "jest"
   },
