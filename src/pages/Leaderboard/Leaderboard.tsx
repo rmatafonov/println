@@ -41,11 +41,11 @@ const Leaderboard = () => {
               </thead>
               <tbody>
                 {items ? (
-                  items.map(({ data }) => (
-                    <tr key={data.id}>
-                      <td>{data.date}</td>
-                      <td>{data.accuracy}</td>
-                      <td>{data.destroyed}</td>
+                  items.map((item) => (
+                    <tr key={item.data.id}>
+                      <td>{item.data.date}</td>
+                      <td>{item.data.accuracy}</td>
+                      <td>{item.data.destroyed}</td>
                     </tr>
                   ))
                 ) : (

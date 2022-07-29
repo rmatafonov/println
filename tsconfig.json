@@ -1,10 +1,6 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "es2017"
-    ],
+    "lib": ["dom", "dom.iterable", "es2017"],
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "ES6",
@@ -27,14 +23,13 @@
       "@/*": ["*"]
     },
     "typeRoots": ["typings/**/*.d.ts", "node_modules/@types"],
-    "types": ["jest"],
+    "types": ["jest"]
   },
   "include": [
     "src",
     "typings/**/*.d.ts",
-    "./node_modules/@types"
-, "server.ts"  ],
-  "exclude": [
-    "**/*.js"
-  ]
+    "./node_modules/@types",
+    "server/render/hmr.ts"
+  ],
+  "exclude": ["**/*.js"]
 }

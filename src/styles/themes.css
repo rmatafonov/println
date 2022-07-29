@@ -6,6 +6,6 @@
 
   &_light {
     --app-background: url('../../static/images/app-bg-light.jpg');
-    --game-background: url('../../static/images/bubbles.png');
+    --game-background: url('../../static/images/bubbles.jpg');
   }
 }

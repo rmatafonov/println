@@ -3,7 +3,7 @@ const {
   app, /* startApp */
 } = require('./dist/server.js')
 
-const PORT = process.env.PORT || 9001
+const PORT = process.env.PORT || 3000
 
 const start = async () => {
   try {

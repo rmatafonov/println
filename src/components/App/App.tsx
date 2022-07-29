@@ -14,20 +14,27 @@ import withAuthorizedOrLogin from '../hoc/withAuthorizedOrLogin'
 import { Game } from '@/pages/Game'
 import { ThemeContext } from '../context'
 import { AppTheme } from '../context/types'
+import { useAppDispatch, useAppSelector } from '@/redux/store/hooks'
+import { setUser, userSelector } from '@/redux/userSlice'
+import { gameApi } from '@/api'
 
 export default function App() {
-  const [theme, setTheme] = useState(AppTheme.dark)
+  const enrichedUser = useAppSelector(userSelector)
+  const theme = enrichedUser.data?.theme ? enrichedUser.data.theme : AppTheme.dark
+  console.log('App - user', enrichedUser)
 
-  const AuthorizedMenu = withAuthorizedOrLogin(Menu)
-  const AuthorizedLeaderboard = withAuthorizedOrLogin(Leaderboard)
-  const AuthorizedProfile = withAuthorizedOrLogin(Profile)
-  const AuthorizedForum = withAuthorizedOrLogin(Forum)
-  const AuthorizedForumTheme = withAuthorizedOrLogin(ForumTheme)
-  const AuthorizedForumAdd = withAuthorizedOrLogin(ForumAdd)
-  const AuthorizedGameContainer = withAuthorizedOrLogin(Game)
+  const AuthorizedMenu = withAuthorizedOrLogin(Menu, enrichedUser)
+  const AuthorizedLeaderboard = withAuthorizedOrLogin(Leaderboard, enrichedUser)
+  const AuthorizedProfile = withAuthorizedOrLogin(Profile, enrichedUser)
+  const AuthorizedForum = withAuthorizedOrLogin(Forum, enrichedUser)
+  const AuthorizedForumTheme = withAuthorizedOrLogin(ForumTheme, enrichedUser)
+  const AuthorizedForumAdd = withAuthorizedOrLogin(ForumAdd, enrichedUser)
+  const AuthorizedGameContainer = withAuthorizedOrLogin(Game, enrichedUser)
 
+  const dispatch = useAppDispatch()
   const handleThemeChange = (newTheme: AppTheme) => {
-    setTheme(newTheme)
+    dispatch(setUser({ user: enrichedUser.data.user, theme: newTheme }))
+    gameApi.setTheme(enrichedUser.data.user.id, newTheme)
   }
 
   return (

@@ -4,6 +4,7 @@ import React, {
   useEffect,
   useRef,
 } from 'react'
+import { nanoid } from 'nanoid'
 import { Ship } from '../Ship'
 import { EnemiesContainer } from '../EnemiesContainer'
 import { domUtil, keyboardUtils } from '@/utils'
@@ -20,6 +21,7 @@ import './GameContainer.css'
 import { useAppDispatch, useAppSelector } from '@/redux/store/hooks'
 import Bullet from '../Bullet/Bullet'
 import { Screensaver } from '../Screensaver'
+import { pushToLeaderboard } from '@/redux/leaderboardSlice'
 
 const GameContainer: GameContainerProps = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -111,10 +113,33 @@ const GameContainer: GameContainerProps = () => {
   }
 
   const getAccuracy = () => {
-    // @ts-ignore
     if (statistics.numberOfShots) {
-      console.log((statistics.numberOfHits / statistics.numberOfShots) * 100)
+      return Math.round((statistics.numberOfHits / statistics.numberOfShots) * 100)
     }
+    return 0
+  }
+
+  const getDate = () => {
+    const date = new Date()
+    const day = date.getDate()
+    const mounth = date.getMonth()
+    const year = date.getFullYear()
+    const hours = date.getHours()
+    const minutes = date.getMinutes()
+    return `${day}.${mounth}.${year}/${hours}:${minutes}`
+  }
+
+  const setLeaderboard = () => {
+    dispatch(pushToLeaderboard({
+      ratingFieldName: 'ratingFieldName',
+      data: {
+        id: nanoid(),
+        date: getDate(),
+        accuracy: getAccuracy(),
+        destroyed: statistics.destroyed,
+        ratingFieldName: 'ratingFieldName'
+      },
+    }))
   }
 
   useEffect(() => {
@@ -143,14 +168,14 @@ const GameContainer: GameContainerProps = () => {
   if (!isLevelLoading && canvasCtx) {
     const handleShipKilled = () => {
       cancelAnimationFrame(rafIdRef.current)
-      getAccuracy()
+      setLeaderboard()
       setScreensaverText('Ба-бах!')
       setShowScreensaver(true)
     }
     const handleEnemiesKilled = () => {
       cancelAnimationFrame(rafIdRef.current)
       setScreensaverText('Всех порвал, один остался!')
-      getAccuracy()
+      setLeaderboard()
       setShowScreensaver(true)
       setLevelLoading(true)
       setTimeout(() => {

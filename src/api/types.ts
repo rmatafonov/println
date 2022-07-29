@@ -41,8 +41,9 @@ export type DataToLeaderboard = {
   data: {
     id: string
     date: string
-    accuracy: string
+    accuracy: number
     destroyed: string | number
+    ratingFieldName: string
   }
 }
 

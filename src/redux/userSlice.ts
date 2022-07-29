@@ -1,29 +1,19 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import authApi from '@/api/AuthApi'
 import { ChangeUserResponse, UserEnrichedData } from '@/api/types'
 import { RootState } from '@/redux/store/types'
 import profileApi from '@/api/ProfileApi'
-import gameApi from '@/api/gameApi'
-
-type UserState = {
-  loading: boolean
-  data: null | UserEnrichedData
-  message?: unknown
-}
+import { UserState } from './types/userTypes'
 
 const initialState: UserState = {
-  loading: false,
+  loading: true,
   data: null,
 }
 
 export const fetchUser = createAsyncThunk(
   'user/fetchUser',
-  async (): Promise<UserEnrichedData> => {
-    const user = await authApi.getUser()
-    const theme = await gameApi.getTheme()
-    return { user, theme }
-  }
+  async (): Promise<UserEnrichedData> => authApi.getEnrichedUser()
 )
 
 export const pushAvatar = createAsyncThunk(
@@ -55,13 +45,23 @@ export const updateUser = createAsyncThunk(
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(fetchUser.pending, (state) => {
-      state.loading = true
-    })
-    builder.addCase(fetchUser.fulfilled, (state, action) => {
+  reducers: {
+    setUser: (state, action: PayloadAction<null | UserEnrichedData>) => {
       state.data = action.payload
+      state.message = undefined
+    }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchUser.fulfilled, (state, action) => {
+      console.log('loaded user')
+      state.data = action.payload
+      state.loading = false
+    })
+    builder.addCase(fetchUser.rejected, (state, action) => {
+      console.log('loading user failed', action)
+      state.message = `${action.error.code}: ${action.error.message}`
+      state.data = null
+      state.loading = false
     })
     builder.addCase(pushAvatar.pending, (state) => {
       state.loading = true
@@ -87,6 +87,8 @@ const userSlice = createSlice({
     })
   },
 })
+
+export const { setUser } = userSlice.actions
 
 export const userSelector = (state: RootState) => state.user
 

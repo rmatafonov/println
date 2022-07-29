@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { themesRoutes } from './themesRouter';
+import { themesRoutes } from './theme/themesRoutes';
 
-const router: Router = Router();
+const router: Router = Router()
 
-themesRoutes(router);
+themesRoutes(router)
 
-export default router;
+export default router

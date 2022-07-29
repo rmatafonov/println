@@ -13,6 +13,10 @@ function configureAppStore(preloadedState?: any) {
       leaderboard: leaderboardSlice,
     },
     preloadedState,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        serializableCheck: false,
+      }),
   })
 }
 

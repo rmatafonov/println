@@ -3,9 +3,7 @@ import { BulletModel } from '@/components/Bullet/types'
 import { RootState } from './store/types'
 
 type StatisticsType = {
-  date: Date
   destroyed: number
-  accuracy: number
   numberOfShots: number
   numberOfHits: number
 }
@@ -26,9 +24,7 @@ const initialState: EnemiesState = {
   },
   shipAngle: 0,
   statistics: {
-    date: new Date(),
     destroyed: 0,
-    accuracy: 0,
     numberOfShots: 0,
     numberOfHits: 0,
   },
@@ -87,7 +83,8 @@ const enemiesSlice = createSlice({
       let targetId = state.targetEnemyId
       if (!targetId) {
         targetId = Object.keys(state.enemies).find((enemyId) =>
-          state.enemies?.[enemyId].word.startsWith(letter))
+          state.enemies?.[enemyId].word.startsWith(letter)
+        )
       } else if (!state.enemies[targetId].word.startsWith(letter)) {
         console.log('Не попал ◔_◔')
         return
@@ -124,10 +121,12 @@ const enemiesSlice = createSlice({
   },
 })
 
-export const { setEnemies, moveEnemies, shoot, destroyEnemy } =
+export const {
+  setEnemies, moveEnemies, shoot, destroyEnemy,
+} =
   enemiesSlice.actions
 
-export const enemiesSelector = (state: RootState): Record<string, EnemyModel> =>
+export const enemiesSelector = (state: RootState): EnemiesState =>
   state.enemiesSlice
 
 export default enemiesSlice.reducer

@@ -12,7 +12,7 @@
     "build": "cross-env NODE_ENV=production NODE_PATH=. npm run clean && webpack --mode production",
     "start:webpack": "webpack --mode=development --watch",
     "start:server": "node index.js --watch dist/server.js",
-    "start": "NODE_ENV=development npm-run-all --parallel start:*",
+    "start": "cross-env NODE_ENV=development npm-run-all --parallel start:*",
     "lint:js": "eslint '**/*{.tsx,.js}'",
     "lint:css": "stylelint '**/*.css'",
     "lint:all": "npm-run-all lint:js lint:css",
@@ -124,6 +124,7 @@
     "axios": "0.27.2",
     "babel-polyfill": "6.26.0",
     "bem-cn": "3.0.1",
+    "body-parser": "1.20.0",
     "dotenv": "16.0.1",
     "draft-js": "0.11.7",
     "express": "4.18.1",
@@ -137,9 +138,9 @@
     "react-redux": "8.0.2",
     "react-router-dom": "6.3.0",
     "reflect-metadata": "0.1.13",
-    "sequelize-typescript": "2.1.3",
     "sanitize-html": "2.7.0",
-    "sequelize": "6.6.5"
+    "sequelize": "6.21.3",
+    "sequelize-typescript": "2.1.3"
   },
   "overrides": {
     "draft-convert": {
