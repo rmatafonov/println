@@ -2,7 +2,7 @@ import axios from 'axios'
 import { AppTheme } from '@/components/context/types'
 
 export const gameAxios = axios.create({
-  withCredentials: true,
+  withCredentials: true
 })
 
 const gameApi = {
