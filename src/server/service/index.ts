@@ -1,1 +1,2 @@
-export { themeService } from './ThemeService'
+export { themeService } from './themeService'
+export { leaderboardService } from './leaderboardService'

@@ -36,22 +36,6 @@ export type SignUpData = {
   phone: string
 }
 
-export type DataToLeaderboard = {
-  ratingFieldName: string
-  data: {
-    id: string
-    date: string
-    accuracy: string
-    destroyed: string | number
-  }
-}
-
-export type GetFromLeaderboardData = {
-  ratingFieldName: string
-  cursor: number | string
-  limit: number
-}
-
 export type YandexOAuthSearchParamsState = {
   currentPath: string
 }

@@ -6,7 +6,7 @@ import React, {
 } from 'react'
 import { Ship } from '../Ship'
 import { EnemiesContainer } from '../EnemiesContainer'
-import { domUtil, keyboardUtils } from '@/utils'
+import { domUtil, keyboardUtils, getDate } from '@/utils'
 import { GameContainerProps } from './types'
 import {
   enemiesSelector,
@@ -14,12 +14,14 @@ import {
   setEnemies,
   shoot,
 } from '@/redux/enemiesSlice'
+import { userSelector } from '@/redux/userSlice'
 import EnemiesFactory from '@/service/EnemiesFactory'
 
 import './GameContainer.css'
 import { useAppDispatch, useAppSelector } from '@/redux/store/hooks'
 import Bullet from '../Bullet/Bullet'
 import { Screensaver } from '../Screensaver'
+import gameApi from '@/api/gameApi'
 
 const GameContainer: GameContainerProps = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -39,7 +41,8 @@ const GameContainer: GameContainerProps = () => {
   const [shipSize, setShipSize] = useState(0)
   const [enemySize, setEnemySize] = useState(0)
   const [enemiesFactory, setEnemiesFactory] = useState<EnemiesFactory>()
-  const { bullet } = useAppSelector(enemiesSelector)
+  const { bullet, statistics } = useAppSelector(enemiesSelector)
+  const { data: { user } } = useAppSelector(userSelector)
   const rafIdRef = useRef(0)
 
   const dispatch = useAppDispatch()
@@ -110,6 +113,17 @@ const GameContainer: GameContainerProps = () => {
     rafIdRef.current = requestAnimationFrame(startEnemiesRaf)
   }
 
+  const getAccuracy = () => {
+    if (statistics.numberOfShots) {
+      return Math.round((statistics.numberOfHits / statistics.numberOfShots) * 100)
+    }
+    return 0
+  }
+
+  const addToLeaderboard = () => {
+    gameApi.setLeaderboard(+user.id, getDate(), getAccuracy(), statistics.destroyed)
+  }
+
   useEffect(() => {
     if (isLevelLoading) {
       return undefined
@@ -142,6 +156,7 @@ const GameContainer: GameContainerProps = () => {
     const handleEnemiesKilled = () => {
       cancelAnimationFrame(rafIdRef.current)
       setScreensaverText('Всех порвал, один остался!')
+      addToLeaderboard()
       setShowScreensaver(true)
       setLevelLoading(true)
       setTimeout(() => {
