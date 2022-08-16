@@ -1,13 +1,13 @@
-import Api from './Api'
+import { praktikumApi } from './Api'
 import { ChangeUserResponse } from './types'
 
 const profileApi = {
   async changeUserAvatar(req: FormData) {
-    const res = await Api.put('user/profile/avatar', req)
+    const res = await praktikumApi.put('user/profile/avatar', req)
     return res
   },
   async changeUserData(req: ChangeUserResponse) {
-    const res = await Api.put('user/profile', req)
+    const res = await praktikumApi.put('user/profile', req)
     return res
   }
 }

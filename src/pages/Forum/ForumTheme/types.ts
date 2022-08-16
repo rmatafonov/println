@@ -1,4 +1,4 @@
 export type isShowingReplyType = {
-  isShow: boolean;
-  messageId: null | string;
+  isShow: boolean
+  messageId: null | number
 }

@@ -1,2 +1,4 @@
-export { default as Api } from './Api'
-export { default as gameApi } from './gameApi'
+export { praktikumApi } from './Api'
+export { appApi } from './Api'
+export { forumApi } from './forumApi'
+export { usersApi } from './usersApi'

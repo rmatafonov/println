@@ -1,16 +1,16 @@
 import { AppTheme } from '@/components/context/types';
-import { UserTheme } from '../db/dao';
+import { UserThemeDao } from '../db';
 
 export const themeService = {
-  find: (userId: string) => UserTheme.findOne({ where: { userId } }),
+  find: (userId: string) => UserThemeDao.findOne({ where: { userId } }),
 
-  createOrUpdate: async (userId: string, theme: AppTheme): Promise<string> => {
-    const foundTheme = await UserTheme.findOne({
+  createOrUpdate: async (userId: number, theme: AppTheme): Promise<string> => {
+    const foundTheme = await UserThemeDao.findOne({
       where: { userId }
     })
 
     if (foundTheme === null) {
-      await UserTheme.create({ userId, theme })
+      await UserThemeDao.create({ userId, theme })
       return 'created'
     }
 

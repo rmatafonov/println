@@ -1,6 +1,6 @@
 import { AppTheme } from '@/components/context/types'
-import Api from './Api'
-import gameApi from './gameApi'
+import { praktikumApi } from './Api'
+import themeApi from './themeApi'
 import {
   SignInData,
   AuthResponse,
@@ -12,7 +12,7 @@ import {
 const authApi = {
   signIn: async (data: SignInData): Promise<AuthResponse> => {
     try {
-      await Api.post('auth/signin', data)
+      await praktikumApi.post('auth/signin', data)
       return {
         error: null,
       }
@@ -26,7 +26,7 @@ const authApi = {
   },
   signUp: async (data: SignUpData): Promise<AuthResponse> => {
     try {
-      await Api.post('auth/signUp', data)
+      await praktikumApi.post('auth/signUp', data)
       return {
         error: null,
       }
@@ -39,12 +39,12 @@ const authApi = {
     }
   },
   getUser: async (): Promise<GetUserResponse> => {
-    const response = await Api.get<GetUserResponse>('auth/user')
+    const response = await praktikumApi.get<GetUserResponse>('auth/user')
     return response.data
   },
   getEnrichedUser: async (): Promise<UserEnrichedData> =>
     authApi.getUser().then((user) =>
-      gameApi
+      themeApi
         .getTheme(user.id)
         .then((theme) => ({ user, theme }))
         .catch(() => ({ user, theme: AppTheme.dark }))
@@ -56,7 +56,7 @@ const authApi = {
       .catch(() => false),
   logout: async () => {
     try {
-      const response = await Api.post('auth/logout')
+      const response = await praktikumApi.post('auth/logout')
       return response
     } catch (error) {
       console.log(error)
