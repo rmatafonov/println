@@ -2,9 +2,7 @@ import React, { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-import { RootState } from '@/redux/store/types';
-import { useAppDispatch } from '@/redux/store/hooks';
-import { addNewTheme } from '@/redux/forumSlice';
+import { RootState } from '@/redux/store/types'
 
 import Input from '@/components/Input'
 import Button from '@/components/Button'
@@ -12,13 +10,13 @@ import TextEditor from '@/components/TextEditor'
 import SvgIcon from '@/components/SvgIcon'
 
 import './forumAdd.css'
+import { forumApi } from '@/api'
 
 function ForumAdd() {
   const navigate = useNavigate()
   const [editorText, setEditorText] = useState('')
-  const user = useSelector((state: RootState) => state.user.data);
-  const [themeName, setThemeName] = useState('');
-  const dispatch = useAppDispatch();
+  const userInfo = useSelector((state: RootState) => state.user.data)
+  const [themeName, setThemeName] = useState('')
 
   const goBack = () => {
     navigate('/forum')
@@ -33,16 +31,9 @@ function ForumAdd() {
   }, [themeName])
 
   const createTheme = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (user) {
-      const payload = {
-        id: user?.id,
-        username: user?.display_name || user?.first_name,
-        avatar: user?.avatar,
-        message: editorText,
-        themeName
-      }
-      dispatch(addNewTheme(payload))
+    e.preventDefault()
+    if (userInfo) {
+      forumApi.addTheme(userInfo.user.id, themeName, editorText)
       navigate('/forum')
     } else {
       throw new Error('Что то пошло не по плану')

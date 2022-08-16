@@ -1,1 +1,1 @@
-export { default } from './ForumTheme'
+export { ForumThemeComponent } from './ForumThemeComponent'

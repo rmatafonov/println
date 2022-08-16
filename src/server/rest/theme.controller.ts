@@ -1,28 +1,29 @@
 import { Router, Request, Response } from 'express'
 import { themeService } from '@/server/service'
+import { HttpStatusCode } from './HttpStatusCodes'
 
 export const themeController = {
   find: async (req: Request, resp: Response) => {
     if (!req.query.userId) {
-      resp.status(400).send('Missing required param: userId')
+      resp.status(HttpStatusCode.BAD_REQUEST).send('Missing required param: userId')
       return
     }
 
     const foundTheme = await themeService.find(req.query.userId)
     if (foundTheme !== null) {
-      resp.status(200).send(foundTheme.theme)
+      resp.status(HttpStatusCode.OK).send(foundTheme.theme)
     } else {
-      resp.status(404).send(`Not found theme for user ${req.query.userId}`)
+      resp.status(HttpStatusCode.NOT_FOUND).send(`Not found theme for user ${req.query.userId}`)
     }
   },
 
   createOrUpdate: async (req: Request, resp: Response) => {
     if (!req.body.userId) {
-      resp.status(400).send('Missing required body parameter: userId')
+      resp.status(HttpStatusCode.BAD_REQUEST).send('Missing required body parameter: userId')
       return
     }
     if (!req.body.theme) {
-      resp.status(400).send('Missing required body parameter: theme')
+      resp.status(HttpStatusCode.BAD_REQUEST).send('Missing required body parameter: theme')
       return
     }
 
@@ -31,9 +32,9 @@ export const themeController = {
         req.body.userId,
         req.body.theme
       )
-      resp.status(201).send(status)
+      resp.status(HttpStatusCode.CREATED).send(status)
     } catch (e) {
-      resp.status(500).send('Internal server error')
+      resp.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send('Internal server error')
     }
   }
 }

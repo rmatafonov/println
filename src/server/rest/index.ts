@@ -1,3 +1,4 @@
 export { default as router } from './router'
-export { themeController as themesController } from './theme.controller'
+export { themeController } from './theme.controller'
+export { forumThemesController } from './forumTheme.controller'
 export { leaderboardController } from './leaderboard.controller'

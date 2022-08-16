@@ -1,9 +1,9 @@
-import { Api } from '@/api'
+import { praktikumApi } from '@/api'
 import { urlUtils } from './urlUtils'
 
 export const oAuth = {
   yandex: () => {
-    Api.get('oauth/yandex/service-id', { params: { redirect_uri: window.location.origin } })
+    praktikumApi.get('oauth/yandex/service-id', { params: { redirect_uri: window.location.origin } })
       .then((response) => response.data.service_id as string)
       .then((serviceId) => {
         const params = {
@@ -20,7 +20,7 @@ export const oAuth = {
       })
   },
   authServer: (code: string) =>
-    Api.post(
+    praktikumApi.post(
       'oauth/yandex',
       {
         code,

@@ -7,7 +7,7 @@ import 'babel-polyfill'
 import serverRenderMiddleware from '../../server-render-middleware'
 import hmr from '../../hmr'
 import { router } from '../rest'
-import { db } from '../db'
+import { sequelize } from '../db'
 
 const app = express()
 
@@ -26,4 +26,4 @@ if (IS_DEV) {
 
 app.get('*', serverRenderMiddleware)
 
-export { app, db }
+export { app, sequelize }

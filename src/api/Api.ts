@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const Api = axios.create({
+export const praktikumApi = axios.create({
   baseURL: 'https://ya-praktikum.tech/api/v2/',
   headers: {
     'Content-type': 'application/json',
@@ -8,4 +8,6 @@ const Api = axios.create({
   withCredentials: true
 });
 
-export default Api
+export const appApi = axios.create({
+  withCredentials: true
+})

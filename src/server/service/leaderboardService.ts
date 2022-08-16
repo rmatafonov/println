@@ -1,11 +1,11 @@
-import { Leaderboard } from '../db/dao'
+import { LeaderBoardDao } from '../db'
 
 export const leaderboardService = {
-  findAll: (userId: string) => Leaderboard.findAll({ where: { userId } }),
+  findAll: (userId: string) => LeaderBoardDao.findAll({ where: { userId } }),
 
-  create: async (userId: string, date: string, accuracy: number, destroyed: number) => {
-    await Leaderboard.create({
-      userId, date, accuracy, destroyed
+  create: async (userId: number, accuracy: number, destroyed: number) => {
+    await LeaderBoardDao.create({
+      userId, accuracy, destroyed
     })
     return 'created'
   },

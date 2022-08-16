@@ -1,37 +1,38 @@
 import { Router, Request, Response } from 'express'
 import { leaderboardService } from '@/server/service'
+import { HttpStatusCode } from './HttpStatusCodes'
 
 export const leaderboardController = {
   findAll: async (req: Request, res: Response) => {
     if (!req.query.userId) {
-      res.status(400).send('Missing required param: userId')
+      res.status(HttpStatusCode.BAD_REQUEST).send('Missing required param: userId')
       return
     }
 
     const allLeaderboards = await leaderboardService.findAll(req.query.userId)
     if (allLeaderboards !== null) {
-      res.status(200).send(allLeaderboards)
+      res.status(HttpStatusCode.OK).send(allLeaderboards)
     } else {
-      res.status(400).send(`Not found theme for user ${req.query.userId}`)
+      res.status(HttpStatusCode.BAD_REQUEST).send(`Not found theme for user ${req.query.userId}`)
     }
   },
 
   create: async (req: Request, res: Response) => {
     if (!req.body.params.userId) {
-      res.status(400).send('Missing required body parameter: userId')
+      res.status(HttpStatusCode.BAD_REQUEST).send('Missing required body parameter: userId')
       console.log(req.body)
       return
     }
     if (!req.body.params.date) {
-      res.status(400).send('Missing required body parameter: date')
+      res.status(HttpStatusCode.BAD_REQUEST).send('Missing required body parameter: date')
       return
     }
     if (!req.body.params.accuracy) {
-      res.status(400).send('Missing required body parameter: accuracy')
+      res.status(HttpStatusCode.BAD_REQUEST).send('Missing required body parameter: accuracy')
       return
     }
     if (!req.body.params.destroyed) {
-      res.status(400).send('Missing required body parameter: destroyed')
+      res.status(HttpStatusCode.BAD_REQUEST).send('Missing required body parameter: destroyed')
       return
     }
 
@@ -42,9 +43,9 @@ export const leaderboardController = {
         req.body.params.accuracy,
         req.body.params.destroyed,
       )
-      res.status(201).send(status)
+      res.status(HttpStatusCode.CREATED).send(status)
     } catch (e) {
-      res.status(500).send('Internal server error')
+      res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send('Internal server error')
     }
   }
 }
