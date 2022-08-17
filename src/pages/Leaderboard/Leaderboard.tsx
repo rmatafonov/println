@@ -6,7 +6,7 @@ import Loader from 'components/Loader'
 import { useAppSelector } from '@/redux/store/hooks'
 import { userSelector } from '@/redux/userSlice'
 import { LeaderboardType } from './types'
-import gameApi from '@/api/gameApi'
+import leaderboardApi from '@/api/LeaderboardApi'
 import 'styles/widget.css'
 import './Leaderboard.css'
 
@@ -18,7 +18,7 @@ const Leaderboard = () => {
     null
   )
   useEffect(() => {
-    gameApi.getLeaderboards(user.id).then((data) => {
+    leaderboardApi.getLeaderboards(user.id).then((data) => {
       setLeaderboards(data)
     })
   }, [])

@@ -1,7 +1,7 @@
 import { DataTypes, Sequelize } from 'sequelize'
-import { ForumThemeCommentAnswerModel } from './forum/ForumThemeCommentAnswerModel'
-import { ForumThemeCommentModel } from './forum/ForumThemeCommentModel'
 import { ForumThemeModel } from './forum/ForumThemeModel'
+import { ForumThemeCommentModel } from './forum/ForumThemeCommentModel'
+import { ForumThemeCommentAnswerModel } from './forum/ForumThemeCommentAnswerModel'
 import { LeaderboardModel } from './LeaderboardModel'
 import { UserThemeModel } from './UserThemeModel'
 
@@ -50,9 +50,10 @@ const LeaderBoardDao = sequelize.define<LeaderboardModel>('Leaderboard', {
     type: DataTypes.INTEGER,
     allowNull: false
   },
-
-  createdAt: DataTypes.DATE,
-  updatedAt: DataTypes.DATE,
+  date: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 })
 
 const ForumThemeCommentAnswerDao = sequelize.define<ForumThemeCommentAnswerModel>('ForumThemeCommentAnswers', {

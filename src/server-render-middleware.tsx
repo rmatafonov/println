@@ -7,9 +7,18 @@ import Helmet, { HelmetData } from 'react-helmet'
 import { RootState } from './redux/store/types'
 import configureAppStore from './redux/store'
 import App from './components/App'
+import { setUser } from './redux/userSlice'
 
 export default (req: Request, res: Response) => {
   const store = configureAppStore()
+  if ('user' in req.cookies) {
+    try {
+      const userDetails = JSON.parse(req.cookies.user)
+      store.dispatch(setUser(userDetails))
+    } catch (e) {
+      console.log(e)
+    }
+  }
   const helmetData = Helmet.renderStatic()
   const jsx = (
     <StaticRouter location={req.url}>

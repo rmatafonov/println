@@ -48,6 +48,7 @@ const userSlice = createSlice({
   reducers: {
     setUser: (state, action: PayloadAction<null | UserEnrichedData>) => {
       state.data = action.payload
+      state.loading = false
       state.message = undefined
     }
   },

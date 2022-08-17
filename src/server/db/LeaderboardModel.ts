@@ -8,9 +8,7 @@ import {
 export interface LeaderboardModel extends Model<InferAttributes<LeaderboardModel>, InferCreationAttributes<LeaderboardModel>> {
   id: CreationOptional<number>
   userId: number
+  date: string
   accuracy: number
   destroyed: number
-
-  createdAt: CreationOptional<Date>
-  updatedAt: CreationOptional<Date>
 }

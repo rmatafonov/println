@@ -118,11 +118,18 @@ const enemiesSlice = createSlice({
         }
       }
     },
+    resetStatistics: (state) => {
+      state.statistics = {
+        destroyed: 0,
+        numberOfShots: 0,
+        numberOfHits: 0,
+      }
+    },
   },
 })
 
 export const {
-  setEnemies, moveEnemies, shoot, destroyEnemy,
+  setEnemies, moveEnemies, shoot, destroyEnemy, resetStatistics
 } =
   enemiesSlice.actions
 

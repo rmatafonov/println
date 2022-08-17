@@ -13,6 +13,7 @@ function Menu() {
 
   const logout = useCallback(async () => {
     await authApi.logout()
+    document.cookie = 'user= ; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
     dispatch(setUser(null))
   }, [])
 
