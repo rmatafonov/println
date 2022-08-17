@@ -19,7 +19,7 @@ import {
 import { ForumThemeModel } from './ForumThemeModel'
 import { ForumThemeCommentAnswerModel } from './ForumThemeCommentAnswerModel'
 
-export interface ForumThemeCommentModel extends Model<
+interface ForumThemeCommentModel extends Model<
   InferAttributes<ForumThemeCommentModel, { omit: 'answers' }>,
   InferCreationAttributes<ForumThemeCommentModel, { omit: 'answers' }>
 > {
@@ -45,3 +45,5 @@ export interface ForumThemeCommentModel extends Model<
 
   answers?: NonAttribute<ForumThemeCommentAnswerModel[]>
 }
+
+export { ForumThemeCommentModel }
