@@ -68,6 +68,7 @@ function SignUp() {
   const dispatch = useAppDispatch()
   const fetchUserAndGoAhead = () => {
     authApi.getEnrichedUser().then((user) => {
+      document.cookie = `user=${JSON.stringify(user)}; path=/`
       dispatch(setUser(user))
       navigate('/menu')
     })

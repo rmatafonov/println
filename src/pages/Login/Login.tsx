@@ -42,13 +42,11 @@ function Login() {
 
   let nextPath = '/menu'
   if (location.state) {
-    console.log('location.state', location.state)
     nextPath = (location.state as LocationState).from?.pathname
   }
   const fetchUserAndGoAhead = () => {
-    console.log('Going to', nextPath)
     authApi.getEnrichedUser().then((user) => {
-      console.log('Enriched user', user)
+      document.cookie = `user=${JSON.stringify(user)}; path=/`
       dispatch(setUser(user))
       navigate(nextPath)
     })
@@ -58,9 +56,6 @@ function Login() {
   const userInfo = useAppSelector(userSelector)
 
   useEffect(() => {
-    if (userInfo.loading) {
-      return
-    }
     const searchParams = urlUtils.getUrlParams()
     if (searchParams.code) {
       oAuth.authServer(searchParams.code).then(() => {

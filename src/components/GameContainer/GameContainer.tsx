@@ -13,6 +13,7 @@ import {
   moveEnemies,
   setEnemies,
   shoot,
+  resetStatistics,
 } from '@/redux/enemiesSlice'
 import { userSelector } from '@/redux/userSlice'
 import EnemiesFactory from '@/service/EnemiesFactory'
@@ -21,7 +22,7 @@ import './GameContainer.css'
 import { useAppDispatch, useAppSelector } from '@/redux/store/hooks'
 import Bullet from '../Bullet/Bullet'
 import { Screensaver } from '../Screensaver'
-import gameApi from '@/api/gameApi'
+import leaderboardApi from '@/api/LeaderboardApi'
 
 const GameContainer: GameContainerProps = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -121,7 +122,7 @@ const GameContainer: GameContainerProps = () => {
   }
 
   const addToLeaderboard = () => {
-    gameApi.setLeaderboard(+user.id, getDate(), getAccuracy(), statistics.destroyed)
+    leaderboardApi.setLeaderboard(+user.id, getDate(), getAccuracy(), statistics.destroyed)
   }
 
   useEffect(() => {
@@ -132,7 +133,10 @@ const GameContainer: GameContainerProps = () => {
     canvasCtx?.clearRect(0, 0, 200, 200)
 
     startEnemiesRaf()
-    return () => cancelAnimationFrame(rafIdRef.current)
+    return () => {
+      cancelAnimationFrame(rafIdRef.current)
+      dispatch(resetStatistics())
+    }
   }, [isLevelLoading, gameLevel])
 
   let renderScreensaver = <></>

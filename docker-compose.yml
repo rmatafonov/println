@@ -14,7 +14,7 @@ services:
       - postgres
     networks:
       - awesome
-    command: ./utils/wait-for.sh postgres:5432 -- node index.js dist/server.js
+    command: ./utils/wait-for.sh postgres:5432 -- npm run production
   nginx:
     image: nginx:1.23.1
     ports:

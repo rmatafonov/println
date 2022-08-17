@@ -1,16 +1,11 @@
 import React from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
-import Loader from '../Loader'
 import { UserState } from '@/redux/types/userTypes'
 
 function withAuthorizedOrLogin(WrappedComponent: React.ComponentType, user: UserState) {
   return ({ ...props }) => {
     const location = useLocation()
 
-    if (user.loading) {
-      console.log('rendering loader');
-      return <Loader />
-    }
     if (!user.loading && user.data) {
       console.log('rendering wrapped component');
       return <WrappedComponent {...props} />
