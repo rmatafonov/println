@@ -17,7 +17,7 @@ import {
 } from 'sequelize'
 import { ForumThemeCommentModel } from './ForumThemeCommentModel'
 
-export interface ForumThemeModel extends Model<InferAttributes<ForumThemeModel, { omit: 'comments' }>, InferCreationAttributes<ForumThemeModel, { omit: 'comments' }>> {
+interface ForumThemeModel extends Model<InferAttributes<ForumThemeModel, { omit: 'comments' }>, InferCreationAttributes<ForumThemeModel, { omit: 'comments' }>> {
   id: CreationOptional<number>
   userId: number
   title: string
@@ -38,3 +38,5 @@ export interface ForumThemeModel extends Model<InferAttributes<ForumThemeModel, 
 
   comments?: NonAttribute<ForumThemeCommentModel[]>
 }
+
+export { ForumThemeModel }

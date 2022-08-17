@@ -1,0 +1,16 @@
+version: "1"
+
+services:
+  jenkins:
+    image: jenkins:2.60.3
+    ports:
+      - "8081:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins:/var/jenkins_home
+    restart: always
+    env_file:
+      - jenkins.env
+
+volumes:
+    jenkins:

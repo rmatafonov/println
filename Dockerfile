@@ -1,9 +1,14 @@
-FROM node
+FROM node:18
+
+RUN apt update && apt install -y netcat
 
 WORKDIR /var/www
-COPY ./index.js index.js
-COPY ./dist dist
+COPY . .
 
-EXPOSE 3000
+RUN chmod +x ./utils/wait-for.sh
 
-CMD node index.js --watch dist/server.js
+RUN npm ci
+RUN npm run build
+RUN npm prune --production
+
+EXPOSE 5000

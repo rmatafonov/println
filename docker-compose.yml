@@ -1,38 +1,60 @@
-version: '3'
+version: "3"
 
 services:
-  postgres:
-    container_name: postgres-db
-    image: postgres:14.4-alpine
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: root
-      POSTGRES_DB: ztype-db
-    volumes:
-      - ./postgres:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+  chokurdah-web-app:
+    image: cr.yandex/crp2li7e97dklupgilf5/chokurdah/ztype-web-app:latest
     restart: always
-    networks:
-      - awesome
     env_file:
-      - ./.env
-  pgadmin:
-    container_name: pgadmin-db
-    image: dpage/pgadmin4
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: secret
+      - .env
     ports:
-      - "8080:80"
+      - "5000:5000"
+    volumes:
+      - chockurdah-data:/var/www/shared
     depends_on:
       - postgres
     networks:
       - awesome
-networks:
-  awesome:
-    driver: bridge
-volumes:
+    command: ./utils/wait-for.sh postgres:5432 -- node index.js dist/server.js
+  nginx:
+    image: nginx:1.23.1
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+    volumes:
+      - ./nginx/conf/:/etc/nginx/conf.d/:ro
+      - ./data/certbot/www/:/var/www/certbot/:ro
+      - ./data/certbot/letsencrypt/:/etc/letsencrypt/:ro
   postgres:
+    image: postgres:14
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - awesome
   pgadmin:
+    image: dpage/pgadmin4:4.18
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    networks:
+      - awesome
+
+volumes:
+    chockurdah-data:
+    postgres-data:
+    pgadmin-data:
+
+networks:
+    awesome:
+        driver: bridge

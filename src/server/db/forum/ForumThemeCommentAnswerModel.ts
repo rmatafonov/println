@@ -8,7 +8,7 @@ import {
 } from 'sequelize'
 import { ForumThemeCommentModel } from './ForumThemeCommentModel'
 
-export interface ForumThemeCommentAnswerModel extends Model<
+interface ForumThemeCommentAnswerModel extends Model<
   InferAttributes<ForumThemeCommentAnswerModel>,
   InferCreationAttributes<ForumThemeCommentAnswerModel>
 > {
@@ -20,3 +20,5 @@ export interface ForumThemeCommentAnswerModel extends Model<
   createdAt: CreationOptional<Date>
   updatedAt: CreationOptional<Date>
 }
+
+export { ForumThemeCommentAnswerModel }

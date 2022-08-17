@@ -28,8 +28,7 @@
   "include": [
     "src",
     "typings/**/*.d.ts",
-    "./node_modules/@types",
-    "server/render/hmr.ts"
+    "./node_modules/@types"
   ],
   "exclude": ["**/*.js"]
 }

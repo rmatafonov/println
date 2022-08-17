@@ -1,14 +1,14 @@
-import React, { useContext } from 'react'
+import React from 'react'
 
 import 'styles/widget.css'
-import './game.css'
+import './Game.css'
 import { GameContainer } from '@/components/GameContainer'
 
 function Game() {
   return (
     <div className="game">
       <div className="game-background"></div>
-      <GameContainer className="game-container"></GameContainer>
+      <GameContainer></GameContainer>
     </div>
   )
 }

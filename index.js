@@ -5,7 +5,11 @@ const PORT = process.env.PORT || 5000
 
 const start = async () => {
   try {
-    await sequelize.sync({ force: true })
+    const sequelizeOptions = {}
+    if (process.env.NODE_ENV !== 'production') {
+      sequelizeOptions.force = true
+    }
+    await sequelize.sync(sequelizeOptions)
     console.log('DB Connection has been established successfully.')
 
     app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
