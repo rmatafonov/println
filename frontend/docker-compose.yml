@@ -1,0 +1,60 @@
+version: "3"
+
+services:
+  chokurdah-web-app:
+    image: cr.yandex/crp2li7e97dklupgilf5/chokurdah/ztype-web-app:latest
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "5000:5000"
+    volumes:
+      - chockurdah-data:/var/www/shared
+    depends_on:
+      - postgres
+    networks:
+      - awesome
+    command: ./utils/wait-for.sh postgres:5432 -- npm run production
+  nginx:
+    image: nginx:1.23.1
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+    volumes:
+      - ./nginx/conf/:/etc/nginx/conf.d/:ro
+      - ./data/certbot/www/:/var/www/certbot/:ro
+      - ./data/certbot/letsencrypt/:/etc/letsencrypt/:ro
+  postgres:
+    image: postgres:14
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - awesome
+  pgadmin:
+    image: dpage/pgadmin4:4.18
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    networks:
+      - awesome
+
+volumes:
+    chockurdah-data:
+    postgres-data:
+    pgadmin-data:
+
+networks:
+    awesome:
+        driver: bridge

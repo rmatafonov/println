@@ -1,0 +1,16 @@
+.forum-add {
+  position: relative;
+  &__title {
+    margin-bottom: 40px;
+  }
+  &__input {
+    margin-bottom: 20px;
+  }
+  &__editor {
+    margin-bottom: 20px;
+  }
+  &__button {
+    display: flex;
+    justify-content: center;
+  }
+}

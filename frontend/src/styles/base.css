@@ -1,0 +1,111 @@
+@import './themes.css';
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: Roboto, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.2;
+  color: var(--text);
+  position: relative;
+  height: 100%;
+}
+
+.container {
+  width: 95%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+
+  li {
+    list-style-type: none;
+  }
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  height: 2.5em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  color: var(--text);
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 28px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+p {
+  margin: 0;
+}
+
+input {
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+hr {
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border: 1px solid var(--horisontal-line-color);
+}
+
+.app {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  padding-top: 2%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.background {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background: var(--app-background);
+}
+
+.form {
+  width: 100%;
+}

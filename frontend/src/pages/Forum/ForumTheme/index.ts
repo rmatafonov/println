@@ -1,0 +1,1 @@
+export { ForumThemeComponent } from './ForumThemeComponent'

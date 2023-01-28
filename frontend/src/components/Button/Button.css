@@ -1,0 +1,39 @@
+@import '../../styles/colors.css';
+
+.button {
+  padding: 10px 45px;
+  font-size: 18px;
+  color: var(--text);
+  border-radius: var(--border-radius-formfields);
+  background: linear-gradient(to right, #606c88 0%, #3f4c6b 51%, #606c88 100%);
+  transition: 0.5s;
+  background-size: 200% auto;
+  text-align: center;
+  user-select: none;
+
+  &:hover {
+    background-position: right center;
+    text-decoration: none;
+  }
+
+  &_simple {
+    padding: 0;
+    font-size: 16px;
+    border: none;
+    border-radius: 0;
+    background: none;
+  }
+
+  &_highlight {
+    color: var(--highlight);
+  }
+
+  &_disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  &_hidden {
+    display: none;
+  }
+}

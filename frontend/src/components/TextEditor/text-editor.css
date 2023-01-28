@@ -1,0 +1,14 @@
+.text-editor {
+  background: var(--bg-light);
+  border-radius: var(--border-radius-default);
+  color: var(--text-dark);
+  padding: 15px;
+  &__input {
+    color: var(--text-dark) !important;
+    background-color: var(--bg-gray);
+    padding: 5px 10px;
+  }
+  span {
+    color: var(--text-dark);
+  }
+}
