@@ -1,8 +1,0 @@
-{
-  "css.validate": true,
-
-  "editor.codeActionsOnSave": {
-    "source.fixAll.stylelint": true,
-  },
-  "files.eol": "\n",
-}
